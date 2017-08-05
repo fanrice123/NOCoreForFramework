@@ -219,34 +219,40 @@ namespace NOCoreTest
 			graph = new Graph();
 			List<INode> nodes = new List<INode>();
 
-			for (int i = 0; i != 1000; ++i)
+			for (int i = 0; i != 50000; ++i)
 			{
 				var node = new TesteSubNode2();
 				nodes.Add(node);
 				graph.Add(node);
 			}
 			Assert.AreEqual(nodes.Count, graph.Count);
-			Assert.AreEqual(1000, graph.Count);
+			Assert.AreEqual(50000, graph.Count);
 
 			Random random = new Random();
 
-			for (int i = 0; i != 400; ++i)
+			for (int i = 0; i != 50000; ++i)
 			{
-				var index1 = random.Next(0, 1000);
-				var index2 = random.Next(0, 1000);
+				var index1 = random.Next(0, 50000);
+				var index2 = random.Next(0, 50000);
 				while (index2 == index1)
-					index2 = random.Next(0, 1000);
+					index2 = random.Next(0, 50000);
 				graph.ConnectNodeToWith(nodes[index1], nodes[index2], new Edge(random.Next(1, 600)));
 			}
-			Assert.AreEqual(graph.AllEdges.Count, 400);
+			Assert.AreEqual(graph.AllEdges.Count, 50000);
 
-			writer.Save("Large Graph.xml", graph);
+			writer.Save("Large Graph2.xml", graph);
 		}
 
 		[TestMethod]
 		public void TestRead1000NodeGraph()
 		{
 			graph = writer.Read("Large Graph.xml") as Graph;
+		}
+
+		[TestMethod]
+		public void TestRead50000NodeGraph()
+		{
+			graph = writer.Read("Large Graph2.xml") as Graph;
 		}
 
 		private int ParseId(String id)
