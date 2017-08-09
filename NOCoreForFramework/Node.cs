@@ -38,6 +38,12 @@ namespace NetworkObservabilityCore
 			set;
 		}
 
+		public bool IsVisible
+		{
+			get;
+			set;
+		}
+
 		#endregion
 
 		#region Constructors
@@ -46,7 +52,7 @@ namespace NetworkObservabilityCore
 			Id = IdGenerator.GenerateNodeIndex();
 			Label = Id;
 			Links = new HashSet<IEdge>();
-			IsObserver = IsObserverInclusive = false;
+			IsObserver = IsObserverInclusive = IsVisible = false;
 		}
 		#endregion
 
@@ -62,12 +68,12 @@ namespace NetworkObservabilityCore
 
 		public override bool Equals(object obj)
 		{
-			return Id == (obj as Node).Id;
+			return obj is INode && Equals(obj as INode);
 		}
 
 		bool IEquatable<INode>.Equals(INode other)
 		{
-			return other is Node && Equals(other);
+			return Id == other.Id;
 		}
 	}
 }

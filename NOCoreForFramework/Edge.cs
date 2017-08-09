@@ -66,12 +66,12 @@ namespace NetworkObservabilityCore
 
 		public override bool Equals(object obj)
 		{
-			return Id == (obj as Edge).Id;
+			return obj is IEdge && Equals(obj as IEdge);
 		}
 
 		bool IEquatable<IEdge>.Equals(IEdge other)
 		{
-			return other is Edge && Equals(other);
+			return Id == other.Id;
 		}
 	}
 }

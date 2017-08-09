@@ -214,7 +214,7 @@ namespace NOCoreTest
 		}
 
 		[TestMethod]
-		public void TestWrite1000NodeGraph()
+		public void TestWrite50000NodeGraph()
 		{
 			graph = new Graph();
 			List<INode> nodes = new List<INode>();
@@ -241,6 +241,36 @@ namespace NOCoreTest
 			Assert.AreEqual(graph.AllEdges.Count, 50000);
 
 			writer.Save("Large Graph2.xml", graph);
+		}
+
+		[TestMethod]
+		public void TestWriter1000NodeGraph()
+		{
+			graph = new Graph();
+			List<INode> nodes = new List<INode>();
+
+			for (int i = 0; i != 1000; ++i)
+			{
+				var node = new TesteSubNode2();
+				nodes.Add(node);
+				graph.Add(node);
+			}
+			Assert.AreEqual(nodes.Count, graph.Count);
+			Assert.AreEqual(1000, graph.Count);
+
+			Random random = new Random();
+
+			for (int i = 0; i != 1000; ++i)
+			{
+				var index1 = random.Next(0, 1000);
+				var index2 = random.Next(0, 1000);
+				while (index2 == index1)
+					index2 = random.Next(0, 1000);
+				graph.ConnectNodeToWith(nodes[index1], nodes[index2], new Edge(random.Next(1, 600)));
+			}
+			Assert.AreEqual(graph.AllEdges.Count, 1000);
+
+			writer.Save("Large Graph.xml", graph);
 		}
 
 		[TestMethod]

@@ -30,8 +30,15 @@ namespace NOCoreTest
 			get;
 			set;
 		}
-		
-		public bool IsObserverInclusive {
+
+		public bool IsObserverInclusive
+		{
+			get;
+			set;
+		}
+
+		public bool IsVisible
+		{
 			get;
 			set;
 		}

@@ -108,11 +108,13 @@ namespace NetworkObservabilityCore
 
 			var isObserver = new XElement("IsObserver", node.IsObserver);
 			var isObserverInclusive = new XElement("IsObserverInclusive", node.IsObserverInclusive);
+			var isVisible = new XElement("IsVisible", node.IsVisible);
 			var label = new XElement("Label", node.Label);
 			var links = CreateSubXElement(node.Links);
 
 			xelement.Add(isObserver);
 			xelement.Add(isObserverInclusive);
+			xelement.Add(isVisible);
 			xelement.Add(label);
 			xelement.Add(links);
 
@@ -214,6 +216,7 @@ namespace NetworkObservabilityCore
 			property.SetValue(node, xnode.Attribute("Id").Value);
 			node.IsObserver = Boolean.Parse(xnode.Element("IsObserver").Value);
 			node.IsObserverInclusive = Boolean.Parse(xnode.Element("IsObserverInclusive").Value);
+			node.IsVisible = Boolean.Parse(xnode.Element("IsVisible").Value);
 			node.Label = xnode.Element("Label").Value;
 			node.Links = new HashSet<IEdge>();
 

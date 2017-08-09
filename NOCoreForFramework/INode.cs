@@ -18,6 +18,8 @@ namespace NetworkObservabilityCore
 		bool IsObserver { get; set; }
 
 		bool IsObserverInclusive { get; set; }
+		
+		bool IsVisible { get; set; }
 
 	}
 }
