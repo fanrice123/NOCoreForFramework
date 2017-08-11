@@ -110,13 +110,15 @@ namespace NetworkObservabilityCore
 			var isObserverInclusive = new XElement("IsObserverInclusive", node.IsObserverInclusive);
 			var isVisible = new XElement("IsVisible", node.IsVisible);
 			var label = new XElement("Label", node.Label);
-			var links = CreateSubXElement(node.Links);
+			//var links = CreateSubXElement(node.Links, "Links");
+			//var connectFrom = CreateSubXElement(node.ConnectFrom, "ConnectFrom");
 
 			xelement.Add(isObserver);
 			xelement.Add(isObserverInclusive);
 			xelement.Add(isVisible);
 			xelement.Add(label);
-			xelement.Add(links);
+			//xelement.Add(links);
+			//xelement.Add(connectFrom);
 
 			return xelement;
 		}
@@ -138,11 +140,11 @@ namespace NetworkObservabilityCore
 			return xelement;
 		}
 
-		private XElement CreateSubXElement(IEnumerable<IEdge> links)
+		private XElement CreateSubXElement(IEnumerable<IEdge> edges, String name)
 		{
-			XElement linksNode = new XElement("Links");
+			XElement linksNode = new XElement(name);
 
-			foreach (IEdge link in links)
+			foreach (IEdge link in edges)
 			{
 				linksNode.Add(new XElement("EdgeID", link.Id));
 			}
@@ -218,7 +220,8 @@ namespace NetworkObservabilityCore
 			node.IsObserverInclusive = Boolean.Parse(xnode.Element("IsObserverInclusive").Value);
 			node.IsVisible = Boolean.Parse(xnode.Element("IsVisible").Value);
 			node.Label = xnode.Element("Label").Value;
-			node.Links = new HashSet<IEdge>();
+			node.Links = new List<IEdge>();
+			node.ConnectFrom = new List<IEdge>();
 
 			graph.Add(node);
 		}

@@ -20,11 +20,19 @@ namespace NOCoreTest
 			get;
 			set;
 		}
-		public HashSet<IEdge> Links
+
+		public List<IEdge> Links
 		{
 			get;
 			set;
 		}
+
+		public List<IEdge> ConnectFrom
+		{
+			get;
+			set;
+		}
+
 		public bool IsObserver
 		{
 			get;
@@ -47,7 +55,8 @@ namespace NOCoreTest
 		{
 			Id = IdGenerator.GenerateNodeIndex();
 			Label = Id;
-			Links = new HashSet<IEdge>();
+			Links = new List<IEdge>();
+			ConnectFrom = new List<IEdge>();
 			IsObserver = IsObserverInclusive = false;
 		}
 
