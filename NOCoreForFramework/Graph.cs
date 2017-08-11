@@ -40,6 +40,7 @@ namespace NetworkObservabilityCore
 		{
 			AllEdges[edge.Id] = edge;
 			from.Links.Add(edge);
+			to.ConnectFrom.Add(edge);
 			edge.From = from;
 			edge.To = to;
 		}
@@ -76,6 +77,8 @@ namespace NetworkObservabilityCore
 
 		public void Add(INode item)
 		{
+			if (AllNodes.ContainsKey(item.Id))
+				throw new InvalidOperationException("Item already existed in Graph.");
 			AllNodes[item.Id] = item;
 		}
 
@@ -90,9 +93,40 @@ namespace NetworkObservabilityCore
 			throw new NotImplementedException();
 		}
 
+		public bool Remove(IEdge edge)
+		{
+			if (AllEdges.ContainsKey(edge.Id))
+			{
+				edge.From.Links.Remove(edge);
+				edge.To.ConnectFrom.Remove(edge);
+				AllEdges.Remove(edge.Id);
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 		public bool Remove(INode item)
 		{
-			throw new NotImplementedException();
+			if (AllNodes.ContainsKey(item.Id))
+			{
+				while (item.ConnectFrom.Count != 0)
+				{
+					Remove(item.ConnectFrom[0]);
+				}
+				while (item.Links.Count != 0)
+				{
+					Remove(item.Links[0]);
+				}
+				AllNodes.Remove(item.Id);
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		public IEnumerator<INode> GetEnumerator()

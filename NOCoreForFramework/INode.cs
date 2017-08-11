@@ -13,7 +13,9 @@ namespace NetworkObservabilityCore
 
 		String Label { get; set; }
 
-		HashSet<IEdge> Links { get; set; }
+		List<IEdge> Links { get; set; }
+
+		List<IEdge> ConnectFrom { get; set; }
 
 		bool IsObserver { get; set; }
 

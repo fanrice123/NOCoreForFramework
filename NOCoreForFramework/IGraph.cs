@@ -12,6 +12,8 @@ namespace NetworkObservabilityCore
 
 		void ConnectNodeToWith(INode from, INode to, IEdge edge);
 
+		bool Remove(IEdge edge);
+
 
     }
 }

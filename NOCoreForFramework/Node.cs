@@ -20,7 +20,13 @@ namespace NetworkObservabilityCore
 			set;
 		}
 
-		public HashSet<IEdge> Links
+		public List<IEdge> Links
+		{
+			get;
+			set;
+		}
+
+		public List<IEdge> ConnectFrom
 		{
 			get;
 			set;
@@ -51,8 +57,10 @@ namespace NetworkObservabilityCore
 		{
 			Id = IdGenerator.GenerateNodeIndex();
 			Label = Id;
-			Links = new HashSet<IEdge>();
-			IsObserver = IsObserverInclusive = IsVisible = false;
+			Links = new List<IEdge>();
+			ConnectFrom = new List<IEdge>();
+			IsObserver = IsObserverInclusive = false;
+			IsVisible = true;
 		}
 		#endregion
 
