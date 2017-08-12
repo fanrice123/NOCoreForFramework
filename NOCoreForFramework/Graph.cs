@@ -39,7 +39,7 @@ namespace NetworkObservabilityCore
 		public void ConnectNodeToWith(INode from, INode to, IEdge edge)
 		{
 			AllEdges[edge.Id] = edge;
-			from.Links.Add(edge);
+			from.Neighbours.Add(edge);
 			to.ConnectFrom.Add(edge);
 			edge.From = from;
 			edge.To = to;
@@ -98,7 +98,7 @@ namespace NetworkObservabilityCore
 		{
 			if (AllEdges.ContainsKey(edge.Id))
 			{
-				edge.From.Links.Remove(edge);
+				edge.From.Neighbours.Remove(edge);
 				edge.To.ConnectFrom.Remove(edge);
 				AllEdges.Remove(edge.Id);
 				return true;
@@ -117,9 +117,9 @@ namespace NetworkObservabilityCore
 				{
 					Remove(item.ConnectFrom[0]);
 				}
-				while (item.Links.Count != 0)
+				while (item.Neighbours.Count != 0)
 				{
-					Remove(item.Links[0]);
+					Remove(item.Neighbours[0]);
 				}
 				AllNodes.Remove(item.Id);
 				return true;

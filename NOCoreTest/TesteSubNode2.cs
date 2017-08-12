@@ -21,7 +21,7 @@ namespace NOCoreTest
 			set;
 		}
 
-		public List<IEdge> Links
+		public List<IEdge> Neighbours
 		{
 			get;
 			set;
@@ -55,7 +55,7 @@ namespace NOCoreTest
 		{
 			Id = IdGenerator.GenerateNodeIndex();
 			Label = Id;
-			Links = new List<IEdge>();
+			Neighbours = new List<IEdge>();
 			ConnectFrom = new List<IEdge>();
 			IsObserver = IsObserverInclusive = false;
 		}

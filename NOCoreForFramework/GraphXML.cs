@@ -220,7 +220,7 @@ namespace NetworkObservabilityCore
 			node.IsObserverInclusive = Boolean.Parse(xnode.Element("IsObserverInclusive").Value);
 			node.IsVisible = Boolean.Parse(xnode.Element("IsVisible").Value);
 			node.Label = xnode.Element("Label").Value;
-			node.Links = new List<IEdge>();
+			node.Neighbours = new List<IEdge>();
 			node.ConnectFrom = new List<IEdge>();
 
 			graph.Add(node);
