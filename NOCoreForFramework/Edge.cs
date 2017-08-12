@@ -64,11 +64,6 @@ namespace NetworkObservabilityCore
 			return Id.GetHashCode();
 		}
 
-		public override bool Equals(object obj)
-		{
-			return obj is IEdge && Equals(obj as IEdge);
-		}
-
 		bool IEquatable<IEdge>.Equals(IEdge other)
 		{
 			return Id == other.Id;

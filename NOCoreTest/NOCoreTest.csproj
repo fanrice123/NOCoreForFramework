@@ -53,6 +53,7 @@
     <Compile Include="TesteSubNode2.cs" />
     <Compile Include="TestSubEdge.cs" />
     <Compile Include="TestSubNode.cs" />
+    <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

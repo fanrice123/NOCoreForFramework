@@ -66,7 +66,8 @@ namespace NetworkObservabilityCore
 
 					foreach (var observer in observers)
 					{
-						bool flag = dijkstra.PathTo(to).Contains(observer);
+						var paths = dijkstra.PathTo(to);
+						bool flag = paths.Contains(observer);
 						result[new Tuple<INode, INode>(from, to)] = flag;
 					}
 				}

@@ -74,11 +74,6 @@ namespace NetworkObservabilityCore
 			return Id.GetHashCode();
 		}
 
-		public override bool Equals(object obj)
-		{
-			return obj is INode && Equals(obj as INode);
-		}
-
 		bool IEquatable<INode>.Equals(INode other)
 		{
 			return Id == other.Id;
