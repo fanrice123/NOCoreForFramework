@@ -48,9 +48,9 @@
     <Compile Include="IEdge.cs" />
     <Compile Include="IGraph.cs" />
     <Compile Include="INode.cs" />
-    <Compile Include="KShortestPath.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="IndexGenerator.cs" />
+    <Compile Include="Path.cs" />
     <Compile Include="PriorityQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
