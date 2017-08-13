@@ -13,5 +13,7 @@ namespace NetworkObservabilityCore
 		INode From { get; set; }
 
 		INode To { get; set; }
+
+		double Value { get; set; }
 	}
 }

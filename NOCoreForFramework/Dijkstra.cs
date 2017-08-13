@@ -52,7 +52,7 @@ namespace NetworkObservabilityCore
 				{
 					var idxFrom = dict[edge.From];
 					var idxTo = dict[edge.To];
-					var newDist = dist[idxFrom] + edge.Weight;
+					var newDist = dist[idxFrom] + edge.Value;
 					if (newDist < dist[idxTo])
 					{
 						dist[idxTo] = newDist;

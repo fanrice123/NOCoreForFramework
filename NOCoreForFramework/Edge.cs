@@ -20,7 +20,7 @@ namespace NetworkObservabilityCore
 			set;
 		}
 
-		public int Weight
+		public double Value
 		{
 			get;
 			set;
@@ -50,7 +50,7 @@ namespace NetworkObservabilityCore
 		{
 			Id = IdGenerator.GenerateEdgeIndex();
 			Label = Id;
-			Weight = weight;
+			Value = weight;
 		}
 		#endregion
 
