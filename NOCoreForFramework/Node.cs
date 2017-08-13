@@ -20,7 +20,7 @@ namespace NetworkObservabilityCore
 			set;
 		}
 
-		public List<IEdge> Neighbours
+		public List<IEdge> ConnectTo
 		{
 			get;
 			set;
@@ -57,7 +57,7 @@ namespace NetworkObservabilityCore
 		{
 			Id = IdGenerator.GenerateNodeIndex();
 			Label = Id;
-			Neighbours = new List<IEdge>();
+			ConnectTo = new List<IEdge>();
 			ConnectFrom = new List<IEdge>();
 			IsObserver = IsObserverInclusive = false;
 			IsVisible = true;

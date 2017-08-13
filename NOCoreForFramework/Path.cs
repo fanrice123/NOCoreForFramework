@@ -1,39 +1,58 @@
-﻿using NetworkObservabilityCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
-namespace NOCoreForFramework
+namespace NetworkObservabilityCore
 {
-    class Path
+    public class Path : IEnumerable<INode>, IComparable<Path>
     {
-        public Queue<INode> nodeSequence;
+        private LinkedList<INode> nodeSequence;
 
-        public Path()
+        public Path(INode src)
         {
-            nodeSequence = new Queue<INode>();
+            nodeSequence = new LinkedList<INode>();
+			nodeSequence.AddLast(src);
             PathCost = 0;
         }
-
-        //public Path(Queue<INode> nodelist)
-        //{
-        //    nodeSequence = new Queue<INode>(nodelist);
-        //    pathTotalCost = 0;
-
-        //}
+		
+		private Path(Path path)
+        {
+			nodeSequence = new LinkedList<INode>(path.nodeSequence);
+			PathCost = path.PathCost;
+        }
 
         public void Add(IEdge edge)
         {
-            nodeSequence.Enqueue(edge.To);
+            nodeSequence.AddLast(edge.To);
             PathCost += edge.Value;
         }
 
+		public IEnumerator<INode> GetEnumerator()
+		{
+			return nodeSequence.GetEnumerator();
+		}
 
-        public INode Source => nodeSequence.First();
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return nodeSequence.GetEnumerator();
+		}
 
-        public INode Destination => nodeSequence.Last();
+		public int CompareTo(Path other)
+		{
+			return PathCost.CompareTo(other.PathCost);
+		}
+
+		public Path Clone()
+		{
+			return new Path(this);
+		}
+
+		public INode Source => nodeSequence.First.Value;
+
+        public INode Destination => nodeSequence.Last.Value;
 
         public double PathCost
         {

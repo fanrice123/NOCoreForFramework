@@ -13,7 +13,7 @@ namespace NetworkObservabilityCore
 
 		String Label { get; set; }
 
-		List<IEdge> Neighbours { get; set; }
+		List<IEdge> ConnectTo { get; set; }
 
 		List<IEdge> ConnectFrom { get; set; }
 

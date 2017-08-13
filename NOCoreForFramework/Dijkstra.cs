@@ -47,7 +47,7 @@ namespace NetworkObservabilityCore
 			while (pq.Count != 0)
 			{
 				var auxNode = pq.Dequeue();
-				var edges = nodes[auxNode.Item].Neighbours;
+				var edges = nodes[auxNode.Item].ConnectTo;
 				foreach (Edge edge in edges)
 				{
 					var idxFrom = dict[edge.From];
