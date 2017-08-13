@@ -54,7 +54,6 @@
     <Compile Include="TestSubEdge.cs" />
     <Compile Include="TestSubNode.cs" />
     <Compile Include="KShortestPathTest.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="PriorityQueueTest.cs" />
     <Compile Include="TestEdgeClass.cs" />
   </ItemGroup>
