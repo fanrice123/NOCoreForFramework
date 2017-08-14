@@ -126,7 +126,6 @@ namespace NOCoreTest
         // MinHeap is used -> lower key, higher priority
         //Once sorted, the heap is messed up so we build it again
 
-        
-        
+                
     }
 }
