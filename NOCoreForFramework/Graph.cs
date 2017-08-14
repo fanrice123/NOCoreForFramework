@@ -59,22 +59,22 @@ namespace NetworkObservabilityCore
 
 				KShortestPath shortestPath = new KShortestPath(this, from);
 
-				foreach (var toNode in AllNodes)
+				foreach (var to in AllNodes.Values.Where(to => !to.Equals(from)))
 				{
-					var to = toNode.Value;
-					if (from.Equals(to))
-						continue;
-
 					var paths = shortestPath.PathsTo(to);
-					int observed = 0;
+					double observed = 0;
 					foreach (Path path in paths)
 					{
 						foreach (var observer in observers)
 						{
 							if (path.Contains(observer))
+							{
 								++observed;
+								break;
+							}
 						}
-						result[new Tuple<INode, INode>(from, to)] = Convert.ToDouble(observed) / paths.Count;
+
+						result[new Tuple<INode, INode>(from, to)] = observed != 0 ? observed / paths.Count : 0;
 					}
 				}
 			}
