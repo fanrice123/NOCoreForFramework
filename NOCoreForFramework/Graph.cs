@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace NetworkObservabilityCore
 {
@@ -45,10 +46,10 @@ namespace NetworkObservabilityCore
 			edge.To = to;
 		}
 
-		public Dictionary<Tuple<INode, INode>, bool>
+		public Dictionary<Tuple<INode, INode>, double>
 		ObserveConnectivity(ICollection<INode> observers)
 		{
-			var result = new Dictionary<Tuple<INode, INode>, bool>();
+			var result = new Dictionary<Tuple<INode, INode>, double>();
 
 			foreach (var fromNode in AllNodes)
 			{
@@ -56,7 +57,7 @@ namespace NetworkObservabilityCore
 				if (observers.Contains(from) && !from.IsObserverInclusive)
 					continue;
 
-				Dijkstra dijkstra = new Dijkstra(this, from);
+				KShortestPath shortestPath = new KShortestPath(this, from);
 
 				foreach (var toNode in AllNodes)
 				{
@@ -64,11 +65,16 @@ namespace NetworkObservabilityCore
 					if (from.Equals(to))
 						continue;
 
-					foreach (var observer in observers)
+					var paths = shortestPath.PathsTo(to);
+					int observed = 0;
+					foreach (Path path in paths)
 					{
-						var paths = dijkstra.PathTo(to);
-						bool flag = paths.Contains(observer);
-						result[new Tuple<INode, INode>(from, to)] = flag;
+						foreach (var observer in observers)
+						{
+							if (path.Contains(observer))
+								++observed;
+						}
+						result[new Tuple<INode, INode>(from, to)] = Convert.ToDouble(observed) / paths.Count;
 					}
 				}
 			}

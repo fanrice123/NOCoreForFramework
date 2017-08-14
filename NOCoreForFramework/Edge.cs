@@ -46,7 +46,7 @@ namespace NetworkObservabilityCore
 		{
 		}
 
-		public Edge(int weight)
+		public Edge(double weight)
 		{
 			Id = IdGenerator.GenerateEdgeIndex();
 			Label = Id;
