@@ -7,18 +7,18 @@ using System.Collections;
 
 namespace NetworkObservabilityCore
 {
-    public class Path : IEnumerable<INode>, IComparable<Path>
+    public class Route : IEnumerable<INode>, IComparable<Route>
     {
         private LinkedList<INode> nodeSequence;
 
-        public Path(INode src)
+        public Route(INode src)
         {
             nodeSequence = new LinkedList<INode>();
 			nodeSequence.AddLast(src);
             PathCost = 0;
         }
 		
-		private Path(Path path)
+		private Route(Route path)
         {
 			nodeSequence = new LinkedList<INode>(path.nodeSequence);
 			PathCost = path.PathCost;
@@ -40,14 +40,14 @@ namespace NetworkObservabilityCore
 			return nodeSequence.GetEnumerator();
 		}
 
-		public int CompareTo(Path other)
+		public int CompareTo(Route other)
 		{
 			return PathCost.CompareTo(other.PathCost);
 		}
 
-		public Path Clone()
+		public Route Clone()
 		{
-			return new Path(this);
+			return new Route(this);
 		}
 
 		public INode Source => nodeSequence.First.Value;

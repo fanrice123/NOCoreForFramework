@@ -8,15 +8,15 @@ namespace NetworkObservabilityCore
 {
 	public class KShortestPath
 	{
-		private Dictionary<INode, List<Path>> pathsDict;
+		private Dictionary<INode, List<Route>> pathsDict;
 
 		public KShortestPath(IGraph graph, INode src)
 		{
-			pathsDict = new Dictionary<INode, List<Path>>();
+			pathsDict = new Dictionary<INode, List<Route>>();
 			Queue<State> queue = new Queue<State>();
 
-			var srcPath = new Path(src);
-			var srcPaths = new List<Path>() { srcPath };
+			var srcPath = new Route(src);
+			var srcPaths = new List<Route>() { srcPath };
 
 			pathsDict[src] = srcPaths;
 
@@ -35,7 +35,7 @@ namespace NetworkObservabilityCore
 					if (pathsDict.ContainsKey(newNode))
 					{
 						var paths = pathsDict[newNode];
-						Path oldPath = paths[0]; // all paths has same cost
+						Route oldPath = paths[0]; // all paths has same cost
 
 						if (newPath.PathCost > oldPath.PathCost)
 							continue;
@@ -53,7 +53,7 @@ namespace NetworkObservabilityCore
 					}
 					else
 					{
-						var paths = new List<Path>() { newPath };
+						var paths = new List<Route>() { newPath };
 						pathsDict[newNode] = paths;
 					}
 					queue.Enqueue(newState);
@@ -61,7 +61,7 @@ namespace NetworkObservabilityCore
 			}
 		}
 
-		public IList<Path> PathsTo(INode node)
+		public IList<Route> PathsTo(INode node)
 		{
 			return pathsDict[node];
 		}
@@ -83,12 +83,12 @@ namespace NetworkObservabilityCore
 
 		private class State
 		{
-			public State(Path path)
+			public State(Route path)
 			{
 				CurrentPath = path;
 			}
 
-			public Path CurrentPath
+			public Route CurrentPath
 			{
 				get;
 				private set;
