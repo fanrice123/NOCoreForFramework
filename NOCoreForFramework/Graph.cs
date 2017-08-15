@@ -63,7 +63,7 @@ namespace NetworkObservabilityCore
 				{
 					var paths = shortestPath.PathsTo(to);
 					double observed = 0;
-					foreach (Path path in paths)
+					foreach (Route path in paths)
 					{
 						foreach (var observer in observers)
 						{

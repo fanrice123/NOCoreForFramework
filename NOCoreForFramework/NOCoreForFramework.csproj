@@ -51,7 +51,7 @@
     <Compile Include="KShortestPath.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="IndexGenerator.cs" />
-    <Compile Include="Path.cs" />
+    <Compile Include="Route.cs" />
     <Compile Include="PriorityQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
