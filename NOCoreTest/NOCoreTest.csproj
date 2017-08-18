@@ -48,6 +48,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GraphTest.cs" />
     <Compile Include="GraphXMLTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TesteSubNode2.cs" />
