@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace NetworkObservabilityCore
 {
-	public class KShortestPath
+	public class AllPaths
 	{
 		private Dictionary<INode, List<Route>> pathsDict;
 
-		public KShortestPath(IGraph graph, INode src)
+		public AllPaths(IGraph graph, INode src)
 		{
 			pathsDict = new Dictionary<INode, List<Route>>();
 			Queue<State> queue = new Queue<State>();
@@ -26,7 +26,8 @@ namespace NetworkObservabilityCore
 			{
 				State state = queue.Dequeue();
 
-				var newStates = CreateNewStates(state);
+
+				var newStates = CreateLooplessNewStates(state);
 				foreach (var newState in newStates)
 				{
 					var newNode = newState.CurrentNode;
@@ -34,22 +35,7 @@ namespace NetworkObservabilityCore
 
 					if (pathsDict.ContainsKey(newNode))
 					{
-						var paths = pathsDict[newNode];
-						Route oldPath = paths[0]; // all paths has same cost
-
-						if (newPath.PathCost > oldPath.PathCost)
-							continue;
-
-						if (newPath.PathCost < oldPath.PathCost)
-						{
-							paths.Clear();
-							paths.Add(newPath);
-						}
-						else if (newPath.PathCost == oldPath.PathCost)
-						{
-							paths.Add(newPath);
-						}
-
+						pathsDict[newNode].Add(newPath);
 					}
 					else
 					{
@@ -72,21 +58,21 @@ namespace NetworkObservabilityCore
 				return emptyList;
 		}
 
-		private IEnumerable<State> CreateNewStates(State currentState)
+		private IEnumerable<State> CreateLooplessNewStates(State currentState)
 		{
-			var currentPath = currentState.CurrentRoute;
+			var currentRoute = currentState.CurrentRoute;
 			LinkedList<State> states = new LinkedList<State>();
 
 			foreach (var edge in currentState.CurrentNode.ConnectTo)
 			{
-				var newPath = currentPath.Clone();
+				if (currentRoute.Contains(edge.To))
+					continue;
+				var newPath = currentRoute.Clone();
 				newPath.Add(edge);
 				states.AddLast(new State(newPath));
 			}
 
 			return states;
 		}
-
-
 	}
 }

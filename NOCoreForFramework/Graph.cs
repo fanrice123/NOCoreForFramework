@@ -6,6 +6,10 @@ using System.Linq;
 
 namespace NetworkObservabilityCore
 {
+	using FromTo = Tuple<INode, INode>;
+	using ObserveFromToThrough = Dictionary<Tuple<INode, INode, Route>, bool>;
+	using ObserveConnectivityPercent = Dictionary<Tuple<INode, INode>, double>;
+
     public class Graph : IGraph 
     {
 
@@ -46,10 +50,10 @@ namespace NetworkObservabilityCore
 			edge.To = to;
 		}
 
-		public Dictionary<Tuple<INode, INode>, double>
-		ObserveConnectivity(ICollection<INode> observers)
+		public ObserveConnectivityPercent
+		ObserveConnectivityPercentage(ICollection<INode> observers)
 		{
-			var result = new Dictionary<Tuple<INode, INode>, double>();
+			var result = new Dictionary<FromTo, double>();
 
 			foreach (var fromNode in AllNodes)
 			{
@@ -57,7 +61,8 @@ namespace NetworkObservabilityCore
 				if (observers.Contains(from) && !from.IsObserverInclusive)
 					continue;
 
-				KShortestPath shortestPath = new KShortestPath(this, from);
+				//KShortestPath shortestPath = new KShortestPath(this, from);
+				AllPaths shortestPath = new AllPaths(this, from);
 
 				foreach (var to in AllNodes.Values.Where(to => !to.Equals(from)))
 				{
@@ -74,7 +79,44 @@ namespace NetworkObservabilityCore
 							}
 						}
 
-						result[new Tuple<INode, INode>(from, to)] = observed != 0 ? observed / paths.Count : 0;
+						result[Tuple.Create(from, to)] = observed != 0 ? observed / paths.Count : 0;
+					}
+				}
+			}
+
+			return result;
+		}
+
+
+		public ObserveFromToThrough
+		ObserveConnectivity(ICollection<INode> observers)
+		{
+			var result = new Dictionary<Tuple<INode, INode, Route>, bool>();
+
+			foreach (var fromNode in AllNodes)
+			{
+				var from = fromNode.Value;
+				if (observers.Contains(from) && !from.IsObserverInclusive)
+					continue;
+
+				//KShortestPath shortestPath = new KShortestPath(this, from);
+				AllPaths shortestPath = new AllPaths(this, from);
+
+				foreach (var to in AllNodes.Values.Where(to => !to.Equals(from)))
+				{
+					var paths = shortestPath.PathsTo(to);
+					foreach (Route path in paths)
+					{
+						bool observed = false;
+						foreach (var observer in observers)
+						{
+							if (path.Contains(observer))
+							{
+								observed = true;
+								break;
+							}
+						}
+						result[new Tuple<INode, INode, Route>(from, to, path)] = observed;
 					}
 				}
 			}
@@ -150,5 +192,6 @@ namespace NetworkObservabilityCore
 		{
 			return AllNodes.ContainsKey(item.Id);
 		}
+
 	}
 }

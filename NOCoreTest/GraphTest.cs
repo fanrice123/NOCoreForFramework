@@ -3,13 +3,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetworkObservabilityCore;
 using System.Collections.Generic;
 
+
 namespace NOCoreTest
 {
     [TestClass]
     public class GraphTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestObserveConnectivity()
         {
             Graph graph = new Graph();
 
@@ -38,7 +39,17 @@ namespace NOCoreTest
 			graph.ConnectNodeToWith(E, C, new Edge()(1));
 			*/
 
-            var reuslt = graph.ObserveConnectivity(new List<INode>() { B });
+            var result = graph.ObserveConnectivity(new List<INode>() { B });
+
+			var routes = new HashSet<Route>();
+			foreach (var key in result.Keys)
+			{
+				var route = key.Item3;
+				if (!routes.Contains(route))
+					routes.Add(route);
+				else
+					Assert.Fail();
+			}
 
             
         }
