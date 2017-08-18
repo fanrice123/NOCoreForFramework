@@ -7,8 +7,7 @@ using System.Linq;
 namespace NetworkObservabilityCore
 {
 	using FromTo = Tuple<INode, INode>;
-	using ObserveFromToThrough = Dictionary<Tuple<INode, INode, Route>, bool>;
-	using ObserveConnectivityPercent = Dictionary<Tuple<INode, INode>, double>;
+	using FromToThrough = Tuple<INode, INode, Route>;
 
     public class Graph : IGraph 
     {
@@ -50,7 +49,7 @@ namespace NetworkObservabilityCore
 			edge.To = to;
 		}
 
-		public ObserveConnectivityPercent
+		public Dictionary<FromTo, double>
 		ObserveConnectivityPercentage(ICollection<INode> observers)
 		{
 			var result = new Dictionary<FromTo, double>();
@@ -88,10 +87,10 @@ namespace NetworkObservabilityCore
 		}
 
 
-		public ObserveFromToThrough
+		public Dictionary<FromToThrough, bool>
 		ObserveConnectivity(ICollection<INode> observers)
 		{
-			var result = new Dictionary<Tuple<INode, INode, Route>, bool>();
+			var result = new Dictionary<FromToThrough, bool>();
 
 			foreach (var fromNode in AllNodes)
 			{
@@ -116,7 +115,7 @@ namespace NetworkObservabilityCore
 								break;
 							}
 						}
-						result[new Tuple<INode, INode, Route>(from, to, path)] = observed;
+						result[new FromToThrough(from, to, path)] = observed;
 					}
 				}
 			}

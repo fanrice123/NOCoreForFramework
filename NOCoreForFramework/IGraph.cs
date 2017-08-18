@@ -4,6 +4,7 @@ using System.Text;
 
 namespace NetworkObservabilityCore
 {
+
 	public interface IGraph : ICollection<INode>
 	{
 		Dictionary<String, INode> AllNodes { get; }
@@ -14,6 +15,9 @@ namespace NetworkObservabilityCore
 
 		bool Remove(IEdge edge);
 
+		Dictionary<Tuple<INode, INode>, double> ObserveConnectivityPercentage(ICollection<INode> observers);
 
+		Dictionary<Tuple<INode, INode, Route>, bool> ObserveConnectivity(ICollection<INode> observers);
+		
     }
 }
