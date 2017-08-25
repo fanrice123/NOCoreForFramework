@@ -7,8 +7,12 @@ namespace NetworkObservabilityCore
     public class Edge : IEdge
     {
 
-		#region Property
-		public String Id
+        
+        #region Property
+        public Dictionary<string, double> numericalAttributes { get; set; }
+        public Dictionary<string, string> descriptiveAttributes { get; set; }
+
+        public String Id
 		{
 			get;
 			protected set;
