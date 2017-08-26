@@ -11,23 +11,38 @@ namespace NetworkObservabilityCore
 		private Dictionary<INode, List<Route>> pathsDict;
 
 		public AllPaths(IGraph graph, INode src)
+			: this(graph, src, Constraint<INode>.Default, Constraint<IEdge>.Default)
+		{
+		}
+
+		public AllPaths(IGraph graph, INode src, Constraint<INode> cNode)
+			: this(graph, src, cNode, Constraint<IEdge>.Default)
+		{
+		}
+
+		public AllPaths(IGraph graph, INode src, Constraint<IEdge> cEdge)
+			: this(graph, src, Constraint<INode>.Default, cEdge)
+		{
+		}
+
+		public AllPaths(IGraph graph, INode src, Constraint<INode> cNode, Constraint<IEdge> cEdge)
 		{
 			pathsDict = new Dictionary<INode, List<Route>>();
-			Queue<State> queue = new Queue<State>();
+			Stack<State> stack = new Stack<State>();
 
 			var srcPath = new Route(src);
 			var srcPaths = new List<Route>() { srcPath };
 
 			pathsDict[src] = srcPaths;
 
-			queue.Enqueue(new State(srcPath));
+			stack.Push(new State(srcPath));
 
-			while (queue.Count != 0)
+			while (stack.Count != 0)
 			{
-				State state = queue.Dequeue();
+				State state = stack.Pop();
 
 
-				var newStates = CreateLooplessNewStates(state);
+				var newStates = CreateLooplessNewStates(state, cNode, cEdge);
 				foreach (var newState in newStates)
 				{
 					var newNode = newState.CurrentNode;
@@ -42,7 +57,7 @@ namespace NetworkObservabilityCore
 						var paths = new List<Route>() { newPath };
 						pathsDict[newNode] = paths;
 					}
-					queue.Enqueue(newState);
+					stack.Push(newState);
 				}
 			}
 		}
@@ -58,18 +73,22 @@ namespace NetworkObservabilityCore
 				return emptyList;
 		}
 
-		private IEnumerable<State> CreateLooplessNewStates(State currentState)
+		private IEnumerable<State> CreateLooplessNewStates(State currentState, 
+														   Constraint<INode> cNode, 
+														   Constraint<IEdge> cEdge)
 		{
 			var currentRoute = currentState.CurrentRoute;
 			LinkedList<State> states = new LinkedList<State>();
 
 			foreach (var edge in currentState.CurrentNode.ConnectTo)
 			{
-				if (currentRoute.Contains(edge.To))
-					continue;
-				var newPath = currentRoute.Clone();
-				newPath.Add(edge);
-				states.AddLast(new State(newPath));
+				if (!currentRoute.Contains(edge.To) && cNode.Validate(edge.To) &&
+													   cEdge.Validate(edge))
+				{
+					var newPath = currentRoute.Clone();
+					newPath.Add(edge);
+					states.AddLast(new State(newPath));
+				}
 			}
 
 			return states;

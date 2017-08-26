@@ -4,10 +4,10 @@ using System.Text;
 
 namespace NetworkObservabilityCore
 {
-    public class Edge : IEdge
-    {
+	public class Edge : IEdge
+	{
 
-		#region Property
+		#region Properties
 		public String Id
 		{
 			get;
@@ -15,12 +15,6 @@ namespace NetworkObservabilityCore
 		}
 
 		public String Label
-		{
-			get;
-			set;
-		}
-
-		public double Value
 		{
 			get;
 			set;
@@ -38,6 +32,24 @@ namespace NetworkObservabilityCore
 			set;
 		}
 
+		public bool IsBlocked
+		{
+			get;
+			set;
+		}
+
+		public double Weight
+		{
+			get;
+			set;
+		}
+
+		public Dictionary<string, IComparable> Attributes
+		{
+			get;
+			protected set;
+		}
+
 		#endregion
 
 		#region Constructors
@@ -46,13 +58,32 @@ namespace NetworkObservabilityCore
 		{
 		}
 
-		public Edge(double weight)
+		public Edge(int weight)
 		{
 			Id = IdGenerator.GenerateEdgeIndex();
 			Label = Id;
-			Value = weight;
+			Weight = weight;
+			IsBlocked = false;
+			Attributes = new Dictionary<string, IComparable>();
 		}
 		#endregion
+
+		public IComparable this[String key]
+		{
+			get
+			{
+				return Attributes[key];
+			}
+			set
+			{
+				Attributes[key] = value;
+			}
+		}
+
+		public bool HasAttribute(String name)
+		{
+			return Attributes.ContainsKey(name);
+		}
 
 		public override string ToString()
 		{

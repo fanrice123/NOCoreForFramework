@@ -27,7 +27,7 @@ namespace NOCoreTest
         public void TestValue()
         {
             Edge edge = new Edge(3);//////////////////////////////////
-            Assert.AreEqual(3, edge.Value);
+            Assert.AreEqual(3, edge.Weight);
         }
     }
 }

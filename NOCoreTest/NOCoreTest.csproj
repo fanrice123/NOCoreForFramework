@@ -48,6 +48,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicConstraint.cs" />
+    <Compile Include="BasicEdge.cs" />
     <Compile Include="GraphTest.cs" />
     <Compile Include="GraphXMLTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

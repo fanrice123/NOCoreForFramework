@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NetworkObservabilityCore
 {
-	public interface IEdge : IEquatable<IEdge>
+	public interface IEdge : IConstrainable, IEquatable<IEdge>
 	{
 		String Id { get; }
 
@@ -14,6 +14,8 @@ namespace NetworkObservabilityCore
 
 		INode To { get; set; }
 
-		double Value { get; set; }
+		bool IsBlocked { get; set; }
+
+		double Weight { get; set; }
 	}
 }

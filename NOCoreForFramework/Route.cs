@@ -27,7 +27,7 @@ namespace NetworkObservabilityCore
         public void Add(IEdge edge)
         {
             nodeSequence.AddLast(edge.To);
-            PathCost += edge.Value;
+            PathCost += edge.Weight;
         }
 
 		public IEnumerator<INode> GetEnumerator()

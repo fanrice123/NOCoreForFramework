@@ -7,7 +7,7 @@ namespace NetworkObservabilityCore
     public class Node : INode
     {
 
-		#region Property
+		#region Properties
 		public String Id
 		{
 			get;
@@ -50,6 +50,18 @@ namespace NetworkObservabilityCore
 			set;
 		}
 
+		public bool IsBlocked
+		{
+			get;
+			set;
+		}
+
+		public Dictionary<string, IComparable> Attributes
+		{
+			get;
+			protected set;
+		}
+
 		#endregion
 
 		#region Constructors
@@ -59,8 +71,9 @@ namespace NetworkObservabilityCore
 			Label = Id;
 			ConnectTo = new List<IEdge>();
 			ConnectFrom = new List<IEdge>();
-			IsObserver = IsObserverInclusive = false;
+			IsObserver = IsObserverInclusive = IsBlocked = false;
 			IsVisible = true;
+			Attributes = new Dictionary<string, IComparable>();
 		}
 		#endregion
 
@@ -82,6 +95,11 @@ namespace NetworkObservabilityCore
 		bool IEquatable<INode>.Equals(INode other)
 		{
 			return Id == other.Id;
+		}
+
+		public bool HasAttribute(string name)
+		{
+			return Attributes.ContainsKey(name);
 		}
 	}
 }

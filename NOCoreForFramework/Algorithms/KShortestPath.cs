@@ -11,6 +11,21 @@ namespace NetworkObservabilityCore
 		private Dictionary<INode, List<Route>> pathsDict;
 
 		public KShortestPath(IGraph graph, INode src)
+			: this(graph, src, Constraint<INode>.Default, Constraint<IEdge>.Default)
+		{
+		}
+
+		public KShortestPath(IGraph graph, INode src, Constraint<INode> cNode)
+			: this(graph, src, cNode, Constraint<IEdge>.Default)
+		{
+		}
+
+		public KShortestPath(IGraph graph, INode src, Constraint<IEdge> cEdge)
+			: this(graph, src, Constraint<INode>.Default, cEdge)
+		{
+		}
+
+		public KShortestPath(IGraph graph, INode src, Constraint<INode> cNode, Constraint<IEdge> cEdge)
 		{
 			pathsDict = new Dictionary<INode, List<Route>>();
 			Queue<State> queue = new Queue<State>();
@@ -26,7 +41,7 @@ namespace NetworkObservabilityCore
 			{
 				State state = queue.Dequeue();
 
-				var newStates = CreateNewStates(state);
+				var newStates = CreateNewStates(state, cNode, cEdge);
 				foreach (var newState in newStates)
 				{
 					var newNode = newState.CurrentNode;
@@ -72,16 +87,21 @@ namespace NetworkObservabilityCore
 				return emptyList;
 		}
 
-		private IEnumerable<State> CreateNewStates(State currentState)
+		private IEnumerable<State> CreateNewStates(State currentState, 
+												   Constraint<INode> cNode,
+												   Constraint<IEdge> cEdge)
 		{
 			var currentPath = currentState.CurrentRoute;
 			LinkedList<State> states = new LinkedList<State>();
 
 			foreach (var edge in currentState.CurrentNode.ConnectTo)
 			{
-				var newPath = currentPath.Clone();
-				newPath.Add(edge);
-				states.AddLast(new State(newPath));
+				if (cEdge.Validate(edge) && cNode.Validate(edge.To))
+				{
+					var newPath = currentPath.Clone();
+					newPath.Add(edge);
+					states.AddLast(new State(newPath));
+				}
 			}
 
 			return states;

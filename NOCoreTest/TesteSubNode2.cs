@@ -51,6 +51,18 @@ namespace NOCoreTest
 			set;
 		}
 
+		public Dictionary<string, IComparable> Attributes
+		{
+			get;
+			set;
+		}
+
+		public bool IsBlocked { get; set; }
+
+		public double Value { get; set; }
+
+		Dictionary<string, IComparable> IConstrainable.Attributes => throw new NotImplementedException();
+
 		public TesteSubNode2()
 		{
 			Id = IdGenerator.GenerateNodeIndex();
@@ -58,6 +70,7 @@ namespace NOCoreTest
 			ConnectTo = new List<IEdge>();
 			ConnectFrom = new List<IEdge>();
 			IsObserver = IsObserverInclusive = false;
+			Attributes = new Dictionary<string, IComparable>();
 		}
 
 		public bool Equals(INode other)
@@ -68,6 +81,11 @@ namespace NOCoreTest
 		public override int GetHashCode()
 		{
 			return Id.GetHashCode();
+		}
+
+		public bool HasAttribute(string name)
+		{
+			return Attributes.ContainsKey(name);
 		}
 	}
 }

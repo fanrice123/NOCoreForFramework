@@ -7,7 +7,7 @@ namespace NetworkObservabilityCore
 	/// <summary>
 	/// To Implement INode, you must create a field named id.
 	/// </summary>
-	public interface INode : IEquatable<INode>
+	public interface INode : IConstrainable, IEquatable<INode>
 	{
 		String Id { get; }
 
@@ -22,6 +22,8 @@ namespace NetworkObservabilityCore
 		bool IsObserverInclusive { get; set; }
 		
 		bool IsVisible { get; set; }
+
+		bool IsBlocked { get; set; }
 
 	}
 }
