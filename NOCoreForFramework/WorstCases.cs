@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetworkObservabilityCore
 {
-    class WorstCases
+    public class WorstCases
     {
         // The two final sets to be subtracted from each other
         private Dictionary<INode, List<Route>> kShortest;
