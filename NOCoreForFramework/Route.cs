@@ -30,6 +30,18 @@ namespace NetworkObservabilityCore
             PathCost += edge.Weight;
         }
 
+        public bool ContainsObserver()
+        {
+            foreach(var node in nodeSequence)
+            {
+                if (node.IsObserver)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 		public IEnumerator<INode> GetEnumerator()
 		{
 			return nodeSequence.GetEnumerator();
