@@ -12,11 +12,11 @@ namespace NetworkObservabilityCore
         private Dictionary<INode, List<Route>> kShortest;
         private Dictionary<INode, List<Route>> allPaths;
 
-        private List<KShortestPath> allShortestPaths;
-        private List<AllPaths> allPossiblePaths;
-
         public WorstCases(IGraph graph)
         {
+			List<KShortestPath> allShortestPaths = new List<KShortestPath>();
+			List<AllPaths> allPossiblePaths = new List<AllPaths>();
+
             allPaths = new Dictionary<INode, List<Route>>();
             kShortest = new Dictionary<INode, List<Route>>();
 
