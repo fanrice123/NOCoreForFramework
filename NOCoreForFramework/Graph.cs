@@ -160,8 +160,10 @@ namespace NetworkObservabilityCore
 		{
 			if (AllNodes.ContainsKey(item.Id))
 			{
-				item.ConnectFrom.ForEach(edge => Remove(edge));
-				item.ConnectTo.ForEach(edge => Remove(edge));
+				item.ConnectFrom.ForEach(edge => edge.From.ConnectTo.Remove(edge));
+				item.ConnectTo.ForEach(edge => edge.To.ConnectFrom.Remove(edge));
+				item.ConnectFrom.Clear();
+				item.ConnectTo.Clear();
 				AllNodes.Remove(item.Id);
 				return true;
 			}
