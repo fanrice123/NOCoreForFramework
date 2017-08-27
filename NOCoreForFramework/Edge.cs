@@ -44,10 +44,10 @@ namespace NetworkObservabilityCore
 			set;
 		}
 
-		public Dictionary<string, IComparable> Attributes
+		public IDictionary<string, IComparable> Attributes
 		{
 			get;
-			protected set;
+			set;
 		}
 
 		#endregion

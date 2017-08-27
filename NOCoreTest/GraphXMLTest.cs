@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetworkObservabilityCore;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace NOCoreTest
 {
@@ -15,6 +16,7 @@ namespace NOCoreTest
 		String graph1Path;
 		String graph2Path;
 		String graphExoticNodePath;
+		String extendableGraphPath;
 
 		[TestInitialize]
 		public void Initialize()
@@ -27,6 +29,7 @@ namespace NOCoreTest
 			graph1Path = "graph1.xml";
 			graph2Path = "graph2.xml";
 			graphExoticNodePath = "exotic graph.xml";
+			extendableGraphPath = "extendable graph.xml";
 		}
 
 		[TestMethod]
@@ -283,6 +286,46 @@ namespace NOCoreTest
 		public void TestRead50000NodeGraph()
 		{
 			graph = writer.Read("Large Graph2.xml") as Graph;
+		}
+
+		[TestMethod]
+		public void TestWriteExtendableGraph()
+		{
+			graph = new Graph();
+
+			var A = new TestSubNode() { Label = "A" };
+			var B = new Node() { Label = "B" };
+			var C = new Node() { Label = "C" };
+			var D = new TestSubNode() { Label = "D" };
+			var E = new TesteSubNode2() { Label = "E" };
+			E["test"] = "test";
+			B["dummy"] = 15;
+			C["time"] = "NOthing";
+			A["3"] = 0.99;
+
+			graph.AddNode(A);
+			graph.AddNode(B);
+			graph.AddNode(C);
+			graph.AddNode(D);
+			graph.AddNode(E);
+
+			graph.ConnectNodeToWith(A, B, new Edge(8));
+			graph.ConnectNodeToWith(A, D, new TestSubEdge(9));
+			graph.ConnectNodeToWith(A, E, new Edge(4));
+			graph.ConnectNodeToWith(B, C, new Edge(1));
+			graph.ConnectNodeToWith(C, B, new Edge(2));
+			graph.ConnectNodeToWith(C, D, new TestSubEdge(3));
+			graph.ConnectNodeToWith(D, C, new Edge(2));
+			graph.ConnectNodeToWith(D, E, new Edge(7));
+			graph.ConnectNodeToWith(E, C, new Edge(1));
+
+			writer.Save(extendableGraphPath, graph);
+		}
+
+		[TestMethod]
+		public void TestReadExtendableGraph()
+		{
+			graph = writer.Read(extendableGraphPath) as Graph;
 		}
 
 		private int ParseId(String id)

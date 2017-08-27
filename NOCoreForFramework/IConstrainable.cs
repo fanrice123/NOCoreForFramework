@@ -8,7 +8,7 @@ namespace NetworkObservabilityCore
 {
 	public interface IConstrainable
 	{
-		Dictionary<String, IComparable> Attributes { get; }
+		IDictionary<String, IComparable> Attributes { get; set; }
 
 		bool HasAttribute(String name);
 	}

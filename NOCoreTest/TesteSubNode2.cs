@@ -51,7 +51,7 @@ namespace NOCoreTest
 			set;
 		}
 
-		public Dictionary<string, IComparable> Attributes
+		public IDictionary<string, IComparable> Attributes
 		{
 			get;
 			set;
@@ -61,7 +61,6 @@ namespace NOCoreTest
 
 		public double Value { get; set; }
 
-		Dictionary<string, IComparable> IConstrainable.Attributes => throw new NotImplementedException();
 
 		public TesteSubNode2()
 		{
@@ -81,6 +80,18 @@ namespace NOCoreTest
 		public override int GetHashCode()
 		{
 			return Id.GetHashCode();
+		}
+
+		public IComparable this[String key]
+		{
+			get
+			{
+				return Attributes[key];
+			}
+			set
+			{
+				Attributes[key] = value;
+			}
 		}
 
 		public bool HasAttribute(string name)

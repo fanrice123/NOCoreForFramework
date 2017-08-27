@@ -56,10 +56,10 @@ namespace NetworkObservabilityCore
 			set;
 		}
 
-		public Dictionary<string, IComparable> Attributes
+		public IDictionary<string, IComparable> Attributes
 		{
 			get;
-			protected set;
+			set;
 		}
 
 		#endregion
@@ -95,6 +95,18 @@ namespace NetworkObservabilityCore
 		bool IEquatable<INode>.Equals(INode other)
 		{
 			return Id == other.Id;
+		}
+
+		public IComparable this[String key]
+		{
+			get
+			{
+				return Attributes[key];
+			}
+			set
+			{
+				Attributes[key] = value;
+			}
 		}
 
 		public bool HasAttribute(string name)

@@ -109,16 +109,16 @@ namespace NetworkObservabilityCore
 			var isObserver = new XElement("IsObserver", node.IsObserver);
 			var isObserverInclusive = new XElement("IsObserverInclusive", node.IsObserverInclusive);
 			var isVisible = new XElement("IsVisible", node.IsVisible);
+			var isBlocked = new XElement("IsBlocked", node.IsBlocked);
 			var label = new XElement("Label", node.Label);
-			//var links = CreateSubXElement(node.Links, "Links");
-			//var connectFrom = CreateSubXElement(node.ConnectFrom, "ConnectFrom");
+			var attributes = CreateAttributes(node.Attributes);
 
 			xelement.Add(isObserver);
 			xelement.Add(isObserverInclusive);
 			xelement.Add(isVisible);
+			xelement.Add(isBlocked);
 			xelement.Add(label);
-			//xelement.Add(links);
-			//xelement.Add(connectFrom);
+			xelement.Add(attributes);
 
 			return xelement;
 		}
@@ -132,24 +132,38 @@ namespace NetworkObservabilityCore
 			var from = new XElement("From", edge.From.Id);
 			var label = new XElement("Label", edge.Label);
 			var to = new XElement("To", edge.To.Id);
+			var isBlocked = new XElement("IsBlocked", edge.IsBlocked);
+			var weight = new XElement("Weight", edge.Weight);
+			var attributes = CreateAttributes(edge.Attributes);
 
 			xelement.Add(from);
 			xelement.Add(label);
 			xelement.Add(to);
+			xelement.Add(isBlocked);
+			xelement.Add(weight);
+			xelement.Add(attributes);
 
 			return xelement;
 		}
 
-		private XElement CreateSubXElement(IEnumerable<IEdge> edges, String name)
+		public XElement CreateAttributes<K, V>(IDictionary<K, V> attributes)
 		{
-			XElement linksNode = new XElement(name);
-
-			foreach (IEdge link in edges)
+			XElement xelement = new XElement("Attributes");
+			foreach (var pair in attributes)
 			{
-				linksNode.Add(new XElement("EdgeID", link.Id));
-			}
+				var xattribute = new XElement("Attribute");
+				var xkey = new XAttribute("Key", pair.Key);
+				var xvalue = new XAttribute("Value", pair.Value);
+				Type valueType = pair.Value.GetType();
+				var typeFullName = valueType.FullName;
+				var xvalueType = new XAttribute("ValueType", typeFullName);
+				if (!typeFullName.Contains("System"))
+					DependencyMap[typeFullName] = valueType.GetTypeInfo().Assembly;
+				xattribute.Add(xkey, xvalue, xvalueType);
 
-			return linksNode;
+				xelement.Add(xattribute);
+			}
+			return xelement;
 		}
 
 		public IGraph Read(String path)
@@ -199,7 +213,7 @@ namespace NetworkObservabilityCore
 			return graph;
 		}
 
-		private void SetIdsStartFrom(XElement root)
+		public void SetIdsStartFrom(XElement root)
 		{
 			var xnode = root.Element("IndexGenerator");
 			IdGenerator.SetNodeIdStartFrom(Int32.Parse(xnode.Element("NodeIdIndex").Value));
@@ -207,7 +221,7 @@ namespace NetworkObservabilityCore
 
 		}
 
-		private void LoadNodeToGraph(XElement xnode, IGraph graph)
+		public void LoadNodeToGraph(XElement xnode, IGraph graph)
 		{
 			var nodeTypeName = xnode.Attribute("Type").Value;
 			Type nodeType = DependencyMap[nodeTypeName].GetType(nodeTypeName);
@@ -220,13 +234,15 @@ namespace NetworkObservabilityCore
 			node.IsObserverInclusive = Boolean.Parse(xnode.Element("IsObserverInclusive").Value);
 			node.IsVisible = Boolean.Parse(xnode.Element("IsVisible").Value);
 			node.Label = xnode.Element("Label").Value;
+			node.IsBlocked = Boolean.Parse(xnode.Element("IsBlocked").Value);
+			node.Attributes = LoadAttributes(xnode.Element("Attributes"));
 			node.ConnectTo = new List<IEdge>();
 			node.ConnectFrom = new List<IEdge>();
 
 			graph.Add(node);
 		}
 
-		private void LoadEdgeToGraph(XElement xedge, IGraph graph)
+		public void LoadEdgeToGraph(XElement xedge, IGraph graph)
 		{
 			var edgeTypeName = xedge.Attribute("Type").Value;
 			Type edgeType = DependencyMap[edgeTypeName].GetType(edgeTypeName);
@@ -236,11 +252,62 @@ namespace NetworkObservabilityCore
 				BindingFlags.Public | BindingFlags.Instance);
 			property.SetValue(edge, xedge.Attribute("Id").Value);
 			edge.Label = xedge.Element("Label").Value;
+			edge.IsBlocked = Boolean.Parse(xedge.Element("IsBlocked").Value);
+			edge.Attributes = LoadAttributes(xedge.Element("Attributes"));
 
 			var from = graph.AllNodes[xedge.Element("From").Value];
 			var to = graph.AllNodes[xedge.Element("To").Value];
 
 			graph.ConnectNodeToWith(from, to, edge);
+		}
+
+		public IDictionary<String, IComparable> LoadAttributes(XElement xelement)
+		{
+			var attributes = new Dictionary<String, IComparable>();
+			
+			foreach (var xattribute in xelement.Elements())
+			{
+				var xkey = xattribute.Attribute("Key").Value;
+				var xvalue = xattribute.Attribute("Value").Value;
+				var valueTypeName = xattribute.Attribute("ValueType").Value;
+				Type valueType;
+				IComparable attribute;
+				if (valueTypeName.Contains("System"))
+				{
+					valueType = Type.GetType(valueTypeName);
+				}
+				else
+				{
+					valueType = DependencyMap[valueTypeName].GetType(valueTypeName);
+				}
+				var value = ChangeType(xvalue, valueType);
+				if (valueType.Equals(typeof(String)))
+				{
+					attribute = value;
+				}
+				else if (HasConstructor(valueType))
+				{
+					attribute = Activator.CreateInstance(valueType, value) as IComparable;
+				}
+				else
+				{
+					attribute = Activator.CreateInstance(valueType) as IComparable;
+					attribute = value;
+				}
+				attributes[xkey] = attribute;
+			}
+			return attributes;
+		}
+
+		private bool HasConstructor(Type type)
+		{
+			var hasConstructor = type.GetConstructor(BindingFlags.Default, null, Type.EmptyTypes, null) != null;
+			return !(type.IsPrimitive || hasConstructor);
+		}
+
+		private IComparable ChangeType(String str, Type type)
+		{
+			return Convert.ChangeType(str, type) as IComparable;
 		}
 
 	}
