@@ -7,17 +7,16 @@ using System.IO;
 using System.Reflection;
 using System.Diagnostics;
 using System.Runtime;
+using NetworkObservabilityCore.Utils;
 
-namespace NetworkObservabilityCore
+namespace NetworkObservabilityCore.Xml
 {
     public class GraphXML
     {
-		private XDocument file;
-
 		public XDocument File
 		{
-			get => file;
-			set { file = value; }
+			get;
+			protected set;
 		}
 
 		public Dictionary<String, Assembly> DependencyMap
@@ -39,7 +38,12 @@ namespace NetworkObservabilityCore
 
 		public void Save(String path, IGraph graph)
 		{
-			XElement root = new XElement("NetworkObservabilityCore");
+			Save(path, graph, "NetworkObservabilityCore");
+		}
+		
+		public void Save(String path, IGraph graph, String rootName)
+		{
+			XElement root = new XElement(rootName);
 			DumpTo(graph, ref root);
 			File.Add(root);
 
@@ -55,7 +59,7 @@ namespace NetworkObservabilityCore
 			*/
 		}
 
-		public void DumpTo(IGraph graph, ref XElement root)
+		protected virtual void DumpTo(IGraph graph, ref XElement root)
 		{
 			XElement dependenciesNode = new XElement("Dependencies");
 
@@ -91,16 +95,14 @@ namespace NetworkObservabilityCore
 				dependenciesNode.Add(dependencyNode);
 			}
 
-			XElement indexGeneratorNode = new XElement("IndexGenerator");
-			indexGeneratorNode.Add(new XElement("NodeIdIndex", IdGenerator.nodeIdIndex.ToString()));
-			indexGeneratorNode.Add(new XElement("EdgeIdIndex", IdGenerator.edgeIdIndex.ToString()));
+			XElement indexGeneratorNode = CreateXElementIdGenerator();
 
 			root.Add(dependenciesNode);
 			root.Add(indexGeneratorNode);
 			root.Add(graphNode);
 		}
 
-		public XElement CreateXElement(INode node)
+		protected virtual XElement CreateXElement(INode node)
 		{
 			Type nodeType = node.GetType();
 			XElement xelement = new XElement("Node", new XAttribute("Id", node.Id), new XAttribute("Type", nodeType.FullName));
@@ -123,7 +125,7 @@ namespace NetworkObservabilityCore
 			return xelement;
 		}
 
-		public XElement CreateXElement(IEdge edge)
+		protected virtual XElement CreateXElement(IEdge edge)
 		{
 			Type edgeType = edge.GetType();
 			XElement xelement = new XElement("Edge", new XAttribute("Id", edge.Id), new XAttribute("Type", edgeType.FullName));
@@ -146,7 +148,15 @@ namespace NetworkObservabilityCore
 			return xelement;
 		}
 
-		public XElement CreateAttributes<K, V>(IDictionary<K, V> attributes)
+		protected XElement CreateXElementIdGenerator()
+		{
+			XElement element = new XElement("IdGenerator", new XElement("NodeIdIndex", IdGenerator.nodeIdIndex.ToString()),
+														   new XElement("EdgeIdIndex", IdGenerator.edgeIdIndex.ToString()));
+
+			return element;
+		}
+
+		protected XElement CreateAttributes<K, V>(IDictionary<K, V> attributes)
 		{
 			XElement xelement = new XElement("Attributes");
 			foreach (var pair in attributes)
@@ -174,7 +184,7 @@ namespace NetworkObservabilityCore
 			return graph;
 		}
 
-		public IGraph Dump(XElement root)
+		protected virtual IGraph Dump(XElement root)
 		{
 			XElement dependencies = root.Element("Dependencies");
 			foreach (var dependency in dependencies.Elements())
@@ -198,14 +208,18 @@ namespace NetworkObservabilityCore
 
 			foreach (XElement xnode in xnodes)
 			{
-				LoadNodeToGraph(xnode, graph);
+				graph.Add(LoadNode(xnode));
 			}
 
 			IEnumerable<XElement> xedges = xgraph.Element("Edges").Elements();
 
 			foreach (XElement xedge in xedges)
 			{
-				LoadEdgeToGraph(xedge, graph);
+				var tuple = LoadEdge(xedge);
+				var from = graph.AllNodes[tuple.Item1];
+				var to = graph.AllNodes[tuple.Item2];
+				var edge = tuple.Item3;
+				graph.ConnectNodeToWith(from, to, edge);
 			}
 
 			SetIdsStartFrom(root);
@@ -213,15 +227,15 @@ namespace NetworkObservabilityCore
 			return graph;
 		}
 
-		public void SetIdsStartFrom(XElement root)
+		protected void SetIdsStartFrom(XElement root)
 		{
-			var xnode = root.Element("IndexGenerator");
+			var xnode = root.Element("IdGenerator");
 			IdGenerator.SetNodeIdStartFrom(Int32.Parse(xnode.Element("NodeIdIndex").Value));
 			IdGenerator.SetEdgeIdStartFrom(Int32.Parse(xnode.Element("EdgeIdIndex").Value));
 
 		}
 
-		public void LoadNodeToGraph(XElement xnode, IGraph graph)
+		protected virtual INode LoadNode(XElement xnode)
 		{
 			var nodeTypeName = xnode.Attribute("Type").Value;
 			Type nodeType = DependencyMap[nodeTypeName].GetType(nodeTypeName);
@@ -239,10 +253,10 @@ namespace NetworkObservabilityCore
 			node.ConnectTo = new List<IEdge>();
 			node.ConnectFrom = new List<IEdge>();
 
-			graph.Add(node);
+			return node;
 		}
 
-		public void LoadEdgeToGraph(XElement xedge, IGraph graph)
+		protected virtual Tuple<String, String, IEdge> LoadEdge(XElement xedge)
 		{
 			var edgeTypeName = xedge.Attribute("Type").Value;
 			Type edgeType = DependencyMap[edgeTypeName].GetType(edgeTypeName);
@@ -255,13 +269,13 @@ namespace NetworkObservabilityCore
 			edge.IsBlocked = Boolean.Parse(xedge.Element("IsBlocked").Value);
 			edge.Attributes = LoadAttributes(xedge.Element("Attributes"));
 
-			var from = graph.AllNodes[xedge.Element("From").Value];
-			var to = graph.AllNodes[xedge.Element("To").Value];
+			var from = xedge.Element("From").Value;
+			var to = xedge.Element("To").Value;
 
-			graph.ConnectNodeToWith(from, to, edge);
+			return Tuple.Create(from, to, edge);
 		}
 
-		public IDictionary<String, IComparable> LoadAttributes(XElement xelement)
+		protected IDictionary<String, IComparable> LoadAttributes(XElement xelement)
 		{
 			var attributes = new Dictionary<String, IComparable>();
 			

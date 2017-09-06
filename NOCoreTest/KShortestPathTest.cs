@@ -1,5 +1,6 @@
 ﻿using System;
 using NetworkObservabilityCore;
+using NetworkObservabilityCore.Algorithms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 

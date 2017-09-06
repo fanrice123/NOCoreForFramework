@@ -15,9 +15,5 @@ namespace NetworkObservabilityCore
 
 		bool Remove(IEdge edge);
 
-		Dictionary<Tuple<INode, INode>, double> ObserveConnectivityPercentage(ICollection<INode> observers);
-
-		Dictionary<Tuple<INode, INode, Route>, bool> ObserveConnectivity(ICollection<INode> observers);
-		
     }
 }

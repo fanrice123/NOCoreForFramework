@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetworkObservabilityCore;
+using NetworkObservabilityCore.Xml;
+using NetworkObservabilityCore.Utils;
 using System.Collections.Generic;
 using System.Xml.Linq;
 

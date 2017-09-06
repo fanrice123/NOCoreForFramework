@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetworkObservabilityCore
+namespace NetworkObservabilityCore.Utils
 {
 	/// <summary>
 	/// Every Class that implements INode or IEdge should always get their
@@ -15,12 +15,12 @@ namespace NetworkObservabilityCore
 		internal static int nodeIdIndex = 0;
 		internal static int edgeIdIndex = 0;
 
-		public static String GenerateNodeIndex()
+		public static String GenerateNodeId()
 		{
 			return String.Format("N{0:0000000}", nodeIdIndex++);
 		}
 
-		public static String GenerateEdgeIndex()
+		public static String GenerateEdgeId()
 		{
 			return String.Format("E{0:0000000}", edgeIdIndex++);
 		}

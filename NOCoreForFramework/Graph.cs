@@ -6,12 +6,9 @@ using System.Linq;
 
 namespace NetworkObservabilityCore
 {
-	using FromTo = Tuple<INode, INode>;
-	using FromToThrough = Tuple<INode, INode, Route>;
 
     public class Graph : IGraph 
     {
-
 
 		public Dictionary<String, INode> AllNodes
 		{
@@ -49,79 +46,7 @@ namespace NetworkObservabilityCore
 			edge.To = to;
 		}
 
-		public Dictionary<FromTo, double>
-		ObserveConnectivityPercentage(ICollection<INode> observers)
-		{
-			var result = new Dictionary<FromTo, double>();
-
-			foreach (var fromNode in AllNodes)
-			{
-				var from = fromNode.Value;
-				if (observers.Contains(from) && !from.IsObserverInclusive)
-					continue;
-
-				//KShortestPath shortestPath = new KShortestPath(this, from);
-				AllPaths shortestPath = new AllPaths(this, from);
-
-				foreach (var to in AllNodes.Values.Where(to => !to.Equals(from)))
-				{
-					var paths = shortestPath.PathsTo(to);
-					double observed = 0;
-					foreach (Route path in paths)
-					{
-						foreach (var observer in observers)
-						{
-							if (path.Contains(observer))
-							{
-								++observed;
-								break;
-							}
-						}
-
-						result[Tuple.Create(from, to)] = observed != 0 ? observed / paths.Count : 0;
-					}
-				}
-			}
-
-			return result;
-		}
-
-
-		public Dictionary<FromToThrough, bool>
-		ObserveConnectivity(ICollection<INode> observers)
-		{
-			var result = new Dictionary<FromToThrough, bool>();
-
-			foreach (var fromNode in AllNodes)
-			{
-				var from = fromNode.Value;
-				if (observers.Contains(from) && !from.IsObserverInclusive)
-					continue;
-
-				//KShortestPath shortestPath = new KShortestPath(this, from);
-				AllPaths shortestPath = new AllPaths(this, from);
-
-				foreach (var to in AllNodes.Values.Where(to => !to.Equals(from)))
-				{
-					var paths = shortestPath.PathsTo(to);
-					foreach (Route path in paths)
-					{
-						bool observed = false;
-						foreach (var observer in observers)
-						{
-							if (path.Contains(observer))
-							{
-								observed = true;
-								break;
-							}
-						}
-						result[new FromToThrough(from, to, path)] = observed;
-					}
-				}
-			}
-
-			return result;
-		}
+		
 
 		public void Add(INode item)
 		{

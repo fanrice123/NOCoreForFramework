@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using NetworkObservabilityCore.Utils;
 
 namespace NetworkObservabilityCore
 {
@@ -67,7 +68,7 @@ namespace NetworkObservabilityCore
 		#region Constructors
 		public Node()
 		{
-			Id = IdGenerator.GenerateNodeIndex();
+			Id = IdGenerator.GenerateNodeId();
 			Label = Id;
 			ConnectTo = new List<IEdge>();
 			ConnectFrom = new List<IEdge>();

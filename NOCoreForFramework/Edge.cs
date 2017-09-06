@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using NetworkObservabilityCore.Utils;
 
 namespace NetworkObservabilityCore
 {
@@ -60,7 +61,7 @@ namespace NetworkObservabilityCore
 
 		public Edge(int weight)
 		{
-			Id = IdGenerator.GenerateEdgeIndex();
+			Id = IdGenerator.GenerateEdgeId();
 			Label = Id;
 			Weight = weight;
 			IsBlocked = false;

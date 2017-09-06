@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetworkObservabilityCore;
+using NetworkObservabilityCore.Utils;
 
 namespace NOCoreTest
 {
@@ -64,7 +65,7 @@ namespace NOCoreTest
 
 		public TesteSubNode2()
 		{
-			Id = IdGenerator.GenerateNodeIndex();
+			Id = IdGenerator.GenerateNodeId();
 			Label = Id;
 			ConnectTo = new List<IEdge>();
 			ConnectFrom = new List<IEdge>();

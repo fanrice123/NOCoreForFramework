@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetworkObservabilityCore;
 using System.Collections.Generic;
-
+using NetworkObservabilityCore.Utils;
 
 namespace NOCoreTest
 {
@@ -32,14 +32,14 @@ namespace NOCoreTest
             graph.ConnectNodeToWith(A, D, new Edge(9));
             graph.ConnectNodeToWith(D, E, new Edge(7));
             B.IsObserver = true;
-            /*
+			/*
 			graph.ConnectNodeToWith(B, C, new Edge()(1));
 			graph.ConnectNodeToWith(C, D, new Edge()(3));
 			graph.ConnectNodeToWith(D, C, new Edge()(2));
 			graph.ConnectNodeToWith(E, C, new Edge()(1));
 			*/
 
-            var result = graph.ObserveConnectivity(new List<INode>() { B });
+			var result = new ConnectivityObserver().ObserveConnectivity(graph, new List<INode>() { B });
 
 			var routes = new HashSet<Route>();
 			foreach (var key in result.Keys)
