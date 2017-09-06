@@ -10,10 +10,13 @@ namespace NetworkObservabilityCore
 	public interface IGraph : ICollection<INode>
 	{
 		/// <summary>
-		/// This property is a collection of <see cref="INode"/> of **IGraph**
+		/// This property is a collection of <see cref="INode"/> of **Graph**
 		/// </summary>
 		Dictionary<String, INode> AllNodes { get; }
 
+		/// <summary>
+		/// This property is a collection of <see cref="IEdge"/> of **Graph**
+		/// </summary>
 		Dictionary<String, IEdge> AllEdges { get; }
 
 		/// <summary>
@@ -25,7 +28,7 @@ namespace NetworkObservabilityCore
 		void ConnectNodeToWith(INode from, INode to, IEdge edge);
 
 		/// <summary>
-		/// This methods removes an edge from **IGraph**.
+		/// This methods removes an edge from **Graph**.
 		/// </summary>
 		/// <param name="edge"></param>
 		/// <returns></returns>

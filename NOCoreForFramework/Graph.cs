@@ -10,12 +10,14 @@ namespace NetworkObservabilityCore
     public class Graph : IGraph 
     {
 
+		/// <inheritdoc />
 		public Dictionary<String, INode> AllNodes
 		{
 			get;
 			internal set;
 		}
 
+		/// <inheritdoc />
 		public Dictionary<String, IEdge> AllEdges
 		{
 			get;
@@ -24,7 +26,7 @@ namespace NetworkObservabilityCore
 
 		public int Count => AllNodes.Count;
 
-		public bool IsReadOnly => throw new NotImplementedException();
+		public bool IsReadOnly => false;
 
 		public Graph()
 		{
@@ -45,8 +47,6 @@ namespace NetworkObservabilityCore
 			edge.From = from;
 			edge.To = to;
 		}
-
-		
 
 		public void Add(INode item)
 		{
