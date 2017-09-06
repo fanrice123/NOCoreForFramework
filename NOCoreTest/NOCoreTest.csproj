@@ -61,6 +61,7 @@
     <Compile Include="PriorityQueueTest.cs" />
     <Compile Include="TestEdgeClass.cs" />
     <Compile Include="TestNodeClass.cs" />
+    <Compile Include="TestForRouteClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NOCoreForFramework\NOCoreForFramework.csproj">
