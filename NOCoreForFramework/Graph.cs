@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 
 namespace NetworkObservabilityCore
 {
 
-    public class Graph : IGraph 
+	/// <summary>
+	/// **Graph** is an [ADT](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)
+	/// This **Graph** is implemented using [adjacency list](https://en.wikipedia.org/wiki/Adjacency_list)
+	/// representation.
+	/// </summary>
+	public class Graph : IGraph
     {
 
 		#region PrivateFields
@@ -59,6 +61,7 @@ namespace NetworkObservabilityCore
 		public IEnumerable<IEdge> EdgeEnumerable => allEdges.Values;
 		#endregion
 
+		#region Methods
 		/// <summary>
 		/// By calling this method, a node is being added into **Graph**.
 		/// </summary>
@@ -152,6 +155,6 @@ namespace NetworkObservabilityCore
 				return false;
 			}
 		}
-
+		#endregion
 	}
 }
