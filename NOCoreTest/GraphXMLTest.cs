@@ -12,7 +12,7 @@ namespace NOCoreTest
 	public class GraphXMLTest
 	{
 		GraphXML writer;
-		Graph graph;
+		IGraph graph;
 		String emptyGraphPath;
 		String graph1NodePath;
 		String graph1Path;
@@ -65,11 +65,11 @@ namespace NOCoreTest
 			var C = new Node() { Label = "C" };
 			var D = new Node() { Label = "D" };
 			var E = new Node() { Label = "E" };
-			graph.AddNode(A);
-			graph.AddNode(B);
-			graph.AddNode(C);
-			graph.AddNode(D);
-			graph.AddNode(E);
+			graph.Add(A);
+			graph.Add(B);
+			graph.Add(C);
+			graph.Add(D);
+			graph.Add(E);
 
 			graph.ConnectNodeToWith(A, B, new Edge(8));
 			graph.ConnectNodeToWith(A, D, new Edge(9));
@@ -98,15 +98,15 @@ namespace NOCoreTest
 			var six = new Node() { Label = "6" };
 			var seven = new Node() { Label = "7" };
 			var eight = new Node() { Label = "8" };
-			graph.AddNode(zero);
-			graph.AddNode(one);
-			graph.AddNode(two);
-			graph.AddNode(three);
-			graph.AddNode(four);
-			graph.AddNode(five);
-			graph.AddNode(six);
-			graph.AddNode(seven);
-			graph.AddNode(eight);
+			graph.Add(zero);
+			graph.Add(one);
+			graph.Add(two);
+			graph.Add(three);
+			graph.Add(four);
+			graph.Add(five);
+			graph.Add(six);
+			graph.Add(seven);
+			graph.Add(eight);
 
 			graph.ConnectNodeToWith(zero, one, new Edge(4));
 			graph.ConnectNodeToWith(one, zero, new Edge(4));
@@ -151,11 +151,11 @@ namespace NOCoreTest
 			var C = new Node() { Label = "C" };
 			var D = new TestSubNode() { Label = "D" };
 			var E = new TesteSubNode2() { Label = "E" };
-			graph.AddNode(A);
-			graph.AddNode(B);
-			graph.AddNode(C);
-			graph.AddNode(D);
-			graph.AddNode(E);
+			graph.Add(A);
+			graph.Add(B);
+			graph.Add(C);
+			graph.Add(D);
+			graph.Add(E);
 
 			graph.ConnectNodeToWith(A, B, new Edge(8));
 			graph.ConnectNodeToWith(A, D, new TestSubEdge(9));
@@ -305,11 +305,11 @@ namespace NOCoreTest
 			C["time"] = "NOthing";
 			A["3"] = 0.99;
 
-			graph.AddNode(A);
-			graph.AddNode(B);
-			graph.AddNode(C);
-			graph.AddNode(D);
-			graph.AddNode(E);
+			graph.Add(A);
+			graph.Add(B);
+			graph.Add(C);
+			graph.Add(D);
+			graph.Add(E);
 
 			graph.ConnectNodeToWith(A, B, new Edge(8));
 			graph.ConnectNodeToWith(A, D, new TestSubEdge(9));

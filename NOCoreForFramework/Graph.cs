@@ -10,87 +10,127 @@ namespace NetworkObservabilityCore
     public class Graph : IGraph 
     {
 
-		/// <inheritdoc />
-		public Dictionary<String, INode> AllNodes
-		{
-			get;
-			internal set;
-		}
+		#region PrivateFields
+		/// <summary>
+		/// The field of AllNodes.
+		/// See <see cref="AllNodes"/>
+		/// </summary>
+		protected internal Dictionary<String, INode> allNodes;
 
-		/// <inheritdoc />
-		public Dictionary<String, IEdge> AllEdges
-		{
-			get;
-			internal set;
-		}
+		/// <summary>
+		/// The field of AllEdges.
+		/// See <see cref="AllEdges"/>
+		/// </summary>
+		protected internal Dictionary<String, IEdge> allEdges;
+		#endregion
 
-		public int Count => AllNodes.Count;
+		#region Constructors
 
-		public bool IsReadOnly => false;
-
+		/// <summary>
+		/// The constructor of **Graph**.
+		/// <see cref="AllNodes"/> and <see cref="AllEdges"/> will be initialised
+		/// when this constructor being called.
+		/// are initialised.
+		/// </summary>
 		public Graph()
 		{
-			AllNodes = new Dictionary<string, INode>();
-			AllEdges = new Dictionary<string, IEdge>();
+			allNodes = new Dictionary<string, INode>();
+			allEdges = new Dictionary<string, IEdge>();
 		}
+		#endregion
 
-		public void AddNode(INode node)
+		#region Properties
+		/// <inheritdoc />
+		public IReadOnlyDictionary<String, INode> AllNodes => allNodes;
+
+		/// <inheritdoc />
+		public IReadOnlyDictionary<String, IEdge> AllEdges => allEdges;
+
+		/// <inheritdoc />
+		public int NodeCount => allNodes.Count;
+
+		/// <inheritdoc />
+		public int EdgeCount => allNodes.Count;
+
+		/// <inheritdoc />
+		public IEnumerable<INode> NodeEnumerable => allNodes.Values;
+
+		/// <inheritdoc />
+		public IEnumerable<IEdge> EdgeEnumerable => allEdges.Values;
+		#endregion
+
+		/// <summary>
+		/// By calling this method, a node is being added into **Graph**.
+		/// </summary>
+		/// <param name="node"></param>
+		/// <exception cref="InvalidOperationException">
+		/// Thrown when node is added already added into **Graph**.
+		/// </exception>
+		/// <exception cref="ArgumentNullException">
+		/// Thrown when argument is null value.</exception>
+		public void Add(INode node)
 		{
-			Add(node);
+			if (node == null)
+				throw new ArgumentNullException();
+			if (allNodes.ContainsKey(node.Id))
+				throw new InvalidOperationException("Item already existed in Graph.");
+			allNodes[node.Id] = node;
 		}
 
+		/// <summary>
+		/// This method connects 2 nodes with a directed edge.
+		/// </summary>
+		/// <param name="from">A node where a directed edge starts from.</param>
+		/// <param name="to">A node where a directed edge connects to.</param>
+		/// <param name="edge">A directed edges connects up <paramref name="from"/> and <paramref name="to"/></param>
+		/// <exception cref="ArgumentNullException">Thrown if one of arguments is null</exception>
+		/// <exception cref="InvalidOperationException">Thrown if :
+		///		* **from** or **to** Node does not exist in graph.
+		///		* The **edge** found in **Graph**.
+		/// </exception>
 		public void ConnectNodeToWith(INode from, INode to, IEdge edge)
 		{
-			AllEdges[edge.Id] = edge;
+			if (from == null || to == null || edge == null)
+				throw new ArgumentNullException();
+			if (!Contains(from) || !Contains(to) || Contains(edge))
+				throw new InvalidOperationException("Node does not belong to Graph.");
+			allEdges[edge.Id] = edge;
 			from.ConnectTo.Add(edge);
 			to.ConnectFrom.Add(edge);
 			edge.From = from;
 			edge.To = to;
 		}
 
-		public void Add(INode item)
+		/// <inheritdoc />
+		public bool Contains(INode node)
 		{
-			if (AllNodes.ContainsKey(item.Id))
-				throw new InvalidOperationException("Item already existed in Graph.");
-			AllNodes[item.Id] = item;
+			return allNodes.ContainsKey(node.Id);
 		}
 
+		/// <inheritdoc />
+		public bool Contains(IEdge edge)
+		{
+			return allEdges.ContainsKey(edge.Id);
+		}
+
+
+		/// <inheritdoc />
 		public void Clear()
 		{
-			AllNodes.Clear();
-			AllEdges.Clear();
+			allNodes.Clear();
+			allEdges.Clear();
 		}
 
-		public void CopyTo(INode[] array, int arrayIndex)
-		{
-			throw new NotImplementedException();
-		}
-
-		public bool Remove(IEdge edge)
-		{
-			if (AllEdges.ContainsKey(edge.Id))
-			{
-				edge.From.ConnectTo.Remove(edge);
-				edge.To.ConnectFrom.Remove(edge);
-				AllEdges.Remove(edge.Id);
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
+		/// <inheritdoc />
 		public bool Remove(INode item)
 		{
-			if (AllNodes.ContainsKey(item.Id))
+			if (allNodes.ContainsKey(item.Id))
 			{
 				item.ConnectFrom.ForEach(edge => edge.From.ConnectTo.Remove(edge));
 				item.ConnectTo.ForEach(edge => edge.To.ConnectFrom.Remove(edge));
 				item.ConnectFrom.Clear();
 				item.ConnectTo.Clear();
-				AllNodes.Remove(item.Id);
-				return true;
+				return allNodes.Remove(item.Id);
 			}
 			else
 			{
@@ -98,19 +138,19 @@ namespace NetworkObservabilityCore
 			}
 		}
 
-		public IEnumerator<INode> GetEnumerator()
+		/// <inheritdoc />
+		public bool Remove(IEdge edge)
 		{
-			return AllNodes.Values.GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return AllNodes.GetEnumerator();
-		}
-
-		public bool Contains(INode item)
-		{
-			return AllNodes.ContainsKey(item.Id);
+			if (allEdges.ContainsKey(edge.Id))
+			{
+				edge.From.ConnectTo.Remove(edge);
+				edge.To.ConnectFrom.Remove(edge);
+				return allEdges.Remove(edge.Id);
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 	}
