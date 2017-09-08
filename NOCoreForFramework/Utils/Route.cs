@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 
-namespace NetworkObservabilityCore
+namespace NetworkObservabilityCore.Utils
 {
     public class Route : IEnumerable<INode>, IComparable<Route>, IEquatable<Route>
     {
