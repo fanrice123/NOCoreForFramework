@@ -250,8 +250,8 @@ namespace NetworkObservabilityCore.Xml
 			node.Label = xnode.Element("Label").Value;
 			node.IsBlocked = Boolean.Parse(xnode.Element("IsBlocked").Value);
 			node.Attributes = LoadAttributes(xnode.Element("Attributes"));
-			node.ConnectTo = new List<IEdge>();
-			node.ConnectFrom = new List<IEdge>();
+			node.ConnectOut = new List<IEdge>();
+			node.ConnectIn = new List<IEdge>();
 
 			return node;
 		}

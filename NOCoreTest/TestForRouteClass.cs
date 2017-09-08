@@ -37,24 +37,24 @@ namespace NOCoreTest
             dToE = new Edge();
             dToE.Weight = 1;
 
-            a.ConnectTo.Add(aToB);
-            b.ConnectFrom.Add(aToB);
+            a.ConnectOut.Add(aToB);
+            b.ConnectIn.Add(aToB);
             aToB.From = a;
             aToB.To = b;
 
-            b.ConnectTo.Add(bToC);
-            c.ConnectFrom.Add(bToC);
+            b.ConnectOut.Add(bToC);
+            c.ConnectIn.Add(bToC);
             bToC.From = b;
             bToC.To = c;
 
 
-            c.ConnectTo.Add(cToD);
-            d.ConnectFrom.Add(cToD);
+            c.ConnectOut.Add(cToD);
+            d.ConnectIn.Add(cToD);
             cToD.From = c;
             cToD.To = d;
 
-            d.ConnectTo.Add(dToE);
-            e.ConnectFrom.Add(dToE);
+            d.ConnectOut.Add(dToE);
+            e.ConnectIn.Add(dToE);
             dToE.From = d;
             dToE.To = e;
         }

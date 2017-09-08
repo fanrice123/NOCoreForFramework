@@ -5,7 +5,8 @@ namespace NetworkObservabilityCore
 {
 
 	/// <summary>
-	/// An arbitrary Graph type should always implement this interface.
+	/// An arbitrary Graph type should always implement this interface to work with
+	/// <see cref="INode"/> and <see cref="IEdge"/>
 	/// </summary>
 	public interface IGraph
 	{

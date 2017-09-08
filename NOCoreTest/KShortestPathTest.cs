@@ -19,11 +19,11 @@ namespace NOCoreTest
 			var C = new Node() { Label = "C" };
 			var D = new Node() { Label = "D" };
 			var E = new Node() { Label = "E" };
-			graph.AddNode(A);
-			graph.AddNode(B);
-			graph.AddNode(C);
-			graph.AddNode(D);
-			graph.AddNode(E);
+			graph.Add(A);
+			graph.Add(B);
+			graph.Add(C);
+			graph.Add(D);
+			graph.Add(E);
 
 			graph.ConnectNodeToWith(A, B, new Edge(4));
 			graph.ConnectNodeToWith(B, E, new Edge(5));
@@ -54,11 +54,11 @@ namespace NOCoreTest
 			var C = new Node() { Label = "C" };
 			var D = new Node() { Label = "D" };
 			var E = new Node() { Label = "E" };
-			graph.AddNode(A);
-			graph.AddNode(B);
-			graph.AddNode(C);
-			graph.AddNode(D);
-			graph.AddNode(E);
+			graph.Add(A);
+			graph.Add(B);
+			graph.Add(C);
+			graph.Add(D);
+			graph.Add(E);
 
 			graph.ConnectNodeToWith(A, B, new Edge(4));
 			graph.ConnectNodeToWith(B, E, new Edge(5));
@@ -92,14 +92,14 @@ namespace NOCoreTest
 			var F = new Node() { Label = "F" };
 			var G = new Node() { Label = "G" };
 			var H = new Node() { Label = "H" };
-			graph.AddNode(H);
-			graph.AddNode(A);
-			graph.AddNode(B);
-			graph.AddNode(C);
-			graph.AddNode(D);
-			graph.AddNode(E);
-			graph.AddNode(F);
-			graph.AddNode(G);
+			graph.Add(H);
+			graph.Add(A);
+			graph.Add(B);
+			graph.Add(C);
+			graph.Add(D);
+			graph.Add(E);
+			graph.Add(F);
+			graph.Add(G);
 
 			graph.ConnectNodeToWith(A, H, new Edge());
 			graph.ConnectNodeToWith(H, F, new Edge());
@@ -129,13 +129,13 @@ namespace NOCoreTest
 			var E = new Node() { Label = "E" };
 			var F = new Node() { Label = "F" };
 			var G = new Node() { Label = "G" };
-			graph.AddNode(A);
-			graph.AddNode(B);
-			graph.AddNode(C);
-			graph.AddNode(D);
-			graph.AddNode(E);
-			graph.AddNode(F);
-			graph.AddNode(G);
+			graph.Add(A);
+			graph.Add(B);
+			graph.Add(C);
+			graph.Add(D);
+			graph.Add(E);
+			graph.Add(F);
+			graph.Add(G);
 
 			graph.ConnectNodeToWith(A, B, new Edge());
 			graph.ConnectNodeToWith(B, D, new Edge());
@@ -165,13 +165,13 @@ namespace NOCoreTest
 			var E = new Node() { Label = "E" };
 			var F = new Node() { Label = "F" };
 			var G = new Node() { Label = "G" };
-			graph.AddNode(A);
-			graph.AddNode(B);
-			graph.AddNode(C);
-			graph.AddNode(D);
-			graph.AddNode(E);
-			graph.AddNode(F);
-			graph.AddNode(G);
+			graph.Add(A);
+			graph.Add(B);
+			graph.Add(C);
+			graph.Add(D);
+			graph.Add(E);
+			graph.Add(F);
+			graph.Add(G);
 
 			graph.ConnectNodeToWith(A, B, new Edge(4));
 			graph.ConnectNodeToWith(B, D, new Edge(5));

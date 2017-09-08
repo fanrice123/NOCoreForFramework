@@ -22,13 +22,13 @@ namespace NOCoreTest
 			set;
 		}
 
-		public List<IEdge> ConnectTo
+		public List<IEdge> ConnectOut
 		{
 			get;
 			set;
 		}
 
-		public List<IEdge> ConnectFrom
+		public List<IEdge> ConnectIn
 		{
 			get;
 			set;
@@ -67,8 +67,8 @@ namespace NOCoreTest
 		{
 			Id = IdGenerator.GenerateNodeId();
 			Label = Id;
-			ConnectTo = new List<IEdge>();
-			ConnectFrom = new List<IEdge>();
+			ConnectOut = new List<IEdge>();
+			ConnectIn = new List<IEdge>();
 			IsObserver = IsObserverInclusive = false;
 			Attributes = new Dictionary<string, IComparable>();
 		}

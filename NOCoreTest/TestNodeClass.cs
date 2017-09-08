@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetworkObservabilityCore;
 
 namespace NOCoreTest
 {
@@ -9,7 +10,11 @@ namespace NOCoreTest
         [TestMethod]
         public void TestMethod1()
         {
-            //TO DO:
+			var node1 = new Node();
+
+			var node2 = new Node();
+
+			Assert.IsFalse(node1.Equals(node2));
         }
     }
 }

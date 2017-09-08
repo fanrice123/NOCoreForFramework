@@ -20,7 +20,7 @@ namespace NetworkObservabilityCore.Algorithms
             allPaths = new Dictionary<INode, List<Route>>();
             kShortest = new Dictionary<INode, List<Route>>();
 
-            foreach (var node in graph)
+            foreach (var node in graph.NodeEnumerable)
             {
                 KShortestPath kShortest = new KShortestPath(graph, node);
                 allShortestPaths.Add(kShortest);
@@ -30,7 +30,7 @@ namespace NetworkObservabilityCore.Algorithms
             }
 
             // Append all possible paths 
-            foreach (var node in graph)
+            foreach (var node in graph.NodeEnumerable)
             {
                 // Find all the posible paths and store them
                 foreach (var tempAllPaths in allPossiblePaths)

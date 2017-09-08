@@ -174,21 +174,21 @@ namespace NOCoreTest
 		public void TestReadGraphWithUnknownNode()
 		{
 			graph = writer.Read(graphExoticNodePath) as Graph;
-			Assert.AreEqual(5, graph.Count);
+			Assert.AreEqual(5, graph.NodeCount);
 		}
 
 		[TestMethod]
 		public void TestReadEmptyGraph()
 		{
 			graph = writer.Read(emptyGraphPath) as Graph;
-			Assert.AreEqual(graph.Count, 0);
+			Assert.AreEqual(graph.NodeCount, 0);
 		}
 
 		[TestMethod]
 		public void TestReadGraphWithOneNode()
 		{
 			graph = writer.Read(graph1NodePath) as Graph;
-			Assert.AreEqual(1, graph.Count);
+			Assert.AreEqual(1, graph.NodeCount);
 			var fakeNode = new Node();
 			Assert.AreEqual(1, ParseId(fakeNode.Id));
 			var fakeEdge = new Edge();
@@ -199,7 +199,7 @@ namespace NOCoreTest
 		public void TestReadNormalSizeGraph1()
 		{
 			graph = writer.Read(graph1Path) as Graph;
-			Assert.AreEqual(5, graph.Count);
+			Assert.AreEqual(5, graph.NodeCount);
 			var fakeNode = new Node();
 			var fakeEdge = new Edge();
 			Assert.AreEqual(5, ParseId(fakeNode.Id));
@@ -211,7 +211,7 @@ namespace NOCoreTest
 		public void TestReadNormalSizeGraph2()
 		{
 			graph = writer.Read(graph2Path) as Graph;
-			Assert.AreEqual(9, graph.Count);
+			Assert.AreEqual(9, graph.NodeCount);
 			var fakeNode = new Node();
 			var fakeEdge = new Edge();
 			Assert.AreEqual(9, ParseId(fakeNode.Id));
@@ -230,8 +230,8 @@ namespace NOCoreTest
 				nodes.Add(node);
 				graph.Add(node);
 			}
-			Assert.AreEqual(nodes.Count, graph.Count);
-			Assert.AreEqual(50000, graph.Count);
+			Assert.AreEqual(nodes.Count, graph.NodeCount);
+			Assert.AreEqual(50000, graph.NodeCount);
 
 			Random random = new Random();
 
@@ -260,8 +260,8 @@ namespace NOCoreTest
 				nodes.Add(node);
 				graph.Add(node);
 			}
-			Assert.AreEqual(nodes.Count, graph.Count);
-			Assert.AreEqual(1000, graph.Count);
+			Assert.AreEqual(nodes.Count, graph.NodeCount);
+			Assert.AreEqual(1000, graph.NodeCount);
 
 			Random random = new Random();
 

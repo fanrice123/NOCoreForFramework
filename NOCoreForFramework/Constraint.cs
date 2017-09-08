@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace NetworkObservabilityCore
 {
-	public class Constraint<CType> : IEnumerable<ICriterion> where CType : IConstrainable
+	public class Constraint<T> : IEnumerable<ICriterion> where T : IConstrainable
 	{
 
 		#region Properties
-		public static Constraint<CType> Default => new Constraint<CType>();
+		public static Constraint<T> Default => new Constraint<T>();
 
 		public ISet<ICriterion> Criteria { get; private set; }
 		#endregion
@@ -28,7 +28,7 @@ namespace NetworkObservabilityCore
 		}
 		#endregion
 
-		public bool Validate(CType constrainable)
+		public bool Validate(T constrainable)
 		{
 			foreach (var criterion in Criteria)
 			{

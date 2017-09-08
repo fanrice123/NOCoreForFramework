@@ -57,8 +57,10 @@ namespace NetworkObservabilityCore
 			return PathCost.CompareTo(other.PathCost);
 		}
 
-		bool IEquatable<Route>.Equals(Route other)
+		public bool Equals(Route other)
 		{
+			if (nodeSequence.Count != other.nodeSequence.Count)
+				return false;
 			var flagPairs = other.Zip(this, (lhs, rhs) => lhs.Equals(rhs));
 
 			foreach (var flag in flagPairs)

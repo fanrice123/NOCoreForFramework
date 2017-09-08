@@ -94,7 +94,7 @@ namespace NetworkObservabilityCore.Algorithms
 			var currentPath = currentState.CurrentRoute;
 			LinkedList<State> states = new LinkedList<State>();
 
-			foreach (var edge in currentState.CurrentNode.ConnectTo)
+			foreach (var edge in currentState.CurrentNode.ConnectOut)
 			{
 				if (cEdge.Validate(edge) && cNode.Validate(edge.To))
 				{

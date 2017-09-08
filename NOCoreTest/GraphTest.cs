@@ -19,11 +19,11 @@ namespace NOCoreTest
             var C = new Node() { Label = "C" };
             var D = new Node() { Label = "D" };
             var E = new Node() { Label = "E" };
-            graph.AddNode(A);
-            graph.AddNode(B);
-            graph.AddNode(C);
-            graph.AddNode(D);
-            graph.AddNode(E);
+            graph.Add(A);
+            graph.Add(B);
+            graph.Add(C);
+            graph.Add(D);
+            graph.Add(E);
 
             graph.ConnectNodeToWith(A, B, new Edge(4));
             graph.ConnectNodeToWith(B, E, new Edge(5));

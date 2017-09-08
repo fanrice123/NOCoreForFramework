@@ -5,9 +5,11 @@ namespace NetworkObservabilityCore
 {
 
 	/// <summary>
-	/// **Graph** is an [ADT](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)
+	/// **Graph** is an [**ADT**](https://en.wikipedia.org/wiki/Graph_(abstract_data_type))
 	/// This **Graph** is implemented using [adjacency list](https://en.wikipedia.org/wiki/Adjacency_list)
-	/// representation.
+	/// representation. this ADT contains vertex and arc.
+	/// See also vertex representation <see cref="INode"/> and
+	/// arc representation <see cref="IEdge"/>.
 	/// </summary>
 	public class Graph : IGraph
     {
@@ -98,8 +100,8 @@ namespace NetworkObservabilityCore
 			if (!Contains(from) || !Contains(to) || Contains(edge))
 				throw new InvalidOperationException("Node does not belong to Graph.");
 			allEdges[edge.Id] = edge;
-			from.ConnectTo.Add(edge);
-			to.ConnectFrom.Add(edge);
+			from.ConnectOut.Add(edge);
+			to.ConnectIn.Add(edge);
 			edge.From = from;
 			edge.To = to;
 		}
@@ -129,10 +131,10 @@ namespace NetworkObservabilityCore
 		{
 			if (allNodes.ContainsKey(item.Id))
 			{
-				item.ConnectFrom.ForEach(edge => edge.From.ConnectTo.Remove(edge));
-				item.ConnectTo.ForEach(edge => edge.To.ConnectFrom.Remove(edge));
-				item.ConnectFrom.Clear();
-				item.ConnectTo.Clear();
+				item.ConnectIn.ForEach(edge => edge.From.ConnectOut.Remove(edge));
+				item.ConnectOut.ForEach(edge => edge.To.ConnectIn.Remove(edge));
+				item.ConnectIn.Clear();
+				item.ConnectOut.Clear();
 				return allNodes.Remove(item.Id);
 			}
 			else
@@ -146,8 +148,8 @@ namespace NetworkObservabilityCore
 		{
 			if (allEdges.ContainsKey(edge.Id))
 			{
-				edge.From.ConnectTo.Remove(edge);
-				edge.To.ConnectFrom.Remove(edge);
+				edge.From.ConnectOut.Remove(edge);
+				edge.To.ConnectIn.Remove(edge);
 				return allEdges.Remove(edge.Id);
 			}
 			else
