@@ -63,14 +63,14 @@ namespace NOCoreTest
         [TestMethod]
         public void TestPathCost()
         {
-            Route myRoute = new Route(a);
+            Route myRoute = new Route(a, "Weight");
             Assert.AreEqual(0, myRoute.PathCost);
         }
 
         [TestMethod]
         public void testIfContainsObserver()
         {
-            Route myRoute = new Route(a);
+            Route myRoute = new Route(a, "Weight");
             myRoute.Add(aToB);
             myRoute.Add(bToC);
             myRoute.Add(cToD);

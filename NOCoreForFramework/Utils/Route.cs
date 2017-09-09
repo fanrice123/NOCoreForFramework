@@ -10,24 +10,27 @@ namespace NetworkObservabilityCore.Utils
     public class Route : IEnumerable<INode>, IComparable<Route>, IEquatable<Route>
     {
         private LinkedList<INode> nodeSequence;
+		private String edgeKeyAttr;
 
-        public Route(INode src)
+        public Route(INode src, String edgeAttr)
         {
             nodeSequence = new LinkedList<INode>();
 			nodeSequence.AddLast(src);
+			edgeKeyAttr = edgeAttr;
             PathCost = 0;
         }
 		
 		private Route(Route path)
         {
 			nodeSequence = new LinkedList<INode>(path.nodeSequence);
+			edgeKeyAttr = path.edgeKeyAttr;
 			PathCost = path.PathCost;
         }
 
         public void Add(IEdge edge)
         {
             nodeSequence.AddLast(edge.To);
-            PathCost += edge.Weight;
+            PathCost += Convert.ToDouble(edge[edgeKeyAttr]);
         }
 
         public bool ContainsObserver()

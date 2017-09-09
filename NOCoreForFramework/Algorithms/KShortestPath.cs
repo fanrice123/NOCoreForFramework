@@ -10,28 +10,30 @@ namespace NetworkObservabilityCore.Algorithms
 	public class KShortestPath
 	{
 		private Dictionary<INode, List<Route>> pathsDict;
+		private String edgeKeyAttr;
 
-		public KShortestPath(IGraph graph, INode src)
-			: this(graph, src, Constraint<INode>.Default, Constraint<IEdge>.Default)
+		public KShortestPath(IGraph graph, INode src, String edgeAttr)
+			: this(graph, src, edgeAttr, Constraint<INode>.Default, Constraint<IEdge>.Default)
 		{
 		}
 
-		public KShortestPath(IGraph graph, INode src, Constraint<INode> cNode)
-			: this(graph, src, cNode, Constraint<IEdge>.Default)
+		public KShortestPath(IGraph graph, INode src, String edgeAttr, Constraint<INode> cNode)
+			: this(graph, src, edgeAttr, cNode, Constraint<IEdge>.Default)
 		{
 		}
 
-		public KShortestPath(IGraph graph, INode src, Constraint<IEdge> cEdge)
-			: this(graph, src, Constraint<INode>.Default, cEdge)
+		public KShortestPath(IGraph graph, INode src, String edgeAttr, Constraint<IEdge> cEdge)
+			: this(graph, src, edgeAttr, Constraint<INode>.Default, cEdge)
 		{
 		}
 
-		public KShortestPath(IGraph graph, INode src, Constraint<INode> cNode, Constraint<IEdge> cEdge)
+		public KShortestPath(IGraph graph, INode src, String edgeAttr, Constraint<INode> cNode, Constraint<IEdge> cEdge)
 		{
 			pathsDict = new Dictionary<INode, List<Route>>();
+			edgeKeyAttr = edgeAttr;
 			Queue<State> queue = new Queue<State>();
 
-			var srcPath = new Route(src);
+			var srcPath = new Route(src, edgeAttr);
 			var srcPaths = new List<Route>() { srcPath };
 
 			pathsDict[src] = srcPaths;

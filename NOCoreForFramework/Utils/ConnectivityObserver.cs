@@ -14,7 +14,7 @@ namespace NetworkObservabilityCore.Utils
 	public class ConnectivityObserver
 	{
 		public Dictionary<FromTo, double>
-		ObserveConnectivityPercentage(IGraph graph, ICollection<INode> observers)
+		ObserveConnectivityPercentage(IGraph graph, ICollection<INode> observers, String edgeAttr)
 		{
 			var result = new Dictionary<FromTo, double>();
 
@@ -25,7 +25,7 @@ namespace NetworkObservabilityCore.Utils
 					continue;
 
 				//KShortestPath shortestPath = new KShortestPath(this, from);
-				AllPaths shortestPath = new AllPaths(graph, from);
+				AllPaths shortestPath = new AllPaths(graph, from, edgeAttr);
 
 				foreach (var to in graph.AllNodes.Values.Where(to => !to.Equals(from)))
 				{
@@ -52,7 +52,7 @@ namespace NetworkObservabilityCore.Utils
 
 
 		public Dictionary<FromToThrough, bool>
-		ObserveConnectivity(IGraph graph, ICollection<INode> observers)
+		ObserveConnectivity(IGraph graph, ICollection<INode> observers, String edgeAttr)
 		{
 			var result = new Dictionary<FromToThrough, bool>();
 
@@ -63,7 +63,7 @@ namespace NetworkObservabilityCore.Utils
 					continue;
 
 				//KShortestPath shortestPath = new KShortestPath(this, from);
-				AllPaths shortestPath = new AllPaths(graph, from);
+				AllPaths shortestPath = new AllPaths(graph, from, edgeAttr);
 
 				foreach (var to in graph.AllNodes.Values.Where(to => !to.Equals(from)))
 				{

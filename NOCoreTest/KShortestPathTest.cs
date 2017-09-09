@@ -40,7 +40,7 @@ namespace NOCoreTest
 			graph.ConnectNodeToWith(E, C, new Edge()(1));
 			*/
 
-			KShortestPath ksp = new KShortestPath(graph, A);
+			KShortestPath ksp = new KShortestPath(graph, A, "Weight");
 
 			Assert.AreEqual(2, ksp.PathsTo(E).Count);
 		}
@@ -75,7 +75,7 @@ namespace NOCoreTest
 			graph.ConnectNodeToWith(E, C, new Edge()(1));
 			*/
 
-			KShortestPath ksp = new KShortestPath(graph, A);
+			KShortestPath ksp = new KShortestPath(graph, A, "Weight");
 
 			Assert.AreEqual(1, ksp.PathsTo(E).Count);
 		}
@@ -113,7 +113,7 @@ namespace NOCoreTest
 			graph.ConnectNodeToWith(D, G, new Edge());
 			graph.ConnectNodeToWith(G, F, new Edge());
 
-			KShortestPath ksp = new KShortestPath(graph, A);
+			KShortestPath ksp = new KShortestPath(graph, A, "Weight");
 
 			Assert.AreEqual(1, ksp.PathsTo(F).Count);
 		}
@@ -147,7 +147,7 @@ namespace NOCoreTest
 			graph.ConnectNodeToWith(D, G, new Edge());
 			graph.ConnectNodeToWith(G, F, new Edge());
 
-			KShortestPath ksp = new KShortestPath(graph, A);
+			KShortestPath ksp = new KShortestPath(graph, A, "Weight");
 
 			Assert.AreEqual(4, ksp.PathsTo(F).Count);
 			Assert.AreEqual(2, ksp.PathsTo(D).Count);
@@ -183,7 +183,7 @@ namespace NOCoreTest
 			graph.ConnectNodeToWith(F, G, new Edge());
 			graph.ConnectNodeToWith(G, D, new Edge());
 
-			KShortestPath ksp = new KShortestPath(graph, A);
+			KShortestPath ksp = new KShortestPath(graph, A, "Weight");
 
 			Assert.AreEqual(1, ksp.PathsTo(D).Count);
 		}

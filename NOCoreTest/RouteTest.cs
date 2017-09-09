@@ -30,8 +30,8 @@ namespace NOCoreTest
 				};
 				graph.Add(nodes[i]);
 			}
-			route1 = new Route(src);
-			route2 = new Route(src);
+			route1 = new Route(src, "Weight");
+			route2 = new Route(src, "Weight");
 		}
 
 		[TestMethod]

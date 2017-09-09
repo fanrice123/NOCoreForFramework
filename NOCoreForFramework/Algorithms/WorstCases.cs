@@ -13,7 +13,7 @@ namespace NetworkObservabilityCore.Algorithms
         private Dictionary<INode, List<Route>> kShortest;
         private Dictionary<INode, List<Route>> allPaths;
 
-        public WorstCases(IGraph graph)
+        public WorstCases(IGraph graph, String edgeAttr)
         {
 			List<KShortestPath> allShortestPaths = new List<KShortestPath>();
 			List<AllPaths> allPossiblePaths = new List<AllPaths>();
@@ -23,10 +23,10 @@ namespace NetworkObservabilityCore.Algorithms
 
             foreach (var node in graph.NodeEnumerable)
             {
-                KShortestPath kShortest = new KShortestPath(graph, node);
+                KShortestPath kShortest = new KShortestPath(graph, node, edgeAttr);
                 allShortestPaths.Add(kShortest);
 
-                AllPaths allPaths = new AllPaths(graph, node);
+                AllPaths allPaths = new AllPaths(graph, node, edgeAttr);
                 allPossiblePaths.Add(allPaths);
             }
 
