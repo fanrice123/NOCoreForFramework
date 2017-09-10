@@ -88,6 +88,14 @@ namespace NetworkObservabilityCore
 		/// <summary>
 		/// Initialises an **Edge**
 		/// </summary>
+		public Edge()
+			: this(new AttributePair[0])
+		{
+		}
+
+		/// <summary>
+		/// Initialises an **Edge** with <see cref="AttributePair"/>
+		/// </summary>
 		public Edge(params AttributePair[] attrPairs)
 		{
 			Id = IdGenerator.GenerateEdgeId();
