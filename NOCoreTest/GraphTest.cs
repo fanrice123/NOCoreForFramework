@@ -25,18 +25,18 @@ namespace NOCoreTest
             graph.Add(D);
             graph.Add(E);
 
-            graph.ConnectNodeToWith(A, B, new Edge(4));
-            graph.ConnectNodeToWith(B, E, new Edge(5));
-            graph.ConnectNodeToWith(A, C, new Edge(5));
-            graph.ConnectNodeToWith(C, E, new Edge(4));
-            graph.ConnectNodeToWith(A, D, new Edge(9));
-            graph.ConnectNodeToWith(D, E, new Edge(7));
+			graph.ConnectNodeToWith(A, B, new Edge(new AttributePair { Name = "Weight", Attribute = 4 }));
+            graph.ConnectNodeToWith(B, E, new Edge(new AttributePair { Name = "Weight", Attribute = 5 }));
+            graph.ConnectNodeToWith(A, C, new Edge(new AttributePair { Name = "Weight", Attribute = 5 }));
+            graph.ConnectNodeToWith(C, E, new Edge(new AttributePair { Name = "Weight", Attribute = 4 }));
+            graph.ConnectNodeToWith(A, D, new Edge(new AttributePair { Name = "Weight", Attribute = 9 }));
+            graph.ConnectNodeToWith(D, E, new Edge(new AttributePair { Name = "Weight", Attribute = 7 }));
             B.IsObserver = true;
 			/*
-			graph.ConnectNodeToWith(B, C, new Edge()(1));
-			graph.ConnectNodeToWith(C, D, new Edge()(3));
-			graph.ConnectNodeToWith(D, C, new Edge()(2));
-			graph.ConnectNodeToWith(E, C, new Edge()(1));
+			graph.ConnectNodeToWith(B, C, new Edge({Name="Weight", Attribute=)(1));
+			graph.ConnectNodeToWith(C, D, new Edge({Name="Weight", Attribute=)(3));
+			graph.ConnectNodeToWith(D, C, new Edge({Name="Weight", Attribute=)(2));
+			graph.ConnectNodeToWith(E, C, new Edge({Name="Weight", Attribute=)(1));
 			*/
 
 			var result = new ConnectivityObserver().ObserveConnectivity(graph, new List<INode>() { B }, "Weight");

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetworkObservabilityCore;
+using NetworkObservabilityCore.Utils;
 
 namespace NOCoreTest
 {
@@ -26,8 +27,8 @@ namespace NOCoreTest
         [TestMethod]
         public void TestValue()
         {
-            Edge edge = new Edge(3);//////////////////////////////////
-            Assert.AreEqual(3, edge.Weight);
+            Edge edge = new Edge(new AttributePair { Name = "Weight", Attribute = 3 });//////////////////////////////////
+            Assert.AreEqual(3, edge["Weight"]);
         }
     }
 }

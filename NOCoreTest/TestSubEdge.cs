@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetworkObservabilityCore;
+using NetworkObservabilityCore.Utils;
 
 namespace NOCoreTest
 {
@@ -15,7 +16,7 @@ namespace NOCoreTest
 		}
 
 		public TestSubEdge(int weight)
-			: base(weight)
+			: base(new AttributePair { Name = "Weight", Attribute = weight })
 		{
 		}
 	}

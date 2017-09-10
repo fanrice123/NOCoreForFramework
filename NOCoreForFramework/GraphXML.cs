@@ -135,14 +135,12 @@ namespace NetworkObservabilityCore.Xml
 			var label = new XElement("Label", edge.Label);
 			var to = new XElement("To", edge.To.Id);
 			var isBlocked = new XElement("IsBlocked", edge.IsBlocked);
-			var weight = new XElement("Weight", edge.Weight);
 			var attributes = CreateAttributes(edge.Attributes);
 
 			xelement.Add(from);
 			xelement.Add(label);
 			xelement.Add(to);
 			xelement.Add(isBlocked);
-			xelement.Add(weight);
 			xelement.Add(attributes);
 
 			return xelement;

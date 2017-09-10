@@ -30,13 +30,13 @@ namespace NOCoreTest
             e = new Node();
 
             aToB = new Edge();
-            aToB.Weight = 1;
+            aToB["Weight"] = 1;
             bToC = new Edge();
-            bToC.Weight = 5;
+            bToC["Weight"] = 5;
             cToD = new Edge();
-            cToD.Weight = 1;
+            cToD["Weight"] = 1;
             dToE = new Edge();
-            dToE.Weight = 1;
+            dToE["Weight"] = 1;
 
             a.ConnectOut.Add(aToB);
             b.ConnectIn.Add(aToB);

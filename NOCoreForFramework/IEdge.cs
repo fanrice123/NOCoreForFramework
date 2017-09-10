@@ -38,12 +38,5 @@ namespace NetworkObservabilityCore
 		/// being blocked.
 		/// </summary>
 		bool IsBlocked { get; set; }
-
-		/// <summary>
-		/// This property has been deprecated.
-		/// > [!Warning]
-		/// > This property is about to be removed in the coming release.
-		/// </summary>
-		double Weight { get; set; }
 	}
 }

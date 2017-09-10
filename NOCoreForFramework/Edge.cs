@@ -63,16 +63,6 @@ namespace NetworkObservabilityCore
 		}
 
 		/// <inheritdoc />
-		/// <remarks>
-		/// See also <seealso cref="Edge(int)"/>
-		/// </remarks>
-		public double Weight
-		{
-			get;
-			set;
-		}
-
-		/// <inheritdoc />
 		public IDictionary<string, IComparable> Attributes
 		{
 			get;
@@ -96,28 +86,18 @@ namespace NetworkObservabilityCore
 		#region Constructors
 
 		/// <summary>
-		/// This equals to 
-		/// ```cs
-		/// new Edge(1)
-		/// ```
-		/// See also <seealso cref="Edge(double)"/>
+		/// Initialises an **Edge**
 		/// </summary>
-		public Edge()
-			: this(1)
-		{
-		}
-
-		/// <summary>
-		/// Initialises an **Edge** with <see cref="Weight"/> value of `1`.
-		/// </summary>
-		/// <param name="weight"></param>
-		public Edge(double weight)
+		public Edge(params AttributePair[] attrPairs)
 		{
 			Id = IdGenerator.GenerateEdgeId();
 			Label = Id;
-			Weight = weight;
 			IsBlocked = false;
 			Attributes = new Dictionary<string, IComparable>();
+			foreach (var attrPair in attrPairs)
+			{
+				Attributes[attrPair.Name] = attrPair.Attribute;
+			}
 		}
 		#endregion
 
