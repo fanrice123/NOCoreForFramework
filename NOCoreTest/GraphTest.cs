@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetworkObservabilityCore;
 using System.Collections.Generic;
 using NetworkObservabilityCore.Utils;
+using NetworkObservabilityCore.Criteria;
 
 namespace NOCoreTest
 {

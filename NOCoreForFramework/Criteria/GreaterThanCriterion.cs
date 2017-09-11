@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetworkObservabilityCore
+namespace NetworkObservabilityCore.Criteria
 {
-	public class GreaterThanCriterion
+	public class GreaterThanCriterion : ICriterion
 	{
 		public GreaterThanCriterion(String attrName, IComparable criterion)
 		{

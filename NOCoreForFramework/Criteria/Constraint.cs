@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetworkObservabilityCore
+namespace NetworkObservabilityCore.Criteria
 {
 	public class Constraint<T> : IEnumerable<ICriterion> where T : IConstrainable
 	{
@@ -32,8 +32,16 @@ namespace NetworkObservabilityCore
 		{
 			foreach (var criterion in Criteria)
 			{
-				IComparable attribute = constrainable.Attributes[criterion.Attribute];
-				criterion.Check(attribute);
+				if (constrainable.HasAttribute(criterion.Attribute))
+				{
+					IComparable attribute = constrainable.Attributes[criterion.Attribute];
+					if (!criterion.Check(attribute))
+						return false;
+				}
+				else
+				{
+					return false;
+				}
 			}
 
 			return true;
