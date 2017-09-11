@@ -39,7 +39,7 @@ namespace NOCoreTest
 			graph.ConnectNodeToWith(E, C, new Edge({Name="Weight", Attribute=)(1));
 			*/
 
-			var result = new ConnectivityObserver().ObserveConnectivity(graph, new List<INode>() { B }, "Weight");
+			var result = new ConnectivityObserver().ObserveConnectivity(graph, new List<INode>() { B }, Tuple.Create("Weight", Constraint<IEdge>.Default));
 
 			var routes = new HashSet<Route>();
 			foreach (var key in result.Keys)
