@@ -14,19 +14,21 @@ namespace NetworkObservabilityCore.Utils
 	public class ConnectivityObserver
 	{
 		public Dictionary<FromTo, double>
-		ObserveConnectivityPercentage(IGraph graph, ICollection<INode> observers, String edgeAttr)
+		ObserveConnectivityPercentage(IGraph graph, ICollection<INode> observers, Tuple<String, Constraint<IEdge>> tuple)
 		{
 			var result = new Dictionary<FromTo, double>();
 
 			foreach (var fromNode in graph.AllNodes)
 			{
 				var from = fromNode.Value;
+				// if from is one of the observers & it has to be observed as well
 				if (observers.Contains(from) && !from.IsObserverInclusive)
 					continue;
 
 				//KShortestPath shortestPath = new KShortestPath(this, from);
-				AllPaths shortestPath = new AllPaths(graph, from, edgeAttr);
+				AllPaths shortestPath = new AllPaths(graph, from, tuple.Item1, tuple.Item2);
 
+				// 
 				foreach (var to in graph.AllNodes.Values.Where(to => !to.Equals(from)))
 				{
 					var paths = shortestPath.PathsTo(to);
@@ -52,7 +54,7 @@ namespace NetworkObservabilityCore.Utils
 
 
 		public Dictionary<FromToThrough, bool>
-		ObserveConnectivity(IGraph graph, ICollection<INode> observers, String edgeAttr)
+		ObserveConnectivity(IGraph graph, ICollection<INode> observers, Tuple<String, Constraint<IEdge>> tuple)
 		{
 			var result = new Dictionary<FromToThrough, bool>();
 
@@ -63,7 +65,7 @@ namespace NetworkObservabilityCore.Utils
 					continue;
 
 				//KShortestPath shortestPath = new KShortestPath(this, from);
-				AllPaths shortestPath = new AllPaths(graph, from, edgeAttr);
+				AllPaths shortestPath = new AllPaths(graph, from, tuple.Item1, tuple.Item2);
 
 				foreach (var to in graph.AllNodes.Values.Where(to => !to.Equals(from)))
 				{
