@@ -8,7 +8,7 @@ namespace NetworkObservabilityCore
 {
 	/// <summary>
 	/// A type implements **IConstrainable** implies
-	/// that it has <see cref="Attributes"/> which allows it
+	/// that it has <see cref="Properties"/> which allows it
 	/// to work with <see cref="Constraint{T}"/>
 	/// </summary>
 	public interface IConstrainable
@@ -16,7 +16,7 @@ namespace NetworkObservabilityCore
 		/// <summary>
 		/// Gets attributes with its name.
 		/// </summary>
-		IDictionary<String, IComparable> Attributes { get; set; }
+        IDictionary<String, Property> Properties { get; set; }
 
 		/// <summary>
 		/// Checks if it has certain attribute.
@@ -27,9 +27,9 @@ namespace NetworkObservabilityCore
 		bool HasAttribute(String name);
 
 		/// <summary>
-		/// This indexer returns <see cref="Attributes"/> with the name specified.
+		/// This indexer returns <see cref="Properties"/> with the name specified.
 		/// </summary>
-		/// <param name="key">Name of <see cref="Attributes"/></param>
+		/// <param name="key">Name of <see cref="Properties"/></param>
 		/// <returns>The specified Attributes.</returns>
 		IComparable this[String key] { get; set; }
 	}
