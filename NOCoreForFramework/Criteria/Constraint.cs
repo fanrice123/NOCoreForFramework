@@ -34,7 +34,7 @@ namespace NetworkObservabilityCore.Criteria
 			{
 				if (constrainable.HasAttribute(criterion.Attribute))
 				{
-					IComparable attribute = constrainable.Attributes[criterion.Attribute];
+					IComparable attribute = constrainable.Properties[criterion.Attribute];
 					if (!criterion.Check(attribute))
 						return false;
 				}

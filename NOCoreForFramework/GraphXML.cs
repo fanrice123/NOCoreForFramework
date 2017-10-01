@@ -113,7 +113,7 @@ namespace NetworkObservabilityCore.Xml
 			var isVisible = new XElement("IsVisible", node.IsVisible);
 			var isBlocked = new XElement("IsBlocked", node.IsBlocked);
 			var label = new XElement("Label", node.Label);
-			var attributes = CreateAttributes(node.Attributes);
+			var attributes = CreateAttributes(node.Properties);
 
 			xelement.Add(isObserver);
 			xelement.Add(isObserverInclusive);
@@ -135,7 +135,7 @@ namespace NetworkObservabilityCore.Xml
 			var label = new XElement("Label", edge.Label);
 			var to = new XElement("To", edge.To.Id);
 			var isBlocked = new XElement("IsBlocked", edge.IsBlocked);
-			var attributes = CreateAttributes(edge.Attributes);
+			var attributes = CreateAttributes(edge.Properties);
 
 			xelement.Add(from);
 			xelement.Add(label);
@@ -247,7 +247,7 @@ namespace NetworkObservabilityCore.Xml
 			node.IsVisible = Boolean.Parse(xnode.Element("IsVisible").Value);
 			node.Label = xnode.Element("Label").Value;
 			node.IsBlocked = Boolean.Parse(xnode.Element("IsBlocked").Value);
-			node.Attributes = LoadAttributes(xnode.Element("Attributes"));
+			node.Properties = LoadAttributes(xnode.Element("Attributes"));
 			node.ConnectOut = new List<IEdge>();
 			node.ConnectIn = new List<IEdge>();
 
@@ -265,7 +265,7 @@ namespace NetworkObservabilityCore.Xml
 			property.SetValue(edge, xedge.Attribute("Id").Value);
 			edge.Label = xedge.Element("Label").Value;
 			edge.IsBlocked = Boolean.Parse(xedge.Element("IsBlocked").Value);
-			edge.Attributes = LoadAttributes(xedge.Element("Attributes"));
+			edge.Properties = LoadAttributes(xedge.Element("Attributes"));
 
 			var from = xedge.Element("From").Value;
 			var to = xedge.Element("To").Value;

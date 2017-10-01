@@ -63,7 +63,7 @@ namespace NetworkObservabilityCore
 		}
 
 		/// <inheritdoc />
-		public IDictionary<string, IComparable> Attributes
+		public IDictionary<String, Property> Properties
 		{
 			get;
 			set;
@@ -73,11 +73,34 @@ namespace NetworkObservabilityCore
 		{
 			get
 			{
-				return Attributes[key];
+                var property = Properties[key];
+                var value = property.Value;
+                IComparable retVal = null;
+                switch (property.Type)
+                {
+                    case "System.Double":
+                        retVal = Convert.ToDouble(value);
+                        break;
+                    case "System.Boolean":
+                        retVal = Convert.ToBoolean(value);
+                        break;
+                    case "System.String":
+                        retVal = value;
+                        break;
+                }
+                return retVal;
 			}
 			set
 			{
-				Attributes[key] = value;
+                var rawValue = value;
+                var type = rawValue.GetType().FullName;
+                var property = new Property()
+                {
+                    Type = rawValue.GetType().FullName,
+                    Value = String.Format("{0}", rawValue),
+                    Key = key
+                };
+                Properties[key] = property;
 			}
 		}
 
@@ -96,22 +119,22 @@ namespace NetworkObservabilityCore
 		/// <summary>
 		/// Initialises an **Edge** with <see cref="AttributePair"/>
 		/// </summary>
-		public Edge(params AttributePair[] attrPairs)
+		public Edge(params Property[] properties)
 		{
 			Id = IdGenerator.GenerateEdgeId();
 			Label = Id;
 			IsBlocked = false;
-			Attributes = new Dictionary<string, IComparable>();
-			foreach (var attrPair in attrPairs)
+			Properties = new Dictionary<string, Property>();
+			foreach (var attrPair in properties)
 			{
-				Attributes[attrPair.Name] = attrPair.Attribute;
+				Properties[attrPair.Name] = attrPair.Attribute;
 			}
 		}
 		#endregion
 
 		public bool HasAttribute(String name)
 		{
-			return Attributes.ContainsKey(name);
+			return Properties.ContainsKey(name);
 		}
 
 		public override int GetHashCode()

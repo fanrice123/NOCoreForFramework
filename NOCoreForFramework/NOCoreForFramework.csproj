@@ -59,6 +59,7 @@
     <Compile Include="Algorithms\KShortestPath.cs" />
     <Compile Include="Criteria\LessThanCriterion.cs" />
     <Compile Include="Node.cs" />
+    <Compile Include="Property.cs" />
     <Compile Include="Utils\AttributePair.cs" />
     <Compile Include="Utils\ConnectivityObserver.cs" />
     <Compile Include="Utils\IdGenerator.cs" />
