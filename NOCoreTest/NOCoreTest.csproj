@@ -63,9 +63,6 @@
     <Compile Include="TestNodeClass.cs" />
     <Compile Include="TestForRouteClass.cs" />
     <Compile Include="RouteTest.cs" />
-    <Compile Include="AllPathsTest.cs" />
-    <Compile Include="ConstraintTest.cs" />
-    <Compile Include="CriteriaTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NOCoreForFramework\NOCoreForFramework.csproj">

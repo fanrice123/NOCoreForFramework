@@ -12,12 +12,12 @@ namespace NetworkObservabilityCore.Algorithms
 		private Comparison<AuxNode<double, int>> compare;
 		Dictionary<INode, int> dict;
 
-		public Dijkstra(IGraph graph, INode src, String edgeAttr)
-			: this(graph, src, edgeAttr, Comparer<AuxNode<double, int>>.Default)
+		public Dijkstra(IGraph graph, INode src)
+			: this(graph, src, Comparer<AuxNode<double, int>>.Default)
 		{
 		}
 
-		public Dijkstra(IGraph g, INode src, String edgeAttr, IComparer<AuxNode<double, int>> comp)
+		public Dijkstra(IGraph g, INode src, IComparer<AuxNode<double, int>> comp)
 		{
 			compare = comp.Compare;
 			List<AuxNode<double, int>> auxNodes = new List<AuxNode<double, int>>();
@@ -53,7 +53,7 @@ namespace NetworkObservabilityCore.Algorithms
 				{
 					var idxFrom = dict[edge.From];
 					var idxTo = dict[edge.To];
-					var newDist = dist[idxFrom] + (double)edge[edgeAttr];
+					var newDist = dist[idxFrom] + (double)edge["Weight"];
 					if (newDist < dist[idxTo])
 					{
 						dist[idxTo] = newDist;
