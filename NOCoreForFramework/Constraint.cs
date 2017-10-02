@@ -32,9 +32,9 @@ namespace NetworkObservabilityCore.Criteria
 		{
 			foreach (var criterion in Criteria)
 			{
-				if (constrainable.HasAttribute(criterion.Attribute))
+				if (constrainable.HasNumericAttribute(criterion.Attribute))
 				{
-					IComparable attribute = constrainable.Properties[criterion.Attribute];
+					IComparable attribute = constrainable.NumericAttributes[criterion.Attribute];
 					if (!criterion.Check(attribute))
 						return false;
 				}

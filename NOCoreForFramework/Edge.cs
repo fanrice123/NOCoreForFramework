@@ -63,44 +63,29 @@ namespace NetworkObservabilityCore
 		}
 
 		/// <inheritdoc />
-		public IDictionary<String, Property> Properties
+		public IDictionary<String, Double> NumericAttributes
 		{
 			get;
 			set;
 		}
 
-		public IComparable this[String key]
+		/// <inheritdoc />
+		public IDictionary<String, String> DescriptiveAttributes
+		{
+			get;
+			set;
+		}
+
+		/// <inheritdoc />
+		public Double this[String key]
 		{
 			get
 			{
-                var property = Properties[key];
-                var value = property.Value;
-                IComparable retVal = null;
-                switch (property.Type)
-                {
-                    case "System.Double":
-                        retVal = Convert.ToDouble(value);
-                        break;
-                    case "System.Boolean":
-                        retVal = Convert.ToBoolean(value);
-                        break;
-                    case "System.String":
-                        retVal = value;
-                        break;
-                }
-                return retVal;
+				return NumericAttributes[key];
 			}
 			set
 			{
-                var rawValue = value;
-                var type = rawValue.GetType().FullName;
-                var property = new Property()
-                {
-                    Type = rawValue.GetType().FullName,
-                    Value = String.Format("{0}", rawValue),
-                    Key = key
-                };
-                Properties[key] = property;
+				NumericAttributes[key] = value;
 			}
 		}
 
@@ -112,29 +97,48 @@ namespace NetworkObservabilityCore
 		/// Initialises an **Edge**
 		/// </summary>
 		public Edge()
-			: this(new AttributePair[0])
+			: this(new AttributePair<Double>[0], new AttributePair<String>[0])
+		{
+		}
+
+		/// <summary>
+		/// Initialises an **Edge** with numeric attributes
+		/// </summary>
+		public Edge(params AttributePair<Double>[] numericAttr)
+			: this(numericAttr, new AttributePair<String>[0])
 		{
 		}
 
 		/// <summary>
 		/// Initialises an **Edge** with <see cref="AttributePair"/>
 		/// </summary>
-		public Edge(params Property[] properties)
+		public Edge(AttributePair<Double>[] numericAttr, AttributePair<String>[] descriptiveAttr)
 		{
 			Id = IdGenerator.GenerateEdgeId();
 			Label = Id;
 			IsBlocked = false;
-			Properties = new Dictionary<string, Property>();
-			foreach (var attrPair in properties)
+			NumericAttributes = new Dictionary<string, Double>();
+			foreach (var attrPair in numericAttr)
 			{
-				Properties[attrPair.Name] = attrPair.Attribute;
+				NumericAttributes[attrPair.Name] = attrPair.Attribute;
+			}
+
+			DescriptiveAttributes = new Dictionary<string, String>();
+			foreach (var attrPair in descriptiveAttr)
+			{
+				DescriptiveAttributes[attrPair.Name] = attrPair.Attribute;
 			}
 		}
 		#endregion
 
-		public bool HasAttribute(String name)
+		public bool HasNumericAttribute(String name)
 		{
-			return Properties.ContainsKey(name);
+			return NumericAttributes.ContainsKey(name);
+		}
+
+		public bool HasDescriptiveAttribute(String name)
+		{
+			return DescriptiveAttributes.ContainsKey(name);
 		}
 
 		public override int GetHashCode()

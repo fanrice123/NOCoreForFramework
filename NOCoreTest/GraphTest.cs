@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetworkObservabilityCore;
 using System.Collections.Generic;
 using NetworkObservabilityCore.Utils;
+using NetworkObservabilityCore.Criteria;
 
 namespace NOCoreTest
 {
@@ -25,12 +26,12 @@ namespace NOCoreTest
             graph.Add(D);
             graph.Add(E);
 
-			graph.ConnectNodeToWith(A, B, new Edge(new AttributePair { Name = "Weight", Attribute = 4 }));
-            graph.ConnectNodeToWith(B, E, new Edge(new AttributePair { Name = "Weight", Attribute = 5 }));
-            graph.ConnectNodeToWith(A, C, new Edge(new AttributePair { Name = "Weight", Attribute = 5 }));
-            graph.ConnectNodeToWith(C, E, new Edge(new AttributePair { Name = "Weight", Attribute = 4 }));
-            graph.ConnectNodeToWith(A, D, new Edge(new AttributePair { Name = "Weight", Attribute = 9 }));
-            graph.ConnectNodeToWith(D, E, new Edge(new AttributePair { Name = "Weight", Attribute = 7 }));
+			graph.ConnectNodeToWith(A, B, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 4 }));
+            graph.ConnectNodeToWith(B, E, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 5 }));
+            graph.ConnectNodeToWith(A, C, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 5 }));
+            graph.ConnectNodeToWith(C, E, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 4 }));
+            graph.ConnectNodeToWith(A, D, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 9 }));
+            graph.ConnectNodeToWith(D, E, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 7 }));
             B.IsObserver = true;
 			/*
 			graph.ConnectNodeToWith(B, C, new Edge({Name="Weight", Attribute=)(1));

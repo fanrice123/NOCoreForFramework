@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetworkObservabilityCore.Utils
 {
-	public class AttributePair
+	public class AttributePair<T>
 	{
 		public String Name
 		{
@@ -14,7 +14,7 @@ namespace NetworkObservabilityCore.Utils
 			set;
 		}
 
-		public IComparable Attribute
+		public T Attribute
 		{
 			get;
 			set;

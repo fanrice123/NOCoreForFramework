@@ -93,7 +93,14 @@ namespace NetworkObservabilityCore
 		}
 
 		/// <inheritdoc />
-		public IDictionary<string, IComparable> Attributes
+		public IDictionary<string, Double> NumericAttributes
+		{
+			get;
+			set;
+		}
+
+		/// <inheritdoc />
+		public IDictionary<string, String> DescriptiveAttributes
 		{
 			get;
 			set;
@@ -101,15 +108,15 @@ namespace NetworkObservabilityCore
 
 		/// <inheritdoc />
 		/// <exception cref="KeyNotFoundException">Thrown if the attribute does not exist.</exception>
-		public IComparable this[String key]
+		public Double this[String key]
 		{
 			get
 			{
-				return Attributes[key];
+				return NumericAttributes[key];
 			}
 			set
 			{
-				Attributes[key] = value;
+				NumericAttributes[key] = value;
 			}
 		}
 
@@ -130,16 +137,23 @@ namespace NetworkObservabilityCore
 			ConnectIn = new List<IEdge>();
 			IsObserver = IsObserverInclusive = IsBlocked = false;
 			IsVisible = true;
-			Attributes = new Dictionary<string, IComparable>();
+			NumericAttributes = new Dictionary<string, Double>();
+			DescriptiveAttributes = new Dictionary<string, String>();
 		}
 		#endregion
 
 		#region Methods
 
 		/// <inheritdoc />
-		public bool HasAttribute(string name)
+		public bool HasNumericAttribute(string name)
 		{
-			return Attributes.ContainsKey(name);
+			return NumericAttributes.ContainsKey(name);
+		}
+
+		/// <inheritdoc />
+		public bool HasDescriptiveAttribute(string name)
+		{
+			return DescriptiveAttributes.ContainsKey(name);
 		}
 
 		/// <summary>

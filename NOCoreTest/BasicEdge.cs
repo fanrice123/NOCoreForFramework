@@ -17,7 +17,7 @@ namespace NOCoreTest
 		public BasicEdge(double value)
 			: base()
 		{
-			Attributes["test"] = value;
+			NumericAttributes["test"] = value;
 		}
 
 	}

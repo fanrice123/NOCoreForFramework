@@ -52,7 +52,13 @@ namespace NOCoreTest
 			set;
 		}
 
-		public IDictionary<string, IComparable> Attributes
+		public IDictionary<string, Double> NumericAttributes
+		{
+			get;
+			set;
+		}
+
+		public IDictionary<string, String> DescriptiveAttributes
 		{
 			get;
 			set;
@@ -70,7 +76,8 @@ namespace NOCoreTest
 			ConnectOut = new List<IEdge>();
 			ConnectIn = new List<IEdge>();
 			IsObserver = IsObserverInclusive = false;
-			Attributes = new Dictionary<string, IComparable>();
+			NumericAttributes = new Dictionary<string, Double>();
+			DescriptiveAttributes = new Dictionary<string, String>();
 		}
 
 		public bool Equals(INode other)
@@ -83,21 +90,26 @@ namespace NOCoreTest
 			return Id.GetHashCode();
 		}
 
-		public IComparable this[String key]
+		public Double this[String key]
 		{
 			get
 			{
-				return Attributes[key];
+				return NumericAttributes[key];
 			}
 			set
 			{
-				Attributes[key] = value;
+				NumericAttributes[key] = value;
 			}
 		}
 
-		public bool HasAttribute(string name)
+		public bool HasNumericAttribute(string name)
 		{
-			return Attributes.ContainsKey(name);
+			return NumericAttributes.ContainsKey(name);
+		}
+
+		public bool HasDescriptiveAttribute(string name)
+		{
+			return DescriptiveAttributes.ContainsKey(name);
 		}
 	}
 }

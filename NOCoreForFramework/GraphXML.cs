@@ -113,14 +113,16 @@ namespace NetworkObservabilityCore.Xml
 			var isVisible = new XElement("IsVisible", node.IsVisible);
 			var isBlocked = new XElement("IsBlocked", node.IsBlocked);
 			var label = new XElement("Label", node.Label);
-			var attributes = CreateAttributes(node.Properties);
+			var numericAttributes = CreateAttributes(node.NumericAttributes, "NumericAttributes");
+			var descriptiveAttributes = CreateAttributes(node.DescriptiveAttributes, "DescriptiveAttributes");
 
 			xelement.Add(isObserver);
 			xelement.Add(isObserverInclusive);
 			xelement.Add(isVisible);
 			xelement.Add(isBlocked);
 			xelement.Add(label);
-			xelement.Add(attributes);
+			xelement.Add(numericAttributes);
+			xelement.Add(descriptiveAttributes);
 
 			return xelement;
 		}
@@ -135,13 +137,15 @@ namespace NetworkObservabilityCore.Xml
 			var label = new XElement("Label", edge.Label);
 			var to = new XElement("To", edge.To.Id);
 			var isBlocked = new XElement("IsBlocked", edge.IsBlocked);
-			var attributes = CreateAttributes(edge.Properties);
+			var numericAttributes = CreateAttributes(edge.NumericAttributes, "NumericAttributes");
+			var descriptiveAttributes = CreateAttributes(edge.DescriptiveAttributes, "DescriptiveAttributes");
 
 			xelement.Add(from);
 			xelement.Add(label);
 			xelement.Add(to);
 			xelement.Add(isBlocked);
-			xelement.Add(attributes);
+			xelement.Add(numericAttributes);
+			xelement.Add(descriptiveAttributes);
 
 			return xelement;
 		}
@@ -154,9 +158,9 @@ namespace NetworkObservabilityCore.Xml
 			return element;
 		}
 
-		protected XElement CreateAttributes<K, V>(IDictionary<K, V> attributes)
+		protected XElement CreateAttributes<K, V>(IDictionary<K, V> attributes, String name)
 		{
-			XElement xelement = new XElement("Attributes");
+			XElement xelement = new XElement(name);
 			foreach (var pair in attributes)
 			{
 				var xattribute = new XElement("Attribute");
@@ -247,7 +251,8 @@ namespace NetworkObservabilityCore.Xml
 			node.IsVisible = Boolean.Parse(xnode.Element("IsVisible").Value);
 			node.Label = xnode.Element("Label").Value;
 			node.IsBlocked = Boolean.Parse(xnode.Element("IsBlocked").Value);
-			node.Properties = LoadAttributes(xnode.Element("Attributes"));
+			node.NumericAttributes = LoadNumericAttributes(xnode.Element("NumericAttributes"));
+			node.DescriptiveAttributes = LoadDescriptiveAttributes(xnode.Element("DescriptiveAttributes"));
 			node.ConnectOut = new List<IEdge>();
 			node.ConnectIn = new List<IEdge>();
 
@@ -265,7 +270,8 @@ namespace NetworkObservabilityCore.Xml
 			property.SetValue(edge, xedge.Attribute("Id").Value);
 			edge.Label = xedge.Element("Label").Value;
 			edge.IsBlocked = Boolean.Parse(xedge.Element("IsBlocked").Value);
-			edge.Properties = LoadAttributes(xedge.Element("Attributes"));
+			edge.NumericAttributes = LoadNumericAttributes(xedge.Element("NumericAttributes"));
+			edge.DescriptiveAttributes = LoadDescriptiveAttributes(xedge.Element("DescriptiveAttributes"));
 
 			var from = xedge.Element("From").Value;
 			var to = xedge.Element("To").Value;
@@ -273,40 +279,28 @@ namespace NetworkObservabilityCore.Xml
 			return Tuple.Create(from, to, edge);
 		}
 
-		protected IDictionary<String, IComparable> LoadAttributes(XElement xelement)
+		protected IDictionary<String, Double> LoadNumericAttributes(XElement xelement)
 		{
-			var attributes = new Dictionary<String, IComparable>();
+			var attributes = new Dictionary<String, Double>();
 			
 			foreach (var xattribute in xelement.Elements())
 			{
 				var xkey = xattribute.Attribute("Key").Value;
 				var xvalue = xattribute.Attribute("Value").Value;
-				var valueTypeName = xattribute.Attribute("ValueType").Value;
-				Type valueType;
-				IComparable attribute;
-				if (valueTypeName.Contains("System"))
-				{
-					valueType = Type.GetType(valueTypeName);
-				}
-				else
-				{
-					valueType = DependencyMap[valueTypeName].GetType(valueTypeName);
-				}
-				var value = ChangeType(xvalue, valueType);
-				if (valueType.Equals(typeof(String)))
-				{
-					attribute = value;
-				}
-				else if (HasConstructor(valueType))
-				{
-					attribute = Activator.CreateInstance(valueType, value) as IComparable;
-				}
-				else
-				{
-					attribute = Activator.CreateInstance(valueType) as IComparable;
-					attribute = value;
-				}
-				attributes[xkey] = attribute;
+				attributes[xkey] = Double.Parse(xvalue);
+			}
+			return attributes;
+		}
+
+		protected IDictionary<String, String> LoadDescriptiveAttributes(XElement xelement)
+		{
+			var attributes = new Dictionary<String, String>();
+			
+			foreach (var xattribute in xelement.Elements())
+			{
+				var xkey = xattribute.Attribute("Key").Value;
+				var xvalue = xattribute.Attribute("Value").Value;
+				attributes[xkey] = xvalue;
 			}
 			return attributes;
 		}
@@ -316,11 +310,5 @@ namespace NetworkObservabilityCore.Xml
 			var hasConstructor = type.GetConstructor(BindingFlags.Default, null, Type.EmptyTypes, null) != null;
 			return !(type.IsPrimitive || hasConstructor);
 		}
-
-		private IComparable ChangeType(String str, Type type)
-		{
-			return Convert.ChangeType(str, type) as IComparable;
-		}
-
 	}
 }

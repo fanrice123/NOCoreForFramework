@@ -27,7 +27,7 @@ namespace NOCoreTest
         [TestMethod]
         public void TestValue()
         {
-            Edge edge = new Edge(new AttributePair { Name = "Weight", Attribute = 3 });//////////////////////////////////
+            Edge edge = new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 3 });//////////////////////////////////
             Assert.AreEqual(3, edge["Weight"]);
         }
     }

@@ -71,15 +71,15 @@ namespace NOCoreTest
 			graph.Add(D);
 			graph.Add(E);
 
-			graph.ConnectNodeToWith(A, B, new Edge(new AttributePair { Name = "Weight", Attribute = 8 }));
-			graph.ConnectNodeToWith(A, D, new Edge(new AttributePair { Name = "Weight", Attribute = 9 }));
-			graph.ConnectNodeToWith(A, E, new Edge(new AttributePair { Name = "Weight", Attribute = 4 }));
-			graph.ConnectNodeToWith(B, C, new Edge(new AttributePair { Name = "Weight", Attribute = 1 }));
-			graph.ConnectNodeToWith(C, B, new Edge(new AttributePair { Name = "Weight", Attribute = 2 }));
-			graph.ConnectNodeToWith(C, D, new Edge(new AttributePair { Name = "Weight", Attribute = 3 }));
-			graph.ConnectNodeToWith(D, C, new Edge(new AttributePair { Name = "Weight", Attribute = 2 }));
-			graph.ConnectNodeToWith(D, E, new Edge(new AttributePair { Name = "Weight", Attribute = 7 }));
-			graph.ConnectNodeToWith(E, C, new Edge(new AttributePair { Name = "Weight", Attribute = 1 }));
+			graph.ConnectNodeToWith(A, B, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 8 }));
+			graph.ConnectNodeToWith(A, D, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 9 }));
+			graph.ConnectNodeToWith(A, E, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 4 }));
+			graph.ConnectNodeToWith(B, C, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 }));
+			graph.ConnectNodeToWith(C, B, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 2 }));
+			graph.ConnectNodeToWith(C, D, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 3 }));
+			graph.ConnectNodeToWith(D, C, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 2 }));
+			graph.ConnectNodeToWith(D, E, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 7 }));
+			graph.ConnectNodeToWith(E, C, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 }));
 
 			writer.Save(graph1Path, graph);
 		}
@@ -108,34 +108,34 @@ namespace NOCoreTest
 			graph.Add(seven);
 			graph.Add(eight);
 
-			graph.ConnectNodeToWith(zero, one, new Edge(new AttributePair { Name = "Weight", Attribute = 4 }));
-			graph.ConnectNodeToWith(one, zero, new Edge(new AttributePair { Name = "Weight", Attribute = 4 }));
-			graph.ConnectNodeToWith(zero, seven, new Edge(new AttributePair { Name = "Weight", Attribute = 8 }));
-			graph.ConnectNodeToWith(seven, zero, new Edge(new AttributePair { Name = "Weight", Attribute = 8 }));
-			graph.ConnectNodeToWith(one, seven, new Edge(new AttributePair { Name = "Weight", Attribute = 11 }));
-			graph.ConnectNodeToWith(seven, one, new Edge(new AttributePair { Name = "Weight", Attribute = 11 }));
-			graph.ConnectNodeToWith(one, two, new Edge(new AttributePair { Name = "Weight", Attribute = 8 }));
-			graph.ConnectNodeToWith(two, one, new Edge(new AttributePair { Name = "Weight", Attribute = 8 }));
-			graph.ConnectNodeToWith(two, eight, new Edge(new AttributePair { Name = "Weight", Attribute = 2 }));
-			graph.ConnectNodeToWith(eight, two, new Edge(new AttributePair { Name = "Weight", Attribute = 2 }));
-			graph.ConnectNodeToWith(seven, eight, new Edge(new AttributePair { Name = "Weight", Attribute = 7 }));
-			graph.ConnectNodeToWith(eight, seven, new Edge(new AttributePair { Name = "Weight", Attribute = 7 }));
-			graph.ConnectNodeToWith(seven, six, new Edge(new AttributePair { Name = "Weight", Attribute = 1 }));
-			graph.ConnectNodeToWith(six, seven, new Edge(new AttributePair { Name = "Weight", Attribute = 1 }));
-			graph.ConnectNodeToWith(eight, six, new Edge(new AttributePair { Name = "Weight", Attribute = 6 }));
-			graph.ConnectNodeToWith(six, eight, new Edge(new AttributePair { Name = "Weight", Attribute = 6 }));
-			graph.ConnectNodeToWith(two, three, new Edge(new AttributePair { Name = "Weight", Attribute = 7 }));
-			graph.ConnectNodeToWith(three, two, new Edge(new AttributePair { Name = "Weight", Attribute = 7 }));
-			graph.ConnectNodeToWith(two, five, new Edge(new AttributePair { Name = "Weight", Attribute = 4 }));
-			graph.ConnectNodeToWith(five, two, new Edge(new AttributePair { Name = "Weight", Attribute = 4 }));
-			graph.ConnectNodeToWith(six, five, new Edge(new AttributePair { Name = "Weight", Attribute = 2 }));
-			graph.ConnectNodeToWith(five, six, new Edge(new AttributePair { Name = "Weight", Attribute = 2 }));
-			graph.ConnectNodeToWith(three, five, new Edge(new AttributePair { Name = "Weight", Attribute = 14 }));
-			graph.ConnectNodeToWith(five, three, new Edge(new AttributePair { Name = "Weight", Attribute = 14 }));
-			graph.ConnectNodeToWith(three, four, new Edge(new AttributePair { Name = "Weight", Attribute = 9 }));
-			graph.ConnectNodeToWith(four, three, new Edge(new AttributePair { Name = "Weight", Attribute = 9 }));
-			graph.ConnectNodeToWith(five, four, new Edge(new AttributePair { Name = "Weight", Attribute = 10 }));
-			graph.ConnectNodeToWith(four, five, new Edge(new AttributePair { Name = "Weight", Attribute = 10 }));
+			graph.ConnectNodeToWith(zero, one, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 4 }));
+			graph.ConnectNodeToWith(one, zero, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 4 }));
+			graph.ConnectNodeToWith(zero, seven, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 8 }));
+			graph.ConnectNodeToWith(seven, zero, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 8 }));
+			graph.ConnectNodeToWith(one, seven, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 11 }));
+			graph.ConnectNodeToWith(seven, one, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 11 }));
+			graph.ConnectNodeToWith(one, two, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 8 }));
+			graph.ConnectNodeToWith(two, one, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 8 }));
+			graph.ConnectNodeToWith(two, eight, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 2 }));
+			graph.ConnectNodeToWith(eight, two, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 2 }));
+			graph.ConnectNodeToWith(seven, eight, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 7 }));
+			graph.ConnectNodeToWith(eight, seven, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 7 }));
+			graph.ConnectNodeToWith(seven, six, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 }));
+			graph.ConnectNodeToWith(six, seven, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 }));
+			graph.ConnectNodeToWith(eight, six, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 6 }));
+			graph.ConnectNodeToWith(six, eight, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 6 }));
+			graph.ConnectNodeToWith(two, three, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 7 }));
+			graph.ConnectNodeToWith(three, two, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 7 }));
+			graph.ConnectNodeToWith(two, five, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 4 }));
+			graph.ConnectNodeToWith(five, two, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 4 }));
+			graph.ConnectNodeToWith(six, five, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 2 }));
+			graph.ConnectNodeToWith(five, six, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 2 }));
+			graph.ConnectNodeToWith(three, five, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 14 }));
+			graph.ConnectNodeToWith(five, three, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 14 }));
+			graph.ConnectNodeToWith(three, four, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 9 }));
+			graph.ConnectNodeToWith(four, three, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 9 }));
+			graph.ConnectNodeToWith(five, four, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 10 }));
+			graph.ConnectNodeToWith(four, five, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 10 }));
 
 			writer.Save(graph2Path, graph);
 
@@ -157,15 +157,15 @@ namespace NOCoreTest
 			graph.Add(D);
 			graph.Add(E);
 
-			graph.ConnectNodeToWith(A, B, new Edge(new AttributePair { Name = "Weight", Attribute = 8 }));
+			graph.ConnectNodeToWith(A, B, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 8 }));
 			graph.ConnectNodeToWith(A, D, new TestSubEdge(9));
-			graph.ConnectNodeToWith(A, E, new Edge(new AttributePair { Name = "Weight", Attribute = 4 }));
-			graph.ConnectNodeToWith(B, C, new Edge(new AttributePair { Name = "Weight", Attribute = 1 }));
-			graph.ConnectNodeToWith(C, B, new Edge(new AttributePair { Name = "Weight", Attribute = 2 }));
+			graph.ConnectNodeToWith(A, E, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 4 }));
+			graph.ConnectNodeToWith(B, C, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 }));
+			graph.ConnectNodeToWith(C, B, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 2 }));
 			graph.ConnectNodeToWith(C, D, new TestSubEdge(3));
-			graph.ConnectNodeToWith(D, C, new Edge(new AttributePair { Name = "Weight", Attribute = 2 }));
-			graph.ConnectNodeToWith(D, E, new Edge(new AttributePair { Name = "Weight", Attribute = 7 }));
-			graph.ConnectNodeToWith(E, C, new Edge(new AttributePair { Name = "Weight", Attribute = 1 }));
+			graph.ConnectNodeToWith(D, C, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 2 }));
+			graph.ConnectNodeToWith(D, E, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 7 }));
+			graph.ConnectNodeToWith(E, C, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 }));
 
 			writer.Save(graphExoticNodePath, graph);
 		}
@@ -191,7 +191,7 @@ namespace NOCoreTest
 			Assert.AreEqual(1, graph.NodeCount);
 			var fakeNode = new Node();
 			Assert.AreEqual(1, ParseId(fakeNode.Id));
-			var fakeEdge = new Edge(new AttributePair { Name = "Weight", Attribute = 1 });
+			var fakeEdge = new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 });
 			Assert.AreEqual(0, ParseId(fakeEdge.Id));
 		}
 
@@ -201,7 +201,7 @@ namespace NOCoreTest
 			graph = writer.Read(graph1Path) as Graph;
 			Assert.AreEqual(5, graph.NodeCount);
 			var fakeNode = new Node();
-			var fakeEdge = new Edge(new AttributePair { Name = "Weight", Attribute = 1 });
+			var fakeEdge = new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 });
 			Assert.AreEqual(5, ParseId(fakeNode.Id));
 			Assert.AreEqual(9, ParseId(fakeEdge.Id));
 
@@ -213,7 +213,7 @@ namespace NOCoreTest
 			graph = writer.Read(graph2Path) as Graph;
 			Assert.AreEqual(9, graph.NodeCount);
 			var fakeNode = new Node();
-			var fakeEdge = new Edge(new AttributePair { Name = "Weight", Attribute = 1 });
+			var fakeEdge = new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 });
 			Assert.AreEqual(9, ParseId(fakeNode.Id));
 			Assert.AreEqual(28, ParseId(fakeEdge.Id));
 		}
@@ -241,7 +241,7 @@ namespace NOCoreTest
 				var index2 = random.Next(0, 50000);
 				while (index2 == index1)
 					index2 = random.Next(0, 50000);
-				graph.ConnectNodeToWith(nodes[index1], nodes[index2], new Edge(new AttributePair { Name = "Weight", Attribute = random.Next(1, 600) }));
+				graph.ConnectNodeToWith(nodes[index1], nodes[index2], new Edge(new AttributePair<Double> { Name = "Weight", Attribute = random.Next(1, 600) }));
 			}
 			Assert.AreEqual(graph.AllEdges.Count, 50000);
 
@@ -271,7 +271,7 @@ namespace NOCoreTest
 				var index2 = random.Next(0, 1000);
 				while (index2 == index1)
 					index2 = random.Next(0, 1000);
-				graph.ConnectNodeToWith(nodes[index1], nodes[index2], new Edge(new AttributePair { Name = "Weight", Attribute = random.Next(1, 600) }));
+				graph.ConnectNodeToWith(nodes[index1], nodes[index2], new Edge(new AttributePair<Double> { Name = "Weight", Attribute = random.Next(1, 600) }));
 			}
 			Assert.AreEqual(graph.AllEdges.Count, 1000);
 
@@ -300,9 +300,9 @@ namespace NOCoreTest
 			var C = new Node() { Label = "C" };
 			var D = new TestSubNode() { Label = "D" };
 			var E = new TesteSubNode2() { Label = "E" };
-			E["test"] = "test";
+			E.DescriptiveAttributes["test"] = "test";
 			B["dummy"] = 15;
-			C["time"] = "NOthing";
+			C.DescriptiveAttributes["time"] = "NOthing";
 			A["3"] = 0.99;
 
 			graph.Add(A);
@@ -311,15 +311,15 @@ namespace NOCoreTest
 			graph.Add(D);
 			graph.Add(E);
 
-			graph.ConnectNodeToWith(A, B, new Edge(new AttributePair { Name = "Weight", Attribute = 8 }));
+			graph.ConnectNodeToWith(A, B, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 8 }));
 			graph.ConnectNodeToWith(A, D, new TestSubEdge(9));
-			graph.ConnectNodeToWith(A, E, new Edge(new AttributePair { Name = "Weight", Attribute = 4 }));
-			graph.ConnectNodeToWith(B, C, new Edge(new AttributePair { Name = "Weight", Attribute = 1 }));
-			graph.ConnectNodeToWith(C, B, new Edge(new AttributePair { Name = "Weight", Attribute = 2 }));
+			graph.ConnectNodeToWith(A, E, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 4 }));
+			graph.ConnectNodeToWith(B, C, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 }));
+			graph.ConnectNodeToWith(C, B, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 2 }));
 			graph.ConnectNodeToWith(C, D, new TestSubEdge(3));
-			graph.ConnectNodeToWith(D, C, new Edge(new AttributePair { Name = "Weight", Attribute = 2 }));
-			graph.ConnectNodeToWith(D, E, new Edge(new AttributePair { Name = "Weight", Attribute = 7 }));
-			graph.ConnectNodeToWith(E, C, new Edge(new AttributePair { Name = "Weight", Attribute = 1 }));
+			graph.ConnectNodeToWith(D, C, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 2 }));
+			graph.ConnectNodeToWith(D, E, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 7 }));
+			graph.ConnectNodeToWith(E, C, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 }));
 
 			writer.Save(extendableGraphPath, graph);
 		}

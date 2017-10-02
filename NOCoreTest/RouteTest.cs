@@ -37,8 +37,8 @@ namespace NOCoreTest
 		[TestMethod]
 		public void TestMethod1()
 		{
-			IEdge edge1 = new Edge(new AttributePair { Name = "Weight", Attribute = 1 });
-			IEdge edge2 = new Edge(new AttributePair { Name = "Weight", Attribute = 1 });
+			IEdge edge1 = new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 });
+			IEdge edge2 = new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 });
 			graph.ConnectNodeToWith(src, nodes[1], edge1);
 			graph.ConnectNodeToWith(nodes[1], nodes[2], edge2);
 

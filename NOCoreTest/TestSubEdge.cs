@@ -16,7 +16,7 @@ namespace NOCoreTest
 		}
 
 		public TestSubEdge(int weight)
-			: base(new AttributePair { Name = "Weight", Attribute = weight })
+			: base(new AttributePair<Double> { Name = "Weight", Attribute = weight })
 		{
 		}
 	}
