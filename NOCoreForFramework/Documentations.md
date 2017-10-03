@@ -58,7 +58,7 @@ more ___nodes___ from the toolbar section onto the main ___canvas___, and connec
 ***right click***ing on the _source node_ first and select `Connect from here` and then ___right click___ on 
 the _destination_ node and select `Connect to here`.  
    
-![alt text](https://raw.githubusercontent.com/fanrice123/NOCoreForFramework/master/NOCoreForFramework/img/node.png "Select node")
+![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/node.png?raw=true "Select node")
   
 ![alt text]( \img\connect_from.png "Connect from")
  
