@@ -60,9 +60,9 @@ the _destination_ node and select `Connect to here`.
    
 ![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/node.PNG?raw=true "Select node")
   
-![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/connect_from.PNG?raw=true "Connect from")
+![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/connect_from.png?raw=true "Connect from")
  
-![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/connect_to.PNG?raw=true "Connect to")
+![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/connect_to.png?raw=true "Connect to")
    
 ![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/connected_nodes.PNG?raw=true "Connected node")
 
@@ -84,7 +84,7 @@ protocols and variable properties of the entities such as cost and speed can be 
 __Saving and loading graphs from/to file:__ Once the user is happy with the graph on the canvas, they can save it to an `XML` file by clicking 
 on `File > Save`. Additionally, they can load compatible `XML` files into the program.   
    
-![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/save.PNG?raw=true "Save")   
+![alt text]( https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/save.png?raw=true "Save")   
   
 __Running the algorithm:__ After drawing the graph on the canvas, user can hit the `Start` and then `Run` button 
 to run the algorithm. At this point user can select some _numerical attributes_ and specify a 
