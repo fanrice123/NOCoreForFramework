@@ -60,23 +60,23 @@ the _destination_ node and select `Connect to here`.
    
 ![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/node.PNG?raw=true "Select node")
   
-![alt text]( https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img//connect_from.PNG?raw=true "Connect from")
+![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/connect_from.PNG?raw=true "Connect from")
  
-![alt text]( \img\connect_to.png "Connect to")
+![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/connect_to.PNG?raw=true "Connect to")
    
-![alt text]( \img\connected_nodes.png "Connected node")
+![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/connected_nodes.PNG?raw=true "Connected node")
 
 __Setting attributes:__ Key value pairs can be added to the edges as ___attributes___. Users can also select either a _node_ or an _edge_ by clicking on them and view and set 
 some attributes. Attribute types can be __descriptive__ or __numerical__. Users 
 can also select a node to be an __observer__ from here by checking the `Observer` checkbox. 
   
-![alt text]( \img\selected_edge.png "Selected edge")   
+![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/selected_edge.PNG?raw=true "Selected edge")   
   
-![alt text]( \img\add_attr.png "Add attribute")   
+![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/add_attr.PNG?raw=true "Add attribute")   
   
-![alt text]( \img\side_panel.png "Side Panel")   
+![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/side_panel.PNG?raw=true "Side Panel")   
    
-![alt text]( \img\is_observer.png "Is observer")   
+![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/is_observer.PNG?raw=true "Is observer")   
    
 For instance, devices’ names can be descriptive attributes, whereas, supported 
 protocols and variable properties of the entities such as cost and speed can be of type numerical.   
@@ -84,13 +84,13 @@ protocols and variable properties of the entities such as cost and speed can be 
 __Saving and loading graphs from/to file:__ Once the user is happy with the graph on the canvas, they can save it to an `XML` file by clicking 
 on `File > Save`. Additionally, they can load compatible `XML` files into the program.   
    
-![alt text]( \img\save.png "Save")   
+![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/save.PNG?raw=true "Save")   
   
 __Running the algorithm:__ After drawing the graph on the canvas, user can hit the `Start` and then `Run` button 
 to run the algorithm. At this point user can select some _numerical attributes_ and specify a 
 range for each so the algorithm can use the attributes to find the best _paths_.   
    
-![alt text]( \img\start.png "Start")   
+![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/start.PNG?raw=true "Start")   
    
 __Output:__ The algorithm then searches for all the possible paths between each ___pair___ of nodes 
 and connects a __line__ between those pairs if there are paths that contains an ___observer___ between the pairs. 
