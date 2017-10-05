@@ -70,5 +70,20 @@
     <Compile Include="Criteria\RangeCriterion.cs" />
     <Compile Include="Algorithms\WorstCases.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Documentations.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="img\add_attr.PNG" />
+    <Content Include="img\connected_nodes.PNG" />
+    <Content Include="img\connect_from.png" />
+    <Content Include="img\connect_to.png" />
+    <Content Include="img\is_observer.PNG" />
+    <Content Include="img\node.PNG" />
+    <Content Include="img\save.png" />
+    <Content Include="img\selected_edge.PNG" />
+    <Content Include="img\side_panel.PNG" />
+    <Content Include="img\start.PNG" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
