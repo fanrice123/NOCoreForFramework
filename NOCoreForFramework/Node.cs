@@ -123,6 +123,7 @@ namespace NetworkObservabilityCore
 		#endregion
 
 		#region Constructors
+		/*
 		/// <summary>
 		/// Default initialises an **Edge**.
 		/// </summary>
@@ -161,6 +162,7 @@ namespace NetworkObservabilityCore
 				DescriptiveAttributes[attrPair.Name] = attrPair.Attribute;
 			}
 		}
+		*/
 
 		/// <summary>
 		/// Initialises all of the properties.
