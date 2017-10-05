@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetworkObservabilityCore
+namespace NetworkObservabilityCore.Criteria
 {
+
 	public class EqualCriterion : ICriterion
 	{
 		public EqualCriterion(String attrName, IComparable criterion)

@@ -14,12 +14,12 @@ namespace NetworkObservabilityCore
 	public interface IConstrainable
 	{
 		/// <summary>
-		/// Gets attributes with its name.
+		/// Gets numerical attributes with its name.
 		/// </summary>
         IDictionary<String, Double> NumericAttributes { get; set; }
 
 		/// <summary>
-		/// Gets attributes with its name.
+		/// Gets numerical attributes with its name.
 		/// </summary>
         IDictionary<String, String> DescriptiveAttributes { get; set; }
 
