@@ -11,30 +11,52 @@ using NetworkObservabilityCore.Utils;
 
 namespace NetworkObservabilityCore.Xml
 {
+	/// <summary>
+	/// **GraphXML** is a special designed tool to read/load.
+	/// See <see cref="IGraph"/> from/to xml file.
+	/// </summary>
     public class GraphXML
-    {
+    { 
+		/// <summary>
+		/// The actual Xml file.
+		/// </summary>
 		public XDocument File
 		{
 			get;
 			protected set;
 		}
 
+		/// <summary>
+		/// Mapping full name of a type to an <see cref="Assembly"/>.
+		/// </summary>
 		public Dictionary<String, Assembly> DependencyMap
 		{
 			get;
 			set;
 		}
 
+		#region Constructors
+		/// <summary>
+		/// Default constructor of **GraphXML**.
+		/// </summary>
 		public GraphXML()
 			: this("1.0", "utf-8", "false")
 		{
 		}
-		
+
+		/// <summary>
+		/// A constructor allow user to define specification of Xml.
+		/// See also <seealso cref="XDeclaration(string, string, string)"/>
+		/// </summary>
+		/// <param name="version">The version of the Xml, usually "1.0".</param>
+		/// <param name="encoding">The encoding of Xml document.</param>
+		/// <param name="standalone">A string containing "yes" or "no" that specifies whether the Xml is standalone or requires external entities tobe resolved.</param>
 		public GraphXML(String version, String encoding, String standalone)
 		{
 			File = new XDocument(new XDeclaration(version, encoding, standalone));
 			DependencyMap = new Dictionary<String, Assembly>();
 		}
+		#endregion
 
 		public void Save(String path, IGraph graph)
 		{
