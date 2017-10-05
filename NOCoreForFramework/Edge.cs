@@ -94,7 +94,7 @@ namespace NetworkObservabilityCore
 		#region Constructors
 
 		/// <summary>
-		/// Initialises an **Edge**
+		/// Default initialises an **Edge**.
 		/// </summary>
 		public Edge()
 			: this(new AttributePair<Double>[0], new AttributePair<String>[0])
@@ -102,7 +102,8 @@ namespace NetworkObservabilityCore
 		}
 
 		/// <summary>
-		/// Initialises an **Edge** with numeric attributes
+		/// Initialises an **Edge** with numeric attributes <see cref="AttributePair{T}"/>
+		/// where type parameter is <see cref="Double"/>.
 		/// </summary>
 		public Edge(params AttributePair<Double>[] numericAttr)
 			: this(numericAttr, new AttributePair<String>[0])
@@ -110,7 +111,8 @@ namespace NetworkObservabilityCore
 		}
 
 		/// <summary>
-		/// Initialises an **Edge** with <see cref="AttributePair"/>
+		/// Initialises an **Edge** with <see cref="AttributePair{T}"/> 
+		/// where type parameter is <see cref="String"/>.
 		/// </summary>
 		public Edge(AttributePair<Double>[] numericAttr, AttributePair<String>[] descriptiveAttr)
 		{
@@ -131,30 +133,67 @@ namespace NetworkObservabilityCore
 		}
 		#endregion
 
+		#region Members
+
+		/// <inheritdoc />
 		public bool HasNumericAttribute(String name)
 		{
 			return NumericAttributes.ContainsKey(name);
 		}
 
+		/// <inheritdoc />
 		public bool HasDescriptiveAttribute(String name)
 		{
 			return DescriptiveAttributes.ContainsKey(name);
 		}
 
+		/// <summary>
+		/// Compares **IEdge** to other with their <see cref="Id"/>.
+		/// </summary>
+		/// <param name="other">An <see cref="IEdge"/>.</param>
+		/// <returns>Returns `true` if they are equal.</returns>
+		public virtual bool Equals(IEdge other)
+		{
+			return Id == other.Id;
+		}
+		#endregion
+
+		#region Object methods
+		/// <summary>
+		/// Get hash code based on <see cref="Id"/>.
+		/// </summary>
+		/// <returns>Hash code.</returns>
 		public override int GetHashCode()
 		{
 			return Id.GetHashCode();
 		}
 
-		bool IEquatable<IEdge>.Equals(IEdge other)
+		/// <summary>
+		/// Compares **IEdge** with other object.
+		/// > [!Note]
+		/// > Note that this method make use of <see cref="Equals(IEdge)"/>.
+		/// > If `obj` is <see cref="IEdge"/> then it will be compared using
+		/// > <see cref="Equals(IEdge)"/>.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns>`false` if matches one of the following cases, othwerise
+		/// returns `true`:
+		/// * obj is not <see cref="IEdge"/>.
+		/// * obj is <see cref="IEdge"/> but <see cref="Equals(IEdge)"/> returns `false`.
+		/// </returns>
+		public override bool Equals(object obj)
 		{
-			return Id == other.Id;
+			return obj is IEdge && Equals(obj as IEdge);
 		}
 
+		/// <summary>
+		/// String representation of <see cref="INode"/>.
+		/// </summary>
 		public override string ToString()
 		{
 			return String.Format("{0}: {1}, From {2} To {3}", Id, Label, From.Id, To.Id);
 		}
+		#endregion
 
 	}
 }

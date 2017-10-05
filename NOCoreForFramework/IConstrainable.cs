@@ -8,8 +8,8 @@ namespace NetworkObservabilityCore
 {
 	/// <summary>
 	/// A type implements **IConstrainable** implies
-	/// that it has <see cref="Attributes"/> which allows it
-	/// to work with <see cref="Constraint{T}"/>
+	/// that it has <see cref="NumericAttributes"/> and <see cref="DescriptiveAttributes"/> which allows it
+	/// to work with <see cref="Constraint{T}"/>.
 	/// </summary>
 	public interface IConstrainable
 	{
@@ -27,7 +27,7 @@ namespace NetworkObservabilityCore
 		/// Checks if it has certain numeric attribute.
 		/// </summary>
 		/// <param name="name">Name of attribute</param>
-		/// <returns>Returns true if it exists.</returns>
+		/// <returns>Returns `true` if it exists.</returns>
 		/// <exception cref="ArgumentNullException">Thrown if the name is null.</exception>
 		bool HasNumericAttribute(String name);
 
@@ -35,7 +35,7 @@ namespace NetworkObservabilityCore
 		/// Checks if it has certain descriptive attribute.
 		/// </summary>
 		/// <param name="name">Name of attribute</param>
-		/// <returns>Returns true if it exists.</returns>
+		/// <returns>Returns `true` if it exists.</returns>
 		/// <exception cref="ArgumentNullException">Thrown if the name is null.</exception>
 		bool HasDescriptiveAttribute(String name);
 

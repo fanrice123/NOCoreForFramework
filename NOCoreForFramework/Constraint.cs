@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NetworkObservabilityCore.Criteria;
 
-namespace NetworkObservabilityCore.Criteria
+namespace NetworkObservabilityCore
 {
 	public class Constraint<T> : IEnumerable<ICriterion> where T : IConstrainable
 	{

@@ -123,6 +123,44 @@ namespace NetworkObservabilityCore
 		#endregion
 
 		#region Constructors
+		/// <summary>
+		/// Default initialises an **Edge**.
+		/// </summary>
+		public Edge()
+			: this(new AttributePair<Double>[0], new AttributePair<String>[0])
+		{
+		}
+
+		/// <summary>
+		/// Initialises an **Edge** with numeric attributes <see cref="AttributePair{T}"/>
+		/// where type parameter is <see cref="Double"/>.
+		/// </summary>
+		public Edge(params AttributePair<Double>[] numericAttr)
+			: this(numericAttr, new AttributePair<String>[0])
+		{
+		}
+
+		/// <summary>
+		/// Initialises an **Edge** with <see cref="AttributePair{T}"/> 
+		/// where type parameter is <see cref="String"/>.
+		/// </summary>
+		public Edge(AttributePair<Double>[] numericAttr, AttributePair<String>[] descriptiveAttr)
+		{
+			Id = IdGenerator.GenerateEdgeId();
+			Label = Id;
+			IsBlocked = false;
+			NumericAttributes = new Dictionary<string, Double>();
+			foreach (var attrPair in numericAttr)
+			{
+				NumericAttributes[attrPair.Name] = attrPair.Attribute;
+			}
+
+			DescriptiveAttributes = new Dictionary<string, String>();
+			foreach (var attrPair in descriptiveAttr)
+			{
+				DescriptiveAttributes[attrPair.Name] = attrPair.Attribute;
+			}
+		}
 
 		/// <summary>
 		/// Initialises all of the properties.
@@ -157,17 +195,18 @@ namespace NetworkObservabilityCore
 		}
 
 		/// <summary>
-		/// Compares **Node** to other with their <see cref="Id"/>.
+		/// Compares **INode** to other with their <see cref="Id"/>.
 		/// </summary>
 		/// <param name="other">An <see cref="INode"/>.</param>
 		/// <returns>Returns `true` if they are equal.</returns>
-		public bool Equals(INode other)
+		public virtual bool Equals(INode other)
 		{
 			return Id == other.Id;
 		}
 
 		#endregion
 
+		#region Object methods
 		/// <summary>
 		/// Gets hash value based on <see cref="Id"/>
 		/// </summary>
@@ -178,7 +217,7 @@ namespace NetworkObservabilityCore
 		}
 
 		/// <summary>
-		/// Compares **Node** with other object.
+		/// Compares **INode** with other object.
 		/// > [!Note]
 		/// > Note that this method make use of <see cref="Equals(INode)"/>.
 		/// > If `obj` is <see cref="INode"/> then it will be compared using
@@ -202,5 +241,7 @@ namespace NetworkObservabilityCore
 		{
 			return String.Format("{0}: {1}", Id, Label);
 		}
+
+		#endregion
 	}
 }

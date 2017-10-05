@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetworkObservabilityCore.Criteria
 {
-	public class GreaterThanCriterion
+	public class GreaterThanCriterion : ICriterion
 	{
 		public GreaterThanCriterion(String attrName, IComparable criterion)
 		{
