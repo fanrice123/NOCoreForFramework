@@ -94,7 +94,9 @@ namespace NetworkObservabilityCore
 		#region Constructors
 
 		/// <summary>
-		/// Default initialises an **Edge**.
+		/// Default initialises **Node** and all of the properties.
+		/// All containers properties are default initialised as well.
+		/// <see cref="IdGenerator"/> is used to generate an Id.
 		/// </summary>
 		public Edge()
 			: this(new AttributePair<Double>[0], new AttributePair<String>[0])
@@ -114,6 +116,8 @@ namespace NetworkObservabilityCore
 		/// Initialises an **Edge** with <see cref="AttributePair{T}"/> 
 		/// where type parameter is <see cref="String"/>.
 		/// </summary>
+		/// <param name="numericAttr">Attribute pairs.</param>
+		/// <param name="descriptiveAttr">Attribute pairs.</param>
 		public Edge(AttributePair<Double>[] numericAttr, AttributePair<String>[] descriptiveAttr)
 		{
 			Id = IdGenerator.GenerateEdgeId();

@@ -123,53 +123,44 @@ namespace NetworkObservabilityCore
 		#endregion
 
 		#region Constructors
-		/*
+
 		/// <summary>
-		/// Default initialises an **Edge**.
+		/// Initialises an **Node** with <see cref="AttributePair{T}"/> 
+		/// where type parameter is <see cref="String"/>.
 		/// </summary>
-		public Edge()
+		/// <param name="numericAttr">Attribute pairs.</param>
+		/// <param name="descriptiveAttr">Attribute pairs.</param>
+		public Node()
 			: this(new AttributePair<Double>[0], new AttributePair<String>[0])
 		{
 		}
 
 		/// <summary>
-		/// Initialises an **Edge** with numeric attributes <see cref="AttributePair{T}"/>
+		/// Initialises an **Node** with numeric attributes <see cref="AttributePair{T}"/>
 		/// where type parameter is <see cref="Double"/>.
 		/// </summary>
-		public Edge(params AttributePair<Double>[] numericAttr)
+		public Node(params AttributePair<Double>[] numericAttr)
 			: this(numericAttr, new AttributePair<String>[0])
 		{
 		}
 
 		/// <summary>
+		/// Initialises an **Node** with descriptive attributes <see cref="AttributePair{T}"/>
+		/// where type parameter is <see cref="String"/>.
+		/// </summary>
+		public Node(params AttributePair<String>[] descriptiveAttr)
+			: this(new AttributePair<Double>[0], descriptiveAttr)
+		{
+		}
+
+
+		/// <summary>
 		/// Initialises an **Edge** with <see cref="AttributePair{T}"/> 
 		/// where type parameter is <see cref="String"/>.
 		/// </summary>
-		public Edge(AttributePair<Double>[] numericAttr, AttributePair<String>[] descriptiveAttr)
-		{
-			Id = IdGenerator.GenerateEdgeId();
-			Label = Id;
-			IsBlocked = false;
-			NumericAttributes = new Dictionary<string, Double>();
-			foreach (var attrPair in numericAttr)
-			{
-				NumericAttributes[attrPair.Name] = attrPair.Attribute;
-			}
-
-			DescriptiveAttributes = new Dictionary<string, String>();
-			foreach (var attrPair in descriptiveAttr)
-			{
-				DescriptiveAttributes[attrPair.Name] = attrPair.Attribute;
-			}
-		}
-		*/
-
-		/// <summary>
-		/// Initialises all of the properties.
-		/// All containers properties are default initialised as well.
-		/// <see cref="IdGenerator"/> is used to generate an Id.
-		/// </summary>
-		public Node()
+		/// <param name="numericAttr">Attribute pairs.</param>
+		/// <param name="descriptiveAttr">Attribute pairs.</param
+		public Node(AttributePair<Double>[] numericAttr, AttributePair<String>[] descriptiveAttr)
 		{
 			Id = IdGenerator.GenerateNodeId();
 			Label = Id;
