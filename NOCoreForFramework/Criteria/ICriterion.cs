@@ -13,10 +13,14 @@ namespace NetworkObservabilityCore.Criteria
 	public interface ICriterion
 	{
 		/// <summary>
-		/// 
+		/// The name of attribute to be checked.
 		/// </summary>
 		String Attribute { get; }
 
+		/// <summary>
+		/// Function returns `true` if <see cref="Attribute"/> meets
+		/// the criterion specified.
+		/// </summary>
 		Func<IComparable, bool> Check { get; }
 
 	}
