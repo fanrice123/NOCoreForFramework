@@ -58,6 +58,7 @@ namespace NetworkObservabilityCore.Xml
 		}
 		#endregion
 
+		#region Methods
 		/// <summary>
 		/// Saves a **graph** object as Xml file at given path with
 		/// a default root name. See <see cref="Save(string, IGraph, string)"/>
@@ -99,6 +100,25 @@ namespace NetworkObservabilityCore.Xml
 			*/
 		}
 
+		/// <summary>
+		/// Reads Xml file.
+		/// </summary>
+		/// <param name="path">File path of the Xml file.</param>
+		/// <returns><see cref="IGraph"/> object stored in the Xml file.</returns>
+		/// <remarks>
+		/// > [!Note]
+		/// > <see cref="Dump(XElement)"/> is used to load the <see cref="IGraph"/> 
+		/// > from **XElement** xnode.
+		/// </remarks>
+		public IGraph Read(String path)
+		{
+			File = XDocument.Load(path);
+			IGraph graph = Dump(File.Root);
+
+			return graph;
+		}
+
+		#region Save helper methods
 		/// <summary>
 		/// Dumps a <see cref="IGraph"/> into root node in
 		/// <see cref="XElement"/> representation.
@@ -282,25 +302,9 @@ namespace NetworkObservabilityCore.Xml
 			}
 			return xelement;
 		}
+		#endregion
 
-		/// <summary>
-		/// Reads Xml file.
-		/// </summary>
-		/// <param name="path">File path of the Xml file.</param>
-		/// <returns><see cref="IGraph"/> object stored in the Xml file.</returns>
-		/// <remarks>
-		/// > [!Note]
-		/// > <see cref="Dump(XElement)"/> is used to load the <see cref="IGraph"/> 
-		/// > from **XElement** xnode.
-		/// </remarks>
-		public IGraph Read(String path)
-		{
-			File = XDocument.Load(path);
-			IGraph graph = Dump(File.Root);
-
-			return graph;
-		}
-
+		#region Read helper methods
 		/// <summary>
 		/// Restores from a **XElement** node to
 		/// a <see cref="IGraph"/>.
@@ -482,5 +486,7 @@ namespace NetworkObservabilityCore.Xml
 			var hasConstructor = type.GetConstructor(BindingFlags.Default, null, Type.EmptyTypes, null) != null;
 			return !(type.IsPrimitive || hasConstructor);
 		}
+		#endregion
+		#endregion
 	}
 }
