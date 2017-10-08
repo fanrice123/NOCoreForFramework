@@ -40,12 +40,12 @@ namespace NOCoreTest
 			graph.ConnectNodeToWith(E, C, new Edge({Name="Weight", Attribute=)(1));
 			*/
 
-			var result = new ConnectivityObserver().ObserveConnectivity(graph, new List<INode>() { B }, Tuple.Create("Weight", Constraint<IEdge>.Default));
+			var result = new ConnectivityObserver().Observe(graph, new List<INode>() { B }, Tuple.Create("Weight", Constraint<IEdge>.Default));
 
 			var routes = new HashSet<Route>();
 			foreach (var key in result.Keys)
 			{
-				var route = key.Item3;
+				var route = key.Through;
 				if (!routes.Contains(route))
 					routes.Add(route);
 				else

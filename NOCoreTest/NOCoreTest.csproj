@@ -63,6 +63,7 @@
     <Compile Include="TestNodeClass.cs" />
     <Compile Include="TestForRouteClass.cs" />
     <Compile Include="RouteTest.cs" />
+    <Compile Include="ConnectivityObserverTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NOCoreForFramework\NOCoreForFramework.csproj">

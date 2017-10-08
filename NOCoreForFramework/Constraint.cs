@@ -14,7 +14,7 @@ namespace NetworkObservabilityCore
 		#region Properties
 		public static Constraint<T> Default => new Constraint<T>();
 
-		public ISet<ICriterion> Criteria { get; private set; }
+		public IEnumerable<ICriterion> Criteria { get; private set; }
 		#endregion
 
 		#region Constructors
@@ -23,7 +23,7 @@ namespace NetworkObservabilityCore
 		{
 		}
 
-		public Constraint(ISet<ICriterion> criteria) 
+		public Constraint(IEnumerable<ICriterion> criteria) 
 		{
 			Criteria = criteria;
 		}

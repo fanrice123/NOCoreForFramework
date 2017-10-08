@@ -12,16 +12,8 @@ namespace NOCoreTest
 	class BasicConstraint : Constraint<Edge>
 	{
 		BasicConstraint()
-			: base()
+			:base(new List<ICriterion>() { new EqualCriterion("test", 5) })
 		{
-			Criteria.Add(new EqualCriterion("test", 5));
-		}
-
-		public void te()
-		{
-			var ec = new Constraint<Edge>();
-
-			ec.Criteria.Add(new EqualCriterion("Weight", 5));
 		}
 	}
 }

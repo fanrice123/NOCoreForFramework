@@ -58,11 +58,29 @@ namespace NetworkObservabilityCore.Xml
 		}
 		#endregion
 
+		/// <summary>
+		/// Saves a **graph** object as Xml file at given path with
+		/// a default root name. See <see cref="Save(string, IGraph, string)"/>
+		/// for more details.
+		/// </summary>
+		/// <param name="path">File path to store **graph**.</param>
+		/// <param name="graph">Graph object to be saved.</param>
 		public void Save(String path, IGraph graph)
 		{
 			Save(path, graph, "NetworkObservabilityCore");
 		}
 		
+		/// <summary>
+		/// Saves a **graph** object as Xml file at given path with
+		/// a root name specified.
+		/// </summary>
+		/// <param name="path">File path to store **graph**.</param>
+		/// <param name="graph">Graph object to be saved.</param>
+		/// <param name="rootName">Root name of the Xml file.</param>
+		/// <remarks>
+		/// <see cref="DumpTo(IGraph, ref XElement)"/> will be used
+		/// to store the **graph** object.
+		/// </remarks>
 		public void Save(String path, IGraph graph, String rootName)
 		{
 			XElement root = new XElement(rootName);
@@ -81,9 +99,21 @@ namespace NetworkObservabilityCore.Xml
 			*/
 		}
 
+		/// <summary>
+		/// Dumps a <see cref="IGraph"/> into root node in
+		/// <see cref="XElement"/> representation.
+		/// </summary>
+		/// <param name="graph">Graph object to be dumped.</param>
+		/// <param name="root">The root node where the **graph** will be saved at.</param>
+		/// <remarks>
+		/// > [!Note]
+		/// > This method utilises <see cref="CreateXElement(IEdge)"/>,
+		/// > <see cref="CreateXElement(INode)"/>, <see cref="CreateDependencyXElement"/>
+		/// > and <see cref="CreateXElementIdGenerator"/> to store all the details
+		/// > of a **graph**.
+		/// </remarks>
 		protected virtual void DumpTo(IGraph graph, ref XElement root)
 		{
-			XElement dependenciesNode = new XElement("Dependencies");
 
 			Type graphType = graph.GetType();
 			XElement graphNode = new XElement("Graph", new XAttribute("Type", graphType.FullName));
@@ -105,17 +135,7 @@ namespace NetworkObservabilityCore.Xml
 			}
 			graphNode.Add(edges);
 
-			var dependencies = DependencyMap.Values.Distinct();
-			foreach (var dependency in dependencies)
-			{
-				var types = DependencyMap.Where(type => type.Value.FullName == dependency.FullName);
-				XElement dependencyNode = new XElement("Dependency", new XAttribute("Name", dependency.ManifestModule.Name));
-				foreach(var typePair in types)
-				{
-					dependencyNode.Add(new XElement("Type", typePair.Key));
-				}
-				dependenciesNode.Add(dependencyNode);
-			}
+			XElement dependenciesNode = CreateDependencyXElement();
 
 			XElement indexGeneratorNode = CreateXElementIdGenerator();
 
@@ -124,6 +144,20 @@ namespace NetworkObservabilityCore.Xml
 			root.Add(graphNode);
 		}
 
+		/// <summary>
+		/// Creates an XElement representation of <see cref="INode"/>.
+		/// </summary>
+		/// <param name="node">
+		/// A <see cref="INode"/> object to be serialized.
+		/// </param>
+		/// <returns>**XElement** representation of **node**.</returns>
+		/// <remarks>
+		/// > [!Note]
+		/// > This method uses <see cref="CreateAttributes{K, V}(IDictionary{K, V}, string)"/>
+		/// > to serialize <see cref="IConstrainable.DescriptiveAttributes"/> and
+		/// > <see cref="IConstrainable.NumericAttributes"/>. <see cref="DependencyMap"/> is
+		/// > also updated when serialising the **node**.
+		/// </remarks>
 		protected virtual XElement CreateXElement(INode node)
 		{
 			Type nodeType = node.GetType();
@@ -149,6 +183,20 @@ namespace NetworkObservabilityCore.Xml
 			return xelement;
 		}
 
+		/// <summary>
+		/// Creates an XElement representation of <see cref="IEdge"/>.
+		/// </summary>
+		/// <param name="edge">
+		/// A <see cref="IEdge"/> object to be serialized.
+		/// </param>
+		/// <returns>**XElement** representation of **edge**.</returns>
+		/// <remarks>
+		/// > [!Note]
+		/// > This method uses <see cref="CreateAttributes{K, V}(IDictionary{K, V}, string)"/>
+		/// > to serialize <see cref="IConstrainable.DescriptiveAttributes"/> and
+		/// > <see cref="IConstrainable.NumericAttributes"/>. <see cref="DependencyMap"/> is
+		/// > also updated when serialising the **edge**.
+		/// </remarks>
 		protected virtual XElement CreateXElement(IEdge edge)
 		{
 			Type edgeType = edge.GetType();
@@ -172,6 +220,33 @@ namespace NetworkObservabilityCore.Xml
 			return xelement;
 		}
 
+		/// <summary>
+		/// Serialises <see cref="DependencyMap"/> to Xml representation.
+		/// </summary>
+		/// <returns>**XElement** representation of <see cref="DependencyMap"/>.</returns>
+		protected virtual XElement CreateDependencyXElement()
+		{
+			XElement dependenciesNode = new XElement("Dependencies");
+
+			var dependencies = DependencyMap.Values.Distinct();
+			foreach (var dependency in dependencies)
+			{
+				var types = DependencyMap.Where(type => type.Value.FullName == dependency.FullName);
+				XElement dependencyNode = new XElement("Dependency", new XAttribute("Name", dependency.ManifestModule.Name));
+				foreach (var typePair in types)
+				{
+					dependencyNode.Add(new XElement("Type", typePair.Key));
+				}
+				dependenciesNode.Add(dependencyNode);
+			};
+
+			return dependenciesNode;
+		}
+
+		/// <summary>
+		/// Saves <see cref="IdGenerator"/> as **XElement**.
+		/// </summary>
+		/// <returns>**XElement** representation of <see cref="IdGenerator"/>.</returns>
 		protected XElement CreateXElementIdGenerator()
 		{
 			XElement element = new XElement("IdGenerator", new XElement("NodeIdIndex", IdGenerator.nodeIdIndex.ToString()),
@@ -180,6 +255,14 @@ namespace NetworkObservabilityCore.Xml
 			return element;
 		}
 
+		/// <summary>
+		/// Serialises an attributes object.
+		/// </summary>
+		/// <typeparam name="K">The key type. Usually a **string**.</typeparam>
+		/// <typeparam name="V">The value type. Usually a **string** or **double**.</typeparam>
+		/// <param name="attributes">An attributes object.</param>
+		/// <param name="name">The name of **XElement** node.</param>
+		/// <returns>A **XElement** representation of attributes object.</returns>
 		protected XElement CreateAttributes<K, V>(IDictionary<K, V> attributes, String name)
 		{
 			XElement xelement = new XElement(name);
@@ -200,6 +283,16 @@ namespace NetworkObservabilityCore.Xml
 			return xelement;
 		}
 
+		/// <summary>
+		/// Reads Xml file.
+		/// </summary>
+		/// <param name="path">File path of the Xml file.</param>
+		/// <returns><see cref="IGraph"/> object stored in the Xml file.</returns>
+		/// <remarks>
+		/// > [!Note]
+		/// > <see cref="Dump(XElement)"/> is used to load the <see cref="IGraph"/> 
+		/// > from **XElement** xnode.
+		/// </remarks>
 		public IGraph Read(String path)
 		{
 			File = XDocument.Load(path);
@@ -208,6 +301,20 @@ namespace NetworkObservabilityCore.Xml
 			return graph;
 		}
 
+		/// <summary>
+		/// Restores from a **XElement** node to
+		/// a <see cref="IGraph"/>.
+		/// </summary>
+		/// <param name="root">
+		/// The root node where the Xml representation of **graph** is stored at.
+		/// </param>
+		/// <remarks>
+		/// > [!Note]
+		/// > This method utilises <see cref="LoadNode(XElement)"/>,
+		/// > <see cref="LoadEdge(XElement)"/>, <see cref="SetIdsStartFrom(XElement)"/>
+		/// > and <see cref="CreateXElementIdGenerator"/> to restore all the details
+		/// > of a **graph**.
+		/// </remarks>
 		protected virtual IGraph Dump(XElement root)
 		{
 			XElement dependencies = root.Element("Dependencies");
@@ -240,9 +347,9 @@ namespace NetworkObservabilityCore.Xml
 			foreach (XElement xedge in xedges)
 			{
 				var tuple = LoadEdge(xedge);
-				var from = graph.AllNodes[tuple.Item1];
-				var to = graph.AllNodes[tuple.Item2];
-				var edge = tuple.Item3;
+				var from = graph.AllNodes[tuple.From];
+				var to = graph.AllNodes[tuple.To];
+				var edge = tuple.Through;
 				graph.ConnectNodeToWith(from, to, edge);
 			}
 
@@ -251,6 +358,11 @@ namespace NetworkObservabilityCore.Xml
 			return graph;
 		}
 
+		/// <summary>
+		/// Sets <see cref="IdGenerator"/> indices to start from the values
+		/// stores in the root node of Xml file.
+		/// </summary>
+		/// <param name="root">The root node of Xml file.</param>
 		protected void SetIdsStartFrom(XElement root)
 		{
 			var xnode = root.Element("IdGenerator");
@@ -259,6 +371,18 @@ namespace NetworkObservabilityCore.Xml
 
 		}
 
+		/// <summary>
+		/// Loads <see cref="INode"/> object from a **XElement** representation of a **node**.
+		/// </summary>
+		/// <param name="xnode">A **XElement** representation of **node**.</param>
+		/// <returns>A <see cref="INode"/> object.</returns>
+		/// <remarks>
+		/// > [!Note]
+		/// > This method utilises <see cref="LoadNumericAttributes(XElement)"/> and
+		/// > <see cref="LoadDescriptiveAttributes(XElement)"/> to load attributes of
+		/// > <see cref="IConstrainable.NumericAttributes"/> and
+		/// > <see cref="IConstrainable.DescriptiveAttributes"/> respectively.
+		/// </remarks>
 		protected virtual INode LoadNode(XElement xnode)
 		{
 			var nodeTypeName = xnode.Attribute("Type").Value;
@@ -281,7 +405,21 @@ namespace NetworkObservabilityCore.Xml
 			return node;
 		}
 
-		protected virtual Tuple<String, String, IEdge> LoadEdge(XElement xedge)
+		/// <summary>
+		/// Loads <see cref="IEdge"/> object from a **XElement** representation of a **edge**.
+		/// </summary>
+		/// <param name="xedge">**XElement** representation of an **edge**.</param>
+		/// <returns>A <see cref="FromToThrough"/> consists of starting and ending point of <see cref="IEdge"/>
+		/// and the <see cref="IEdge"/> itself.
+		/// </returns>
+		/// <remarks>
+		/// > [!Note]
+		/// > This method utilises <see cref="LoadNumericAttributes(XElement)"/> and
+		/// > <see cref="LoadDescriptiveAttributes(XElement)"/> to load attributes of
+		/// > <see cref="IConstrainable.NumericAttributes"/> and
+		/// > <see cref="IConstrainable.DescriptiveAttributes"/> respectively.
+		/// </remarks>
+		protected virtual FromToThrough<String, String, IEdge> LoadEdge(XElement xedge)
 		{
 			var edgeTypeName = xedge.Attribute("Type").Value;
 			Type edgeType = DependencyMap[edgeTypeName].GetType(edgeTypeName);
@@ -298,9 +436,15 @@ namespace NetworkObservabilityCore.Xml
 			var from = xedge.Element("From").Value;
 			var to = xedge.Element("To").Value;
 
-			return Tuple.Create(from, to, edge);
+			return FromToThrough.Create(from, to, edge);
 		}
 
+		/// <summary>
+		/// Loads from a **XElement** representation of an numerical attributes object.
+		/// </summary>
+		/// <param name="xelement">**XElement** which the attributes object is serialised to.</param>
+		/// <returns>A dictionary object. See <see cref="IConstrainable.NumericAttributes"/>.
+		/// </returns>
 		protected IDictionary<String, Double> LoadNumericAttributes(XElement xelement)
 		{
 			var attributes = new Dictionary<String, Double>();
@@ -314,6 +458,12 @@ namespace NetworkObservabilityCore.Xml
 			return attributes;
 		}
 
+		/// <summary>
+		/// Loads from a **XElement** representation of a descriptive attributes object.
+		/// </summary>
+		/// <param name="xelement">**XElement** which the attributes object is serilaised to.</param>
+		/// <returns>A dictionary object. See <see cref="IConstrainable.DescriptiveAttributes"/>.
+		/// </returns>
 		protected IDictionary<String, String> LoadDescriptiveAttributes(XElement xelement)
 		{
 			var attributes = new Dictionary<String, String>();
