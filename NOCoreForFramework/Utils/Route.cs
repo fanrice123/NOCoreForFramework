@@ -93,7 +93,21 @@ namespace NetworkObservabilityCore.Utils
 			}
 		}
 
-		public Route Clone()
+        public override string ToString()
+        {
+            String ret_val = "";
+            int i = 0;
+            foreach (INode node in nodeSequence)
+            {
+                if (i++ != 0)
+                    ret_val += " --> ";
+                ret_val += node.Label;
+            }
+
+            return ret_val;
+        }
+
+        public Route Clone()
 		{
 			return new Route(this);
 		}
