@@ -12,6 +12,52 @@ namespace NetworkObservabilityCore
 	public class ConnectivityObserver
 	{
 
+        public Dictionary<FromTo<INode, INode>, Tuple<ISet<Route>, ISet<Route>>>
+        Observe(IGraph graph, ICollection<INode> observers, Tuple<String, Constraint<IEdge>> weightAndConstraint)
+        {
+            var result = new Dictionary<FromTo<INode, INode>, Tuple<ISet<Route>, ISet<Route>>>();
+
+            foreach (var fromNode in graph.AllNodes)
+            {
+                var from = fromNode.Value;
+                if (observers.Contains(from) && !from.IsObserverInclusive)
+                    continue;
+
+                //KShortestPath shortestPath = new KShortestPath(this, from);
+                AllPaths shortestPath = new AllPaths(graph, from, weightAndConstraint.Item1, weightAndConstraint.Item2);
+
+                foreach (var to in graph.AllNodes.Values.Where(to => !to.Equals(from)))
+                {
+                    var fromTo = FromTo.Create(from, to);
+                    var observedRoutes = new HashSet<Route>();
+                    var unobservedRoutes = new HashSet<Route>();
+
+                    var paths = shortestPath.PathsTo(to);
+                    foreach (Route path in paths)
+                    {
+                        bool observed = false;
+                        foreach (var observer in observers)
+                        {
+                            if (path.Contains(observer))
+                            {
+                                observedRoutes.Add(path);
+                                break;
+                            }
+                            else
+                            {
+                                unobservedRoutes.Add(path);
+                                break;
+                            }
+                        }
+                    }
+                    result[fromTo] = new Tuple<ISet<Route>, ISet<Route>>(observedRoutes, unobservedRoutes);
+                }
+            }
+
+            return result;
+        }
+        
+        /*
 		public Dictionary<FromToThrough<INode, INode, Route>, bool>
 		Observe(IGraph graph, ICollection<INode> observers, Tuple<String, Constraint<IEdge>> weightAndConstraint)
 		{
@@ -47,6 +93,7 @@ namespace NetworkObservabilityCore
 
 			return result;
 		}
+        */
 
 	}
 }

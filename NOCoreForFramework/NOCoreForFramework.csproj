@@ -61,6 +61,7 @@
     <Compile Include="Node.cs" />
     <Compile Include="Utils\AttributePair.cs" />
     <Compile Include="ConnectivityObserver.cs" />
+    <Compile Include="Utils\FromTo.cs" />
     <Compile Include="Utils\FromToThrough.cs" />
     <Compile Include="Utils\IdGenerator.cs" />
     <Compile Include="Utils\Route.cs" />
