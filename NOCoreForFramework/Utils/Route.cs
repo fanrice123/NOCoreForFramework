@@ -33,6 +33,15 @@ namespace NetworkObservabilityCore.Utils
             PathCost += Convert.ToDouble(edge[edgeKeyAttr]);
         }
 
+		public bool Contains(INode node)
+		{
+			return nodeSequence.Contains(node);
+		}
+
+		public bool IsReadOnly => false;
+
+		public int Count => nodeSequence.Count;
+
         public bool ContainsObserver()
         {
             foreach(var node in nodeSequence)

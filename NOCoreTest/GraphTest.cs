@@ -42,14 +42,21 @@ namespace NOCoreTest
 
 			var result = new ConnectivityObserver().Observe(graph, new List<INode>() { B }, Tuple.Create("Weight", Constraint<IEdge>.Default));
 
-			var routes = new HashSet<Route>();
-			foreach (var key in result.Keys)
+			foreach (var pair in result)
 			{
-				var route = key.Through;
-				if (!routes.Contains(route))
-					routes.Add(route);
-				else
-					Assert.Fail();
+				
+				var observedRoutes = pair.Value.Item1;
+				var unobservedRoutes = pair.Value.Item2;
+				foreach (var route in observedRoutes)
+				{
+					if (!route.Contains(B))
+						Assert.Fail();
+				}
+				foreach (var route in unobservedRoutes)
+				{
+					if (route.Contains(B))
+						Assert.Fail();
+				}
 			}
 
             
