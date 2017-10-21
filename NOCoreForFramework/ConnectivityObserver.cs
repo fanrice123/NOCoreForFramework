@@ -28,6 +28,8 @@ namespace NetworkObservabilityCore
 
                 foreach (var to in graph.AllNodes.Values.Where(to => !to.Equals(from)))
                 {
+					if (observers.Contains(to) && !to.IsObserverInclusive)
+						continue;
                     var fromTo = FromTo.Create(from, to);
                     var observedRoutes = new HashSet<Route>();
                     var unobservedRoutes = new HashSet<Route>();
