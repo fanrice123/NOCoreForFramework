@@ -35,7 +35,6 @@ namespace NetworkObservabilityCore
                     var paths = shortestPath.PathsTo(to);
                     foreach (Route path in paths)
                     {
-                        bool observed = false;
                         foreach (var observer in observers)
                         {
                             if (path.Contains(observer))
