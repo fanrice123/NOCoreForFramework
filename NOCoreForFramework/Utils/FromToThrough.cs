@@ -9,13 +9,13 @@ namespace NetworkObservabilityCore.Utils
 	public static class FromToThrough
 	{
 		public static FromToThrough<F, T, Thr>
-		Create<F, T, Thr>(F from, T to, Thr through)
+		Create<F, T, Thr>(F from, T to, Thr through) where Thr : IConnection
 		{
 			return new FromToThrough<F, T, Thr>(from, to, through);
 		}
 	}
 
-	public class FromToThrough<FType, TType, ThrType>
+	public class FromToThrough<FType, TType, ThrType> where ThrType : IConnection
 	{
 		public FromToThrough(FType from, TType to, ThrType through)
 		{

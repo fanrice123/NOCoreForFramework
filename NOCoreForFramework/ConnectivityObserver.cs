@@ -12,10 +12,10 @@ namespace NetworkObservabilityCore
 	public class ConnectivityObserver
 	{
 
-        public Dictionary<FromTo<INode, INode>, Tuple<ISet<Route>, ISet<Route>>>
+        public Dictionary<FromTo, Tuple<ISet<Route>, ISet<Route>>>
         Observe(IGraph graph, ICollection<INode> observers, Tuple<String, Constraint<IEdge>> weightAndConstraint)
         {
-            var result = new Dictionary<FromTo<INode, INode>, Tuple<ISet<Route>, ISet<Route>>>();
+            var result = new Dictionary<FromTo, Tuple<ISet<Route>, ISet<Route>>>();
 
             foreach (var fromNode in graph.AllNodes)
             {
@@ -30,7 +30,7 @@ namespace NetworkObservabilityCore
                 {
 					if (observers.Contains(to) && !to.IsObserverInclusive)
 						continue;
-                    var fromTo = FromTo.Create(from, to);
+                    var fromTo = new FromTo(from, to);
                     var observedRoutes = new HashSet<Route>();
                     var unobservedRoutes = new HashSet<Route>();
 

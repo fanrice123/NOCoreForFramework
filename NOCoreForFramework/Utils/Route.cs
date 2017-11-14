@@ -7,10 +7,35 @@ using System.Collections;
 
 namespace NetworkObservabilityCore.Utils
 {
-    public class Route : IEnumerable<INode>, IComparable<Route>, IEquatable<Route>
+    public class Route : IConnection, IEnumerable<INode>, IComparable<Route>, IEquatable<Route>
     {
         private LinkedList<INode> nodeSequence;
 		private String edgeKeyAttr;
+
+
+		public INode From
+		{
+			get
+			{
+				return nodeSequence.First.Value;
+			}
+			set
+			{
+				throw new NotImplementedException("Setting starting point of a route is prohibited.");
+			}
+		}
+
+		public INode To
+		{
+			get
+			{
+				return nodeSequence.Last.Value;
+			}
+			set
+			{
+				throw new NotImplementedException("Setting destitation of a route is prohibited.");
+			}
+		}
 
         public Route(INode src, String edgeAttr)
         {

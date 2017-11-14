@@ -6,7 +6,7 @@ namespace NetworkObservabilityCore
 	/// **IEdge** is an interface working with <see cref="INode"/> and <see cref="IGraph"/>.
 	/// A type implements this interface plays the role of arc in a [**Graph**](https://en.wikipedia.org/wiki/Graph_(abstract_data_type))
 	/// </summary>
-	public interface IEdge : IConstrainable, IEquatable<IEdge>
+	public interface IEdge : IConnection, IConstrainable, IEquatable<IEdge>
 	{
 		/// <summary>
 		/// Every Edge type has its unique Id.
@@ -22,16 +22,6 @@ namespace NetworkObservabilityCore
 		/// a nickname whatever he want.
 		/// </summary>
 		String Label { get; set; }
-
-		/// <summary>
-		/// Gets <see cref="INode"/> where a connection starts from.
-		/// </summary>
-		INode From { get; set; }
-
-		/// <summary>
-		/// Gets <see cref="INode"/> where a connection links to.
-		/// </summary>
-		INode To { get; set; }
 
 		/// <summary>
 		/// Indicates if the connection through this edge is 
