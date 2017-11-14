@@ -92,17 +92,29 @@ range for each so the algorithm can use the attributes to find the best _paths_.
    
 ![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/start.PNG?raw=true "Start")   
    
+ 
+__Options:__ On the `Start Window` user can select certain attributes ad add constrants to them before running the algorithm. These constraints include `less than` certain values, `greater than` certain values, and a `range` for the value of the attributes.   
+Then user can select one attribute to run the algorithm. The value of this attribute is passed to the algorithm for all the edges to find the shortest paths between each pair.   
+   
+![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/select.png?raw=true "Select attribute")   
+   
+*note:* These attributes are added manually by the user.
+   
 __Output:__ The algorithm then searches for all the possible paths between each ___pair___ of nodes 
-and connects a __line__ between those pairs if there are paths that contains an ___observer___ between the pairs. 
-The application is also able to calculate an _approximate percentage of the traffic_ that could possible 
-go through each path. This output will be shown in a separate pop up `Window`.
+and connects a __green__ line between those pairs if there are paths that contains an ___observer___ between the pairs. 
+If there are multiple paths between a pair of nodes, and the traffic is likely to take either one, then there will be an ___orange___ line connecting the two nodes, indicating that the traffic is partially being observed.   
+Additionally, all the paths between each pair will be displayed at the bottom section of the output window, and the ones that are in the shortest paths set are also stated.
+
+
+
 # How it works
 One of the clients' requirements was to be able to load different libraries onto the application so that 
 they can use different algorithms. Therefore, the application consists of two _front-end_ and _back-end_ 
-parts. This allows us to easily import the back-end as a _library_ into the application and make 
+parts. This allows us to easily import the back-end as a _library_ - also known as a `.dll` file into the application and make 
 changes if needed or load completely new ones.  
    
    
 
-*data structures used 
+Front-end and back-end components such as _graph, node, and edge_ all have similar names for easily understanding of the code. Front-end _canvas graph_ class maps these components with thier counterparts from the back-end.   
+Everything is constructed by the user in the front-end, and then passed to the back-end for further processing. When the back-end completes its process, the result is passed to the front-end and visualised onto the result window.
 
