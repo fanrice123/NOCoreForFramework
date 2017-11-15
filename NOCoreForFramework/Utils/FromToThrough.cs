@@ -1,26 +1,47 @@
 ﻿
 namespace NetworkObservabilityCore.Utils
 {
+	/// <summary>
+	/// An auxiliary class to instantiate <see cref="FromToThrough{FType, TType, ThrType}"/>.
+	/// </summary>
 	public static class FromToThrough
 	{
-		public static FromToThrough<F, T, Thr>
-		Create<F, T, Thr>(F from, T to, Thr through) where Thr : IConnection
+		/// <summary>
+		/// Instantiates <see cref="FromToThrough{FType, TType, ThrType}"/>.
+		/// </summary>
+		/// <param name="from">Origin node.</param>
+		/// <param name="to">Destitation node.</param>
+		/// <param name="through">Connection between 2 nodes.</param>
+		/// <returns>A tuple object.</returns>
+		public static FromToThrough<T, Thr>
+		Create<T, Thr>(T from, T to, Thr through)
 		{
-			return new FromToThrough<F, T, Thr>(from, to, through);
+			return new FromToThrough<T, Thr>(from, to, through);
 		}
 	}
 
-	public class FromToThrough<FType, TType, ThrType> where ThrType : IConnection
+	/// <summary>
+	/// A tuple consists of 2 nodes and a connection between 2 nodes.
+	/// </summary>
+	public class FromToThrough<PType, ThrType>
 	{
-		public FromToThrough(FType from, TType to, ThrType through)
+		/// <summary>
+		/// Instantiates tuple.
+		/// </summary>
+		/// <param name="from">A point.</param>
+		/// <param name="to">Another point. :(</param>
+		/// <param name="through">Connection between 2 points.</param>
+		public FromToThrough(PType from, PType to, ThrType through)
 		{
 			From = from;
 			To = to;
 			Through = through;
 		}
 
-		public FType From { get; set; }
-		public TType To { get; set; }
+		public PType From { get; set; }
+
+		public PType To { get; set; }
+
 		public ThrType Through { get; set; }
 
 	}

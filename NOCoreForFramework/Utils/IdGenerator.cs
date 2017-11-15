@@ -12,7 +12,7 @@ namespace NetworkObservabilityCore.Utils
 		internal static int edgeIdIndex = 0;
 
 		/// <summary>
-		/// Returns a new Id for *Node* object.
+		/// Returns a new Id for **Node** object.
 		/// </summary>
 		/// <returns>Id with format "N{XXXXXXX}"</returns>
 		public static String GenerateNodeId()
@@ -30,7 +30,7 @@ namespace NetworkObservabilityCore.Utils
 		}
 		 
 		/// <summary>
-		/// Reset Id index for *Node* object to start from number given.
+		/// Reset Id index for **Node** object to start from number given.
 		/// </summary>
 		/// <param name="index">The number of next Id of node start from.</param>
 		public static void SetNodeIdStartFrom(int index)

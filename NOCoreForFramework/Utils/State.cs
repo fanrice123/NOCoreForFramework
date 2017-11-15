@@ -1,6 +1,9 @@
 ﻿
 namespace NetworkObservabilityCore.Utils
 {
+	/// <summary>
+	/// An auxiliary class representing a state in graph search algorithm.
+	/// </summary>
 	public class State
 	{
 		public State(Route route)
@@ -14,6 +17,6 @@ namespace NetworkObservabilityCore.Utils
 			private set;
 		}
 
-		public INode CurrentNode => CurrentRoute.Destination;
+		public INode CurrentNode => CurrentRoute.To;
 	}
 }

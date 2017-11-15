@@ -79,7 +79,7 @@ namespace NetworkObservabilityCore.Algorithms
 		void Run();
 
 		/// <summary>
-		/// Returns all the paths to the *node* given from <see cref="Source"/>.
+		/// Returns all the paths to the **node** given from <see cref="Source"/>.
 		/// </summary>
 		/// <param name="node">the destination point.</param>
 		/// <returns>All possible paths.</returns>

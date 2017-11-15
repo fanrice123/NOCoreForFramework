@@ -52,7 +52,6 @@
     <Compile Include="Graph.cs" />
     <Compile Include="GraphXML.cs" />
     <Compile Include="Criteria\GreaterThanCriterion.cs" />
-    <Compile Include="IConnection.cs" />
     <Compile Include="IConstrainable.cs" />
     <Compile Include="Criteria\ICriterion.cs" />
     <Compile Include="IEdge.cs" />

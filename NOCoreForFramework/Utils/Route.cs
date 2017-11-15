@@ -5,37 +5,50 @@ using System.Collections;
 
 namespace NetworkObservabilityCore.Utils
 {
-    public class Route : IConnection, IEnumerable<INode>, IComparable<Route>, IEquatable<Route>
+	/// <summary>
+	/// A path between 2 **Node**s.
+	/// </summary>
+    public class Route : IEnumerable<INode>, IComparable<Route>, IEquatable<Route>
     {
         private LinkedList<INode> nodeSequence;
 		private String edgeKeyAttr;
 
+		#region Properties
 
-		public INode From
-		{
-			get
-			{
-				return nodeSequence.First.Value;
-			}
-			set
-			{
-				throw new NotImplementedException("Setting starting point of a route is prohibited.");
-			}
-		}
+		/// <summary>
+		/// Starting point of **Route**.
+		/// </summary>
+		public INode From =>  nodeSequence.First.Value;
 
-		public INode To
-		{
-			get
-			{
-				return nodeSequence.Last.Value;
-			}
-			set
-			{
-				throw new NotImplementedException("Setting destitation of a route is prohibited.");
-			}
-		}
+		/// <summary>
+		/// Ending point of **Route**.
+		/// </summary>
+		public INode To => nodeSequence.Last.Value;
 
-        public Route(INode src, String edgeAttr)
+		/// <summary>
+		/// The path cost of **Route** from starting point
+		/// to ending point.
+		/// </summary>
+        public double PathCost
+        {
+            get;
+            private set;
+        }
+
+		public bool IsReadOnly => false;
+
+		public int Count => nodeSequence.Count;
+
+		#endregion
+
+		#region Constructors
+
+		/// <summary>
+		/// Instantiates a **Route** object.
+		/// </summary>
+		/// <param name="src">Starting point of **Route**.</param>
+		/// <param name="edgeAttr">Attribute to calculate path cost.</param>
+		public Route(INode src, String edgeAttr)
         {
             nodeSequence = new LinkedList<INode>();
 			nodeSequence.AddLast(src);
@@ -43,6 +56,10 @@ namespace NetworkObservabilityCore.Utils
             PathCost = 0;
         }
 		
+		/// <summary>
+		/// Copy constructor of **Route**.
+		/// </summary>
+		/// <param name="path"></param>
 		private Route(Route path)
         {
 			nodeSequence = new LinkedList<INode>(path.nodeSequence);
@@ -50,21 +67,34 @@ namespace NetworkObservabilityCore.Utils
 			PathCost = path.PathCost;
         }
 
-        public void Add(IEdge edge)
+		#endregion
+
+		#region Methods
+
+		/// <summary>
+		/// Concatenates a **Route** with an <see cref="IEdge"/>.
+		/// </summary>
+		/// <param name="edge">The new portion of **Route**.</param>
+		public void Add(IEdge edge)
         {
             nodeSequence.AddLast(edge.To);
             PathCost += Convert.ToDouble(edge[edgeKeyAttr]);
         }
 
+		/// <summary>
+		/// Checks if **Route** contains the given <see cref="INode"/>.
+		/// </summary>
+		/// <param name="node">A **Node** object.</param>
+		/// <returns>Returns `true` if contains the given **Node**.</returns>
 		public bool Contains(INode node)
 		{
 			return nodeSequence.Contains(node);
 		}
 
-		public bool IsReadOnly => false;
-
-		public int Count => nodeSequence.Count;
-
+		/// <summary>
+		/// Checks if contains any observer.
+		/// </summary>
+		/// <returns>`true` for containing observer regardless of quantity.</returns>
         public bool ContainsObserver()
         {
             foreach(var node in nodeSequence)
@@ -87,11 +117,24 @@ namespace NetworkObservabilityCore.Utils
 			return nodeSequence.GetEnumerator();
 		}
 
+		/// <summary>
+		/// Compares 2 **Route** with their <see cref="PathCost"/>.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
 		public int CompareTo(Route other)
 		{
 			return PathCost.CompareTo(other.PathCost);
 		}
 
+		/// <summary>
+		/// Checks if equals to **Route** given.
+		/// </summary>
+		/// <param name="other">Targeted **Route**.</param>
+		/// <returns>
+		/// `true` if all of the **Node**s in both **Route** 
+		/// are exact same.
+		/// </returns>
 		public bool Equals(Route other)
 		{
 			if (nodeSequence.Count != other.nodeSequence.Count)
@@ -139,20 +182,16 @@ namespace NetworkObservabilityCore.Utils
             return ret_val;
         }
 
+		/// <summary>
+		/// Clones a **Route** object.
+		/// </summary>
+		/// <returns></returns>
         public Route Clone()
 		{
 			return new Route(this);
 		}
 
-		public INode Source => nodeSequence.First.Value;
+		#endregion
 
-        public INode Destination => nodeSequence.Last.Value;
-
-        public double PathCost
-        {
-            get;
-            private set;
-        }
-
-    }
+	}
 }

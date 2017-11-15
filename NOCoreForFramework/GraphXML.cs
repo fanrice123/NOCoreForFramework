@@ -419,7 +419,7 @@ namespace NetworkObservabilityCore.Xml
 		/// > <see cref="IConstrainable.NumericAttributes"/> and
 		/// > <see cref="IConstrainable.DescriptiveAttributes"/> respectively.
 		/// </remarks>
-		protected virtual FromToThrough<String, String, IEdge> LoadEdge(XElement xedge)
+		protected virtual FromToThrough<String, IEdge> LoadEdge(XElement xedge)
 		{
 			var edgeTypeName = xedge.Attribute("Type").Value;
 			Type edgeType = DependencyMap[edgeTypeName].GetType(edgeTypeName);

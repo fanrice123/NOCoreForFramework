@@ -51,7 +51,9 @@ namespace NetworkObservabilityCore.Utils
 			BuildMinHeap();
 		}
 
-#endregion
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Return the number of element in queue.
@@ -64,6 +66,10 @@ namespace NetworkObservabilityCore.Utils
 		public int Capacity => data.Length;
 
 		public T Front => data[0];
+
+		#endregion
+
+		#region Public Methods
 
 		public IEnumerable<T> Sort()
 		{
@@ -119,6 +125,10 @@ namespace NetworkObservabilityCore.Utils
 			DecreaseKey(index, newKey);
 		}
 
+		#endregion
+
+		#region Private Methods
+
 		private void MinHeapify(int index)
 		{
 			int left = Left(index);
@@ -163,5 +173,6 @@ namespace NetworkObservabilityCore.Utils
 			data[rhs] = temp;
 		}
 
-    }
+		#endregion
+	}
 }

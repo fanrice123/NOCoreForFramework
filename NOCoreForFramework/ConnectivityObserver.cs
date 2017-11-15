@@ -20,13 +20,13 @@ namespace NetworkObservabilityCore
 		/// <param name="observers"></param>
 		/// <param name="weightAndConstraint"></param>
 		/// <returns></returns>
-        public Dictionary<FromTo, Tuple<ISet<Route>, ISet<Route>>>
+        public Dictionary<FromTo<INode>, Tuple<ISet<Route>, ISet<Route>>>
         Observe(IGraph graph, 
 				ICollection<INode> observers, 
 				Tuple<String, Constraint<IEdge>> weightAndConstraint, 
 				IAlgorithm algorithm)
         {
-            var result = new Dictionary<FromTo, Tuple<ISet<Route>, ISet<Route>>>();
+            var result = new Dictionary<FromTo<INode>, Tuple<ISet<Route>, ISet<Route>>>();
 
             foreach (var fromNode in graph.AllNodes)
             {
@@ -42,7 +42,7 @@ namespace NetworkObservabilityCore
                 {
 					if (observers.Contains(to) && !to.IsObserverInclusive)
 						continue;
-                    var fromTo = new FromTo(from, to);
+                    var fromTo = new FromTo<INode>(from, to);
                     var observedRoutes = new HashSet<Route>();
                     var unobservedRoutes = new HashSet<Route>();
 
