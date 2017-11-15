@@ -2,12 +2,12 @@
 namespace NetworkObservabilityCore.Utils
 {
 	/// <summary>
-	/// An auxiliary class to instantiate <see cref="FromToThrough{FType, TType, ThrType}"/>.
+	/// An auxiliary class to instantiate <see cref="FromToThrough{PType, ThrType}"/>.
 	/// </summary>
 	public static class FromToThrough
 	{
 		/// <summary>
-		/// Instantiates <see cref="FromToThrough{FType, TType, ThrType}"/>.
+		/// Instantiates <see cref="FromToThrough{PType, ThrType}"/>.
 		/// </summary>
 		/// <param name="from">Origin node.</param>
 		/// <param name="to">Destitation node.</param>

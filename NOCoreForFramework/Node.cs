@@ -152,13 +152,12 @@ namespace NetworkObservabilityCore
 		{
 		}
 
-
 		/// <summary>
 		/// Initialises an **Edge** with <see cref="AttributePair{T}"/> 
 		/// where type parameter is <see cref="String"/>.
 		/// </summary>
-		/// <param name="numericAttr">Attribute pairs.</param>
-		/// <param name="descriptiveAttr">Attribute pairs.</param
+		/// <param name="numericAttr"></param>
+		/// <param name="descriptiveAttr"></param>
 		public Node(AttributePair<Double>[] numericAttr, AttributePair<String>[] descriptiveAttr)
 		{
 			Id = IdGenerator.GenerateNodeId();
