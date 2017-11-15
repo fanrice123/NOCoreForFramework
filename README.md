@@ -98,7 +98,7 @@ Then user can select one attribute to run the algorithm. The value of this attri
    
 ![alt text](https://github.com/fanrice123/NOCoreForFramework/blob/master/NOCoreForFramework/img/select.png?raw=true "Select attribute")   
    
-*note:* These attributes are added manually by the user.
+*note:* These attributes are added manually by the user. Additionally, only attributes that all the edges have will appear in this drop down menu.
    
 __Output:__ The algorithm then searches for all the possible paths between each ___pair___ of nodes 
 and connects a __green__ line between those pairs if there are paths that contains an ___observer___ between the pairs. 
