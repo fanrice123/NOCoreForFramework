@@ -8,36 +8,74 @@ using NetworkObservabilityCore.Criteria;
 
 namespace NetworkObservabilityCore.Algorithms
 {
-	public class KShortestPath
+	public class KShortestPath : IAlgorithm
 	{
 		private Dictionary<INode, List<Route>> pathsDict;
-		private String edgeKeyAttr;
 
-		public KShortestPath(IGraph graph, INode src, String edgeAttr)
-			: this(graph, src, edgeAttr, Constraint<INode>.Default, Constraint<IEdge>.Default)
+		#region Properties
+
+		public INode Source
+		{
+			get;
+			set;
+		}
+
+		public Constraint<INode> NodeConstraint
+		{
+			get;
+			set;
+		}
+
+		public Constraint<IEdge> EdgeConstraint
+		{
+			get;
+			set;
+		}
+
+		public String SelectedEdgeAttribute
+		{
+			get;
+			set;
+		}
+
+		#endregion
+
+		public KShortestPath()
 		{
 		}
 
-		public KShortestPath(IGraph graph, INode src, String edgeAttr, Constraint<INode> cNode)
-			: this(graph, src, edgeAttr, cNode, Constraint<IEdge>.Default)
+		public void Setup(INode src, String edgeAttr)
 		{
+			Setup(src, edgeAttr, Constraint<INode>.Default, Constraint<IEdge>.Default);
 		}
 
-		public KShortestPath(IGraph graph, INode src, String edgeAttr, Constraint<IEdge> cEdge)
-			: this(graph, src, edgeAttr, Constraint<INode>.Default, cEdge)
+		public void Setup(INode src, String edgeAttr, Constraint<INode> cNode)
 		{
+			Setup(src, edgeAttr, cNode, Constraint<IEdge>.Default);
 		}
 
-		public KShortestPath(IGraph graph, INode src, String edgeAttr, Constraint<INode> cNode, Constraint<IEdge> cEdge)
+		public void Setup(INode src, String edgeAttr, Constraint<IEdge> cEdge)
+		{
+			Setup(src, edgeAttr, Constraint<INode>.Default, cEdge);
+		}
+
+		public void Setup(INode src, String edgeAttr, Constraint<INode> cNode, Constraint<IEdge> cEdge)
+		{
+			Source = src;
+			SelectedEdgeAttribute = edgeAttr;
+			NodeConstraint = cNode;
+			EdgeConstraint = cEdge;
+		}
+
+		public void Run()
 		{
 			pathsDict = new Dictionary<INode, List<Route>>();
-			edgeKeyAttr = edgeAttr;
 			Queue<State> queue = new Queue<State>();
 
-			var srcPath = new Route(src, edgeAttr);
+			var srcPath = new Route(Source, SelectedEdgeAttribute);
 			var srcPaths = new List<Route>() { srcPath };
 
-			pathsDict[src] = srcPaths;
+			pathsDict[Source] = srcPaths;
 
 			queue.Enqueue(new State(srcPath));
 
@@ -45,7 +83,7 @@ namespace NetworkObservabilityCore.Algorithms
 			{
 				State state = queue.Dequeue();
 
-				var newStates = CreateNewStates(state, cNode, cEdge);
+				var newStates = CreateNewStates(state, NodeConstraint, EdgeConstraint);
 				foreach (var newState in newStates)
 				{
 					var newNode = newState.CurrentNode;

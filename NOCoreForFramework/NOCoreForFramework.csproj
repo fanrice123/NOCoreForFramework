@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\AllPaths.cs" />
+    <Compile Include="Algorithms\IAlgorithm.cs" />
     <Compile Include="Criteria\EqualCriterion.cs" />
     <Compile Include="Algorithms\Dijkstra.cs" />
     <Compile Include="Edge.cs" />
@@ -70,7 +71,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\State.cs" />
     <Compile Include="Criteria\RangeCriterion.cs" />
-    <Compile Include="Algorithms\WorstCases.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Documentations.md" />

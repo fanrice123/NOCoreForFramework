@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NetworkObservabilityCore
 {
+	/// <summary>
+	/// An interface that possess proterpies "From" and "To".
+	/// </summary>
 	public interface IConnection
 	{
 

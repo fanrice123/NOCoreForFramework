@@ -8,36 +8,75 @@ using NetworkObservabilityCore.Criteria;
 
 namespace NetworkObservabilityCore.Algorithms
 {
-	public class AllPaths
+	public class AllPaths : IAlgorithm
 	{
 		private Dictionary<INode, List<Route>> pathsDict;
-		private String edgeKeyAttr;
 
-		public AllPaths(IGraph graph, INode src, String edgeAttr)
-			: this(graph, src, edgeAttr, Constraint<INode>.Default, Constraint<IEdge>.Default)
+		#region Properties
+
+		public INode Source
+		{
+			get;
+			set;
+		}
+
+		public Constraint<INode> NodeConstraint
+		{
+			get;
+			set;
+		}
+
+		public Constraint<IEdge> EdgeConstraint
+		{
+			get;
+			set;
+		}
+
+		public String SelectedEdgeAttribute
+		{
+			get;
+			set;
+		}
+
+		#endregion
+
+		public AllPaths()
 		{
 		}
 
-		public AllPaths(IGraph graph, INode src, String edgeAttr, Constraint<INode> cNode)
-			: this(graph, src, edgeAttr, cNode, Constraint<IEdge>.Default)
+
+		public void Setup(INode src, String edgeAttr)
 		{
+			Setup(src, edgeAttr, Constraint<INode>.Default, Constraint<IEdge>.Default);
 		}
 
-		public AllPaths(IGraph graph, INode src, String edgeAttr, Constraint<IEdge> cEdge)
-			: this(graph, src, edgeAttr, Constraint<INode>.Default, cEdge)
+		public void Setup(INode src, String edgeAttr, Constraint<INode> cNode)
 		{
+			Setup(src, edgeAttr, cNode, Constraint<IEdge>.Default);
 		}
 
-		public AllPaths(IGraph graph, INode src, String edgeAttr, Constraint<INode> cNode, Constraint<IEdge> cEdge)
+		public void Setup(INode src, String edgeAttr, Constraint<IEdge> cEdge)
+		{
+			Setup(src, edgeAttr, Constraint<INode>.Default, cEdge);
+		}
+
+		public void Setup(INode src, String edgeAttr, Constraint<INode> cNode, Constraint<IEdge> cEdge)
+		{
+			Source = src;
+			SelectedEdgeAttribute = edgeAttr;
+			NodeConstraint = cNode;
+			EdgeConstraint = cEdge;
+		}
+
+		public void Run()
 		{
 			pathsDict = new Dictionary<INode, List<Route>>();
-			edgeKeyAttr = edgeAttr;
 			Stack<State> stack = new Stack<State>();
 
-			var srcPath = new Route(src, edgeAttr);
+			var srcPath = new Route(Source, SelectedEdgeAttribute);
 			var srcPaths = new List<Route>() { srcPath };
 
-			pathsDict[src] = srcPaths;
+			pathsDict[Source] = srcPaths;
 
 			stack.Push(new State(srcPath));
 
@@ -46,7 +85,7 @@ namespace NetworkObservabilityCore.Algorithms
 				State state = stack.Pop();
 
 
-				var newStates = CreateLooplessNewStates(state, cNode, cEdge);
+				var newStates = CreateLooplessNewStates(state, NodeConstraint, EdgeConstraint);
 				foreach (var newState in newStates)
 				{
 					var newNode = newState.CurrentNode;

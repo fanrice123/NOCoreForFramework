@@ -40,7 +40,9 @@ namespace NOCoreTest
 			graph.ConnectNodeToWith(E, C, new Edge(new AttributePair<Double> { Name="Weight", Attribute=)(1));
 			*/
 
-			KShortestPath ksp = new KShortestPath(graph, A, "Weight");
+			KShortestPath ksp = new KShortestPath();
+			ksp.Setup(A, "Weight");
+			ksp.Run();
 
 			Assert.AreEqual(2, ksp.PathsTo(E).Count);
 		}
@@ -75,7 +77,9 @@ namespace NOCoreTest
 			graph.ConnectNodeToWith(E, C, new Edge(new AttributePair<Double> { Name="Weight", Attribute=)(1));
 			*/
 
-			KShortestPath ksp = new KShortestPath(graph, A, "Weight");
+			KShortestPath ksp = new KShortestPath();
+			ksp.Setup(A, "Weight");
+			ksp.Run();
 
 			Assert.AreEqual(1, ksp.PathsTo(E).Count);
 		}
@@ -113,7 +117,9 @@ namespace NOCoreTest
 			graph.ConnectNodeToWith(D, G, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 }));
 			graph.ConnectNodeToWith(G, F, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 }));
 
-			KShortestPath ksp = new KShortestPath(graph, A, "Weight");
+			KShortestPath ksp = new KShortestPath();
+			ksp.Setup(A, "Weight");
+			ksp.Run();
 
 			Assert.AreEqual(1, ksp.PathsTo(F).Count);
 		}
@@ -147,7 +153,9 @@ namespace NOCoreTest
 			graph.ConnectNodeToWith(D, G, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 }));
 			graph.ConnectNodeToWith(G, F, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 }));
 
-			KShortestPath ksp = new KShortestPath(graph, A, "Weight");
+			KShortestPath ksp = new KShortestPath();
+			ksp.Setup(A, "Weight");
+			ksp.Run();
 
 			Assert.AreEqual(4, ksp.PathsTo(F).Count);
 			Assert.AreEqual(2, ksp.PathsTo(D).Count);
@@ -183,7 +191,9 @@ namespace NOCoreTest
 			graph.ConnectNodeToWith(F, G, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 }));
 			graph.ConnectNodeToWith(G, D, new Edge(new AttributePair<Double> { Name = "Weight", Attribute = 1 }));
 
-			KShortestPath ksp = new KShortestPath(graph, A, "Weight");
+			KShortestPath ksp = new KShortestPath();
+			ksp.Setup(A, "Weight");
+			ksp.Run();
 
 			Assert.AreEqual(1, ksp.PathsTo(D).Count);
 		}

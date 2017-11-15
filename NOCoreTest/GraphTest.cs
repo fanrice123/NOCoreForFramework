@@ -4,6 +4,7 @@ using NetworkObservabilityCore;
 using System.Collections.Generic;
 using NetworkObservabilityCore.Utils;
 using NetworkObservabilityCore.Criteria;
+using NetworkObservabilityCore.Algorithms;
 
 namespace NOCoreTest
 {
@@ -40,7 +41,10 @@ namespace NOCoreTest
 			graph.ConnectNodeToWith(E, C, new Edge({Name="Weight", Attribute=)(1));
 			*/
 
-			var result = new ConnectivityObserver().Observe(graph, new List<INode>() { B }, Tuple.Create("Weight", Constraint<IEdge>.Default));
+			var result = new ConnectivityObserver().Observe(graph, 
+															new List<INode>() { B }, 
+															Tuple.Create("Weight", Constraint<IEdge>.Default),
+															new AllPaths());
 
 			foreach (var pair in result)
 			{

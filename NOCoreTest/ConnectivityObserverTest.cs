@@ -5,6 +5,7 @@ using System.Linq;
 using NetworkObservabilityCore;
 using NetworkObservabilityCore.Utils;
 using NetworkObservabilityCore.Xml;
+using NetworkObservabilityCore.Algorithms;
 
 namespace NOCoreTest
 {
@@ -57,7 +58,8 @@ namespace NOCoreTest
 			GraphXML xgraph = new GraphXML();
 			var g = xgraph.Read("C:\\Users\\user\\Downloads\\multiple_paths.xml");
 			observers = g.AllNodes.Values.Where(node => node.IsObserver).ToList();
-			var results = co.Observe(g, observers, Tuple.Create("cost", Constraint<IEdge>.Default));
+			AllPaths algorithm = new AllPaths();
+			var results = co.Observe(g, observers, Tuple.Create("cost", Constraint<IEdge>.Default), algorithm);
 
 			foreach (var pair in results)
 			{

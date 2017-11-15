@@ -4,6 +4,7 @@ using NetworkObservabilityCore.Utils;
 
 namespace NetworkObservabilityCore.Algorithms
 {
+	[Obsolete("This algorithm is deprecated. Please use KShortestPath instead.")]
 	public class Dijkstra
     {
 		readonly List<INode> nodes;

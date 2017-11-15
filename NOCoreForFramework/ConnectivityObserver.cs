@@ -1,19 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NetworkObservabilityCore.Utils;
 using NetworkObservabilityCore.Algorithms;
 
 namespace NetworkObservabilityCore
 {
 
+	/// <summary>
+	/// This object observes connectivity of a *Graph*.
+	/// </summary>
 	public class ConnectivityObserver
 	{
 
+		/// <summary>
+		/// Observes a *Graph*.
+		/// </summary>
+		/// <param name="graph">Graph to be observed.</param>
+		/// <param name="observers"></param>
+		/// <param name="weightAndConstraint"></param>
+		/// <returns></returns>
         public Dictionary<FromTo, Tuple<ISet<Route>, ISet<Route>>>
-        Observe(IGraph graph, ICollection<INode> observers, Tuple<String, Constraint<IEdge>> weightAndConstraint)
+        Observe(IGraph graph, 
+				ICollection<INode> observers, 
+				Tuple<String, Constraint<IEdge>> weightAndConstraint, 
+				IAlgorithm algorithm)
         {
             var result = new Dictionary<FromTo, Tuple<ISet<Route>, ISet<Route>>>();
 
@@ -24,7 +35,8 @@ namespace NetworkObservabilityCore
                     continue;
 
                 //KShortestPath shortestPath = new KShortestPath(this, from);
-                AllPaths shortestPath = new AllPaths(graph, from, weightAndConstraint.Item1, weightAndConstraint.Item2);
+                algorithm.Setup(from, weightAndConstraint.Item1, Constraint<INode>.Default, weightAndConstraint.Item2);
+				algorithm.Run();
 
                 foreach (var to in graph.AllNodes.Values.Where(to => !to.Equals(from)))
                 {
@@ -34,7 +46,7 @@ namespace NetworkObservabilityCore
                     var observedRoutes = new HashSet<Route>();
                     var unobservedRoutes = new HashSet<Route>();
 
-                    var paths = shortestPath.PathsTo(to);
+                    var paths = algorithm.PathsTo(to);
                     foreach (Route path in paths)
                     {
                         foreach (var observer in observers)
