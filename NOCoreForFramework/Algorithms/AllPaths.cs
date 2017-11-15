@@ -8,31 +8,46 @@ using NetworkObservabilityCore.Criteria;
 
 namespace NetworkObservabilityCore.Algorithms
 {
+	/// <summary>
+	/// An algorithm finds all the possible loopless paths from origin to every single nodes in a graph.
+	/// </summary>
 	public class AllPaths : IAlgorithm
 	{
 		private Dictionary<INode, List<Route>> pathsDict;
+		private static readonly List<Route> emptyList = new List<Route>();
 
 		#region Properties
 
+		/// <inheritdoc />
 		public INode Source
 		{
 			get;
 			set;
 		}
 
+		/// <inheritdoc />
 		public Constraint<INode> NodeConstraint
 		{
 			get;
 			set;
 		}
 
+		/// <inheritdoc />
 		public Constraint<IEdge> EdgeConstraint
 		{
 			get;
 			set;
 		}
 
+		/// <inheritdoc />
 		public String SelectedEdgeAttribute
+		{
+			get;
+			set;
+		}
+
+		/// <inheritdoc />
+		public bool IsSet
 		{
 			get;
 			set;
@@ -40,36 +55,61 @@ namespace NetworkObservabilityCore.Algorithms
 
 		#endregion
 
+		#region Constructors
+
+		/// <summary>
+		/// Instantiates an *AllPaths* algorithm.
+		/// </summary>
 		public AllPaths()
 		{
+			IsSet = false;
 		}
 
+		#endregion
 
+		#region Public Methods
+
+		/// <summary>
+		/// See <see cref="Setup(INode, string, Constraint{INode}, Constraint{IEdge})"/>.
+		/// </summary>
 		public void Setup(INode src, String edgeAttr)
 		{
 			Setup(src, edgeAttr, Constraint<INode>.Default, Constraint<IEdge>.Default);
 		}
 
+		/// <summary>
+		/// See <see cref="Setup(INode, string, Constraint{INode}, Constraint{IEdge})"/>.
+		/// </summary>
 		public void Setup(INode src, String edgeAttr, Constraint<INode> cNode)
 		{
 			Setup(src, edgeAttr, cNode, Constraint<IEdge>.Default);
 		}
 
+		/// <summary>
+		/// See <see cref="Setup(INode, string, Constraint{INode}, Constraint{IEdge})"/>.
+		/// </summary>
 		public void Setup(INode src, String edgeAttr, Constraint<IEdge> cEdge)
 		{
 			Setup(src, edgeAttr, Constraint<INode>.Default, cEdge);
 		}
 
+		/// <inheritdoc />
 		public void Setup(INode src, String edgeAttr, Constraint<INode> cNode, Constraint<IEdge> cEdge)
 		{
 			Source = src;
 			SelectedEdgeAttribute = edgeAttr;
 			NodeConstraint = cNode;
 			EdgeConstraint = cEdge;
+			IsSet = true;
+
 		}
 
+		/// <inheritdoc />
 		public void Run()
 		{
+			if (!IsSet)
+				throw new InvalidOperationException("The algorithm is not set. Call method Setup before running the algorithm.");
+
 			pathsDict = new Dictionary<INode, List<Route>>();
 			Stack<State> stack = new Stack<State>();
 
@@ -105,8 +145,8 @@ namespace NetworkObservabilityCore.Algorithms
 			}
 		}
 
-		private static readonly List<Route> emptyList = new List<Route>();
 
+		/// <inheritdoc />
 		public IList<Route> PathsTo(INode node)
 		{
 
@@ -115,6 +155,10 @@ namespace NetworkObservabilityCore.Algorithms
 			else
 				return emptyList;
 		}
+
+		#endregion
+
+		#region Private Methods
 
 		private IEnumerable<State> CreateLooplessNewStates(State currentState, 
 														   Constraint<INode> cNode, 
@@ -136,5 +180,7 @@ namespace NetworkObservabilityCore.Algorithms
 
 			return states;
 		}
+
+		#endregion
 	}
 }
