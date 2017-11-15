@@ -42,12 +42,13 @@ namespace NetworkObservabilityCore
                             if (path.Contains(observer))
                             {
                                 observedRoutes.Add(path);
+								if (unobservedRoutes.Contains(path))
+									unobservedRoutes.Remove(path);
                                 break;
                             }
                             else
                             {
                                 unobservedRoutes.Add(path);
-                                break;
                             }
                         }
                     }

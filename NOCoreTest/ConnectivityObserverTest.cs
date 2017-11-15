@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 using NetworkObservabilityCore;
 using NetworkObservabilityCore.Utils;
+using NetworkObservabilityCore.Xml;
 
 namespace NOCoreTest
 {
@@ -52,7 +54,20 @@ namespace NOCoreTest
 		[TestMethod]
 		public void TestObserve()
 		{
-			co.Observe(graph, observers, Tuple.Create("Weight", Constraint<IEdge>.Default));
+			GraphXML xgraph = new GraphXML();
+			var g = xgraph.Read("C:\\Users\\user\\Downloads\\multiple_paths.xml");
+			observers = g.AllNodes.Values.Where(node => node.IsObserver).ToList();
+			var results = co.Observe(g, observers, Tuple.Create("cost", Constraint<IEdge>.Default));
+
+			foreach (var pair in results)
+			{
+				var from = pair.Key.From;
+				var to = pair.Key.To;
+
+				var obsereveds = pair.Value.Item1;
+				var unobsserveds = pair.Value.Item2;
+			}
+
 		}
 	}
 }
